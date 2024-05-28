@@ -2,7 +2,7 @@
 
 class MustachePresenter{
     private $mustache;
-    private $partialsPathLoader;
+
 
     public function __construct($partialsPathLoader){
         Mustache_Autoloader::register();
@@ -10,7 +10,7 @@ class MustachePresenter{
             array(
                 'partials_loader' => new Mustache_Loader_FilesystemLoader( $partialsPathLoader )
             ));
-        $this->partialsPathLoader = $partialsPathLoader;
+
     }
 
     public function render($contentFile , $data = array() ){
@@ -20,8 +20,8 @@ class MustachePresenter{
     }
 
     public function generateHtml($contentFile, $data = array()) {
-        //$contentAsString = file_get_contents(  $this->partialsPathLoader .'/nav.mustache');
-        $contentAsString = file_get_contents('Preguntados/view/' . $contentFile . '_view.mustache');
+      //  $contentAsString = file_get_contents(   .'/header.mustache');
+        $contentAsString = file_get_contents('Sabiondos/view/' . $contentFile . '_view.mustache');
         //$contentAsString .= file_get_contents($this->partialsPathLoader . '/nav-admin.mustache');
         return $this->mustache->render($contentAsString, $data);
     }

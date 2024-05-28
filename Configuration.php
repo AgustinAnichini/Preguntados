@@ -7,6 +7,10 @@ include_once ("model/RegistroModel.php");
 include_once ("model/HomeModel.php");
 
 include_once ("helper/Router.php");
+include_once("helper/Database.php");
+include_once("helper/MustachePresenter.php");
+include_once("helper/Presenter.php");
+include_once('vendor/vendor/mustache/src/Mustache/Autoloader.php');
 
 Class Configuration{
 

@@ -1,34 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/general.css">
-    <title>Login</title>
-</head>
-<body>
 <main>
 
     <h2>Cada dia se aprende algo nuevo</h2>
     <div id="contenedor-form-login">
         <h3>Inicia sesión para jugar</h3>
-        <form method="post" action="/Home/login">
+
+        <form method="post" action="/home/login">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" required>
             </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" required>
+                <input type="text" id="password" name="password" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
         </form>
         <p>¿No estás registrado? <a href="/registro">Registrate</a></p>
     </div>
 </main>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>

@@ -11,8 +11,10 @@ class RegistroController
         $this->presenter = $presenter;
     }
 
-    public function login()
+    public function home()
     {
         $this->presenter->render("Registro", []);
     }
+
+
 }

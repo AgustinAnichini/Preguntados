@@ -13,3 +13,29 @@ CREATE TABLE usuarios (
                           cuenta_activa BOOLEAN DEFAULT FALSE,
                           token_validacion VARCHAR(255)
 );
+
+INSERT INTO usuarios (
+    nombre_completo,
+    fecha_nacimiento,
+    sexo,
+    pais,
+    ciudad,
+    mail,
+    contrasenia_hash,
+    nombre_usuario,
+    foto_perfil,
+    cuenta_activa,
+    token_validacion
+) VALUES (
+             'Juan Perez',
+             '1985-06-15',
+             'Masculino',
+             'Argentina',
+             'Buenos Aires',
+             'juanPerez@gmail.com',
+             'hashed_password_here', -- Asegúrate de hashear la contraseña antes de insertarla
+             'juanperez85',
+             'path/to/profile/photo.jpg',
+             TRUE,
+             'some_validation_token_here'
+         );

@@ -10,6 +10,12 @@ header {
     padding: 20px;
     text-align: center;
 }
+main {
+    background-color: #336699;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
 h1 {
     margin: 0;
 }

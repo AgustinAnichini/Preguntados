@@ -42,7 +42,7 @@ class RegistroController
           $mail = new PHPMailer(true);
 
           try {
-              // Configuración del servidor de correo
+                  // Configuración del servidor de correo
               $mail->isSMTP();
               $mail->Host = 'smtp.office365.com'; // Host del servidor SMTP
               $mail->SMTPAuth = true;

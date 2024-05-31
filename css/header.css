@@ -18,4 +18,8 @@ main {
 }
 h1 {
     margin: 0;
+    background-color: darkred;
+}
+.prueba{
+    background-color: gold;
 }

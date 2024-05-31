@@ -17,7 +17,7 @@ Class Configuration{
     //CONTROLLERS----------------------------------------------------------------------------------------------------------------------
     public static function getRegistroController()
     {
-        return new RegistroController(self::getRegistroModel() ,self::getPresenter()); // no se si debe recibir un presenter
+        return new RegistroController(self::getRegistroModel() ,self::getPresenter()); // le falta ser creado con el servicio
     }
     public static function getHomeController()
     {

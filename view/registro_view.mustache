@@ -7,28 +7,28 @@
 
         <form action="/Registro/registrar" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="fullName">Nombre Completo</label>
-                <input type="text" class="form-control" id="fullName" name="fullName" required>
+                <label for="nombreCompleto">Nombre Completo</label>
+                <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" required>
             </div>
             <div class="form-group">
-                <label for="birthYear">Año de Nacimiento</label>
-                <input type="number" class="form-control" id="birthYear" name="birthYear" min="1900" max="2023" required>
+                <label for="AnioNacimiento">Año de Nacimiento</label>
+                <input type="date" class="form-control" id="AnioNacimiento" name="AnioNacimiento" min="1900" max="2023" required>
             </div>
             <div class="form-group">
-                <label for="gender">Sexo</label>
-                <select class="form-control" id="gender" name="gender" required>
+                <label for="sexo">Sexo</label>
+                <select class="form-control" id="sexo" name="sexo" required>
                     <option value="Masculino">Masculino</option>
                     <option value="Femenino">Femenino</option>
                     <option value="Prefiero no cargarlo">Prefiero no cargarlo</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="country">País</label>
-                <input type="text" class="form-control" id="country" name="country" required>
+                <label for="pais">País</label>
+                <input type="text" class="form-control" id="pais" name="pais" required>
             </div>
             <div class="form-group">
-                <label for="city">Ciudad</label>
-                <input type="text" class="form-control" id="city" name="city" required>
+                <label for="ciudad">Ciudad</label>
+                <input type="text" class="form-control" id="ciudad" name="ciudad" required>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -47,8 +47,8 @@
                 <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-                <label for="profilePhoto">Foto de Perfil</label>
-                <input type="file" class="form-control-file" id="profilePhoto" name="profilePhoto" accept="image/*" required>
+                <label for="fotoPerfil">Foto de Perfil</label>
+                <input type="file" class="form-control-file" id="fotoPerfil" name="fotoPerfil" accept="image/*" required>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
         </form>

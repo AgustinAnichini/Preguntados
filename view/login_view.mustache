@@ -1,20 +1,22 @@
 <main>
-
-    <h2>Cada dia se aprende algo nuevo</h2>
-    <div id="contenedor-form-login">
-        <h3>Inicia sesión para jugar</h3>
-
-        <form method="post" action="/home/login">
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+    <div class="container-fluid login-container">
+        <div class="login-card col-md-4">
+            <div class="login-header">
+                <h2>Cada día se aprende algo nuevo</h2>
+                <h3>Inicia sesión para jugar</h3>
             </div>
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="text" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
-        </form>
-        <p>¿No estás registrado? <a href="/registro">Registrate</a></p>
+            <form method="post" action="/home/login">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+            </form>
+            <p class="mt-3 text-center">¿No estás registrado? <a href="/registro">Regístrate</a></p>
+        </div>
     </div>
 </main>

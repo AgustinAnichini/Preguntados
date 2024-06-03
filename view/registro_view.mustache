@@ -5,7 +5,7 @@
     <div class="container mt-5 bg-warning p-5">
         <h2 class="text-center">Registro de Usuario</h2>
 
-        <form action="/Registro/registrar" method="post" enctype="multipart/form-data">
+        <form action="/Registro/registrar" method="post" enctype="multipart/form-data" id="formRegistro">
             <div class="form-group">
                 <label for="nombreCompleto">Nombre Completo</label>
                 <input type="text" class="form-control" id="nombreCompleto" name="nombreCompleto" required>
@@ -54,5 +54,18 @@
                 <button type="submit" class="btn btn-primary w-25">Ingresar</button>
             </div>
         </form>
+
+<!--         MODAL PARA VALIDAR.-->
+        <div class="py-5 ocultar modalEmial bg-dark text-light" id="modalRegistro">
+            <div class="content container px-lg-5 p-4 rounded-3">
+                <h2 class="text-center display-5 fw-bold">¡Solo queda un paso más!</h2>
+                <p class="text-center display-5">Revisa tu bandeja de entrada y valida tu mail para continuar.</p>
+                <section class="text-center">
+                    <a href="/" class="btn btn-primary btn-lg">Aceptar</a>
+                </section>
+            </div>
+        </div>
+
     </div>
+    <script src="/public/js/resgistroExitoso.js"></script>
 </main>

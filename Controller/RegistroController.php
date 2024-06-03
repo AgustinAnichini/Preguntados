@@ -22,8 +22,10 @@ class RegistroController
     {
         $this->presenter->render("Registro", []);
     }
+
     public function registrar()
-    {
+    {  // todo esto hay que llevarlo al servicio
+
       if(  isset($_POST["nombreCompleto"],$_POST["AnioNacimiento"],$_POST["sexo"],
           $_POST["pais"],$_POST["ciudad"],$_POST["email"],$_POST["password"],$_POST["confirmPassword"],$_POST["username"])){
           $formData = $_POST;
@@ -44,10 +46,10 @@ class RegistroController
           try {
                   // Configuración del servidor de correo
               $mail->isSMTP();
-              $mail->Host = 'smtp.office365.com'; // Host del servidor SMTP
+              $mail->Host = 'smtp.gmail.com'; // Host del servidor SMTP
               $mail->SMTPAuth = true;
-              $mail->Username = 'aanichini@alumno.unlam.edu.ar'; // Tu correo
-              $mail->Password = '27636921'; // Tu contraseña de correo
+              $mail->Username = 'agustinanichini277@gmail.com'; // Tu correo
+              $mail->Password = 'okmmaeerwqyghuxs'; // Tu contraseña de correo
               $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
               $mail->Port = 587;
 
@@ -58,18 +60,13 @@ class RegistroController
               // Contenido del correo
               $mail->isHTML(true);
               $mail->Subject = 'Si no sale me MATO';
-              $mail->Body    = 'El hash MD5 de tu contraseña es: ' . $passwordHash.
-                  '\n Tu email es ' . $formData["email"].
-                  '\n Tu nombre de usuario es ' . $formData["username"];
-
+              $mail->Body    = 'El hash MD5 de tu contraseña es: ' . $passwordHash. "<br>".
+                  'Tu email es ' . $formData["email"]."<br>".
+                  'Tu nombre de usuario es ' . $formData["username"];
               $mail->send();
-              echo 'El mensaje ha sido enviado';
           } catch (Exception $e) {
               echo "El mensaje no pudo ser enviado.".'<br>'." Error de PHPMailer: {$mail->ErrorInfo}";
           }
       }
-      echo '<br>'. "ALGO SALIO MAL";
     }
-
-
 }

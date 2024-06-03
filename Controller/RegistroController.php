@@ -47,7 +47,7 @@ class RegistroController
               $mail->Host = 'smtp.office365.com'; // Host del servidor SMTP
               $mail->SMTPAuth = true;
               $mail->Username = 'aanichini@alumno.unlam.edu.ar'; // Tu correo
-              $mail->Password = 'capoTATO12'; // Tu contraseña de correo
+              $mail->Password = '27636921'; // Tu contraseña de correo
               $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
               $mail->Port = 587;
 

@@ -15,6 +15,27 @@ class HomeController
     {
         $this->presenter->render("login", []);
     }
+    public function validarHash()
+    {
+        if(!isset($_GET['hash'])){
+            $this->presenter->render("registro", ["mensaje" => "El hash no fue proporcionado"]);
+            return;
+        }
+
+        $hash = $_GET['hash'];
+        $usuario = $this->model->buscarUsuarioPorHash($hash);
+
+            if($usuario != null){
+                $this->model->activarCuenta($usuario);
+                var_dump($usuario);
+                header("Location: /");
+                exit();
+            }else{
+                $this->presenter->render("login",["mensaje"=>"El enlace no es valido"]);
+            }
+
+//        $this->presenter->render("login", []);
+    }
     public function login()
     {
         $username = $_POST["email"];
@@ -24,11 +45,12 @@ class HomeController
 //        var_dump($usuario);
 
         if ($usuario != null){
-            $this->presenter->render("lobby", [$usuario["nombre_usuario"]]);
-            session_start();
+            $this->presenter->render("lobby", ["usuario"=>$usuario]);
         }else{
             header("Location: /Home");
             exit();
         }
     }
+
+
 }

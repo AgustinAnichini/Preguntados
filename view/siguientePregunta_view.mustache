@@ -5,24 +5,28 @@
     <title>Title</title>
 </head>
 <body>
-{{#pregunta}}
-    <h1 class="p-5 text-light">{{texto}}</h1>
-{{/pregunta}}
+<section class="container">
+    {{#pregunta}}
+        <h1 class="p-5 text-light text-center">{{texto}}</h1>
+    {{/pregunta}}
 
-    <form action="/Partida/verificarRespuesta" method="get" class="respuestas-juego">
-        {{#pregunta}}
-            <input type="hidden" name="{{id}}" id="{{id}}" value="{{texto}}">
-        {{/pregunta}}
+        <form action="/Partida/verificarRespuesta" method="get" class="respuestas-juego d-flex flex-column container w-50">
+            {{#pregunta}}
+                <div>
+                      <input type="hidden" name="{{id}}" id="{{id}}" value="{{texto}}">
+                </div>
+            {{/pregunta}}
 
-        {{#respuesta}}
-            <label id="{{id}}">{{texto}}</label>
-            <input type="radio" name="{{id}}" id="{{id}}" value="{{texto}}">
-        {{/respuesta}}
-        <input type="submit" value="Enviar">
-    </form>
-
-
-
-
+            {{#respuesta}}
+                <div class="aling-items-center">
+                    <label id="{{id}}" class="text-light">{{texto}}</label>
+                    <input type="radio" name="{{id}}" id="{{id}}" value="{{texto}}" class="">
+                </div>
+            {{/respuesta}}
+            <div class="d-flex justify-content-center mt-4">
+                <input type="submit" value="Enviar" class="btn btn-warning w-25">
+            </div>
+        </form>
+</section>
 </body>
 </html>

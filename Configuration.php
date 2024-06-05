@@ -51,7 +51,7 @@ Class Configuration{
         return new LobbyModel(self::getsabiondosDatabase());
     }
     private static  function getPartidaModel(){
-        return new LobbyModel(self::getsabiondosDatabase());
+        return new PartidaModel(self::getsabiondosDatabase());
     }
 
 

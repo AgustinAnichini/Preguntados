@@ -9,12 +9,19 @@
     <h1 class="p-5 text-light">{{texto}}</h1>
 {{/pregunta}}
 
-{{#respuesta}}
-    <form>
+    <form action="/Partida/verificarRespuesta" method="get" class="respuestas-juego">
+        {{#pregunta}}
+            <input type="hidden" name="{{id}}" id="{{id}}" value="{{texto}}">
+        {{/pregunta}}
 
+        {{#respuesta}}
+            <label id="{{id}}">{{texto}}</label>
+            <input type="radio" name="{{id}}" id="{{id}}" value="{{texto}}">
+        {{/respuesta}}
+        <input type="submit" value="Enviar">
     </form>
 
-{{/respuesta}}
+
 
 
 </body>

@@ -22,13 +22,14 @@ class PartidaController
         $pregunta = $this->model->siguientePregunta();
 
         // Obtén las respuestas para la pregunta
-        $respuestas = $this->model->respuestas($pregunta["id"]); // array
+        $respuestas = $this->model->respuestas($pregunta[0]['id']); // array
 
         // Inicializa un array para almacenar los datos
         //$preguntaData = array();
 
         // Almacena la pregunta y las respuestas en el array
         //$preguntaData = array($pregunta, $respuestas);
+
         $preguntaData["pregunta"] = $pregunta;
         $preguntaData["respuesta"] = $respuestas;
         // Renderiza la vista pasando los datos

@@ -12,15 +12,15 @@ class   PartidaModel
     function siguientePregunta(){
         $preguntas = $this->database->query("SELECT * FROM pregunta");
         $totalPreguntas = count($preguntas);
-        $idRandom = rand(0,);
+        $idRandom = rand(0,$totalPreguntas);
 
 
         $result = $this->database->query("SELECT * FROM pregunta WHERE id = '$idRandom'");
-        return $result[0];
+        return $result;
     }
     function respuestas($id){
 
-        $result = $this->database->query("SELECT * FROM respuesta WHERE id = '$id'");
+        $result = $this->database->query("SELECT * FROM respuesta WHERE pregunta_id = '$id'");
         return $result;
     }
 }

@@ -13,9 +13,18 @@ class Database
         }
     }
 
-    public function query($sql){
+    public function query($sql)
+    {
         $result = mysqli_query($this->conn, $sql);
-        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        // Verifica si el resultado es un objeto mysqli_result
+        if ($result instanceof mysqli_result) {
+            // Si es un objeto mysqli_result, retorna el conjunto de resultados como un array asociativo
+            return mysqli_fetch_all($result, MYSQLI_ASSOC);
+        } else {
+            // Si no es un objeto mysqli_result, retorna el resultado de la consulta
+            return $result;
+        }
     }
 
     public function execute($sql)

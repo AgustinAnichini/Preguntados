@@ -19,7 +19,6 @@ class HomeModel
         $this->database->execute("UPDATE usuarios SET cuenta_activa = 'true'  WHERE id = '$usuarioID'");
     }
     function buscarUsuarioPorHash($hash){
-
         $result = $this->database->query("SELECT * FROM usuarios WHERE token_validacion = '$hash'");
         return $result;
     }

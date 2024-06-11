@@ -56,13 +56,9 @@ class   PartidaModel
         return $result;
     }
 
-
-
-
-    function verificarRespuesta($idRespuesta){
+    function verificarRespuesta($idPregunta, $idRespuesta){
         // debo comparar el ID  de la pregunta con el ID  de la respuesta, debe retornar un boolean
-
-        $result = $this->database->query("SELECT r.correcta FROM respuesta r WHERE r.pregunta_id = '$idRespuesta'");
-        return $result;
+        $result = $this->database->query("SELECT r.correcta FROM respuesta r WHERE r.pregunta_id = '$idPregunta' and $idRespuesta like r.id");
+        return $result[0]["correcta"];
     }
 }

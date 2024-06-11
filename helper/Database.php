@@ -17,7 +17,6 @@ class Database
     {
         $result = mysqli_query($this->conn, $sql);
 
-        // Verifica si el resultado es un objeto mysqli_result
         if ($result instanceof mysqli_result) {
             // Si es un objeto mysqli_result, retorna el conjunto de resultados como un array asociativo
             return mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -29,7 +28,6 @@ class Database
 
     public function execute($sql)
     {
-        //mysqli_query($this->conn, $sql);
         if (mysqli_query($this->conn, $sql)) {
             return true; // Inserción exitosa
         } else {

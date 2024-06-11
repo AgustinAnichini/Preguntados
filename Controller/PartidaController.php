@@ -17,14 +17,15 @@ class PartidaController
     }
     public function verificarRespuesta()
     {
-        if (isset($_GET['respuestaSeleccionada'])) {
+        if (isset($_GET['respuestaSeleccionada']) && isset($_GET['idPregunta'])) {
             $idRespuesta = $_GET['respuestaSeleccionada'];
+            $idPregunta = $_GET['idPregunta'];
 
-            // Verifica si la respuesta es correcta
-            $esCorrecta = $this->model->verificarRespuesta($idRespuesta);
+            $esCorrecta = $this->model->verificarRespuesta($idPregunta,$idRespuesta);
+
             if ($esCorrecta) {
-                $mensajeUsuario = "¡Sos la máquina, Ganaste!";
-                $this->presenter->render("siguientePregunta", ['mensajeUsuario' => $mensajeUsuario]);
+                $this->siguientePregunta();
+//                $this->presenter->render("siguientePregunta", ['mensajeUsuario' => $mensajeUsuario]);
             } else {
                 $mensajeUsuario = "La miseria te persigue, Perdiste";
                 $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
@@ -35,9 +36,6 @@ class PartidaController
             $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
         }
     }
-
-
-
 
     public function siguientePregunta()
     {
@@ -63,7 +61,4 @@ class PartidaController
         // Renderiza la vista pasando los datos
         $this->presenter->render("siguientePregunta", $preguntaData);
     }
-
-
-
 }

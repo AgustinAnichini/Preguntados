@@ -4,4 +4,44 @@
     {{/usuario}}
 
     <a href="">Nueva partida</a>
+
+    <section class="container d-flex justify-content-around ">
+        <form action="/partida" method="post" class="botones">
+            <input type="submit" name="nuevaPartida" id="nuevaPartida" value="Nueva Partida">
+        </form>
+
+        <form action="/Ranking" method="post" class="botones">
+            <input type="submit" name="rankingMundial" id="rankingMundial" value="Ranking Mundial">
+        </form>
+
+        <form action="/Tienda" method="post" class="botones">
+            <input type="submit" name="tienda" id="tienda" value="Tienda">
+        </form>
+    </section>
+
+    <section class="container">
+        <h1 class="p-5 text-light">Partidas jugadas</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Tiempo</th>
+                <th scope="col">Puntaje</th>
+                <th scope="col">Duracion</th>
+                <th scope="col">Preguntas Acertadas</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#partida}}
+                <tr>
+                    <th scope="row">{{Id}}</th>
+                    <td>{{Tiempo}}</td>
+                    <td>{{Puntaje}}</td>
+                    <td>{{Duracion}}</td>
+                    <td>{{Preguntas Acertadas}}</td>
+                </tr>
+            {{/partida}}
+            </tbody>
+        </table>
+    </section>
 </main>

@@ -1,0 +1,15 @@
+<main>
+    <section class="container text-center">
+        {{#mensajeUsuario}}
+            <h1 class="text-light mt-3">{{mensajeUsuario}}</h1>
+        {{/mensajeUsuario}}
+        {{#error}}
+            <h1 class="text-light">{{error}}</h1>
+        {{/error}}
+        <h1 class="text-light p-5">¿Estas listo para perder?</h1>
+
+        <form action="/Partida/siguientePregunta" method="post" class="botones">
+            <input type="submit" name="comenzar" id="tienda" value="Comenzar">
+        </form>
+    </section>
+</main>

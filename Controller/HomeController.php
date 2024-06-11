@@ -45,6 +45,7 @@ class HomeController
 //        var_dump($usuario);
 
         if ($usuario != null){
+            $_SESSION["usuario"]=$usuario;
             $this->presenter->render("lobby", ["usuario"=>$usuario]);
         }else{
             header("Location: /Home");

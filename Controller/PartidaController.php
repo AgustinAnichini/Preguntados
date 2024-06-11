@@ -15,6 +15,11 @@ class PartidaController
     {
         $this->presenter->render("nuevaPartida", []);
     }
+    public function nuevaPartida()
+    {
+        $this->model->crearNuevaPartida();
+        $this->presenter->render("nuevaPartida", [] );
+    }
     public function verificarRespuesta()
     {
         if (isset($_GET['respuestaSeleccionada']) && isset($_GET['idPregunta'])) {
@@ -24,8 +29,9 @@ class PartidaController
             $esCorrecta = $this->model->verificarRespuesta($idPregunta,$idRespuesta);
 
             if ($esCorrecta) {
+                // si es correcta entra en la tabla preguntaUsuario--> primer insert
+                $this->model->agregarPreguntaRespondida($idPregunta);
                 $this->siguientePregunta();
-//                $this->presenter->render("siguientePregunta", ['mensajeUsuario' => $mensajeUsuario]);
             } else {
                 $mensajeUsuario = "La miseria te persigue, Perdiste";
                 $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
@@ -41,6 +47,9 @@ class PartidaController
     {
         // Obtén la siguiente pregunta
         $pregunta = $this->model->siguientePregunta();
+        // se busco una pregunta, hay que verif. que el usuario no la haya respondido --> preguntaUsuario
+
+        $this->model->verificarPregunta($pregunta);
 
         if (!$pregunta) {
             // Manejar el caso en el que no hay más preguntas
@@ -57,6 +66,7 @@ class PartidaController
         // Almacena la pregunta y las respuestas en el array
         $preguntaData["pregunta"] = $pregunta;
         $preguntaData["respuesta"] = $respuestas;
+        $preguntaData["idUsuario"] = $_POST["idUsuario"];
 
         // Renderiza la vista pasando los datos
         $this->presenter->render("siguientePregunta", $preguntaData);

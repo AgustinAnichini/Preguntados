@@ -64,10 +64,40 @@ class   PartidaModel
     function agregarPreguntaRespondida($idPregunta){
         $usuario = $_SESSION["usuario"];
         $idUsuario = $usuario["id"];
-        $result = $this->database->execute("INSERT INTO preguntaUsuario (idPregunta,idUsuario) values 
-                                                       $idPregunta,
-                                                       $idUsuario                                                       
-                                                       ");
-        return $result[0]["correcta"];
+        $result = $this->database->execute("INSERT INTO preguntaUsuario (idPregunta,idUsuario) values ($idPregunta, $idUsuario)");
+    }
+
+    function verificarPregunta($pregunta){
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+        $idPregunta = $pregunta["id"];
+        $result = $this->database->query("SELECT * FROM preguntaUsuario PU WHERE PU.idPregunta = $idPregunta and PU.idUsuario = $idUsuario");
+        return empty($result); // True si no encontró la pregunta
+    }
+
+    function verificarSiContestoTodasLasPreguntas(){
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+        $respondioTodas = false;
+
+        $preguntasDelUsuario = $this->database->query("SELECT * FROM preguntaUsuario PU WHERE PU.idUsuario = $idUsuario");
+        $cantPregUsuario = count($preguntasDelUsuario);
+
+       $todasLasPreguntas = $this->getPreguntas();
+       $cantDePreg = count($todasLasPreguntas);
+
+       if($cantDePreg == $cantPregUsuario){
+           $this->borrarPreguntasDelUsuario($idUsuario);
+           $respondioTodas = true;
+       }
+
+       return $respondioTodas;
+    }
+
+    function borrarPreguntasDelUsuario($idUsuario){
+        $this->database->execute("DELETE FROM preguntaUsuario PU WHERE PU.idUsuario = $idUsuario");
+    }
+    function getPreguntas(){
+        return $this->database->query("SELECT * FROM pregunta");
     }
 }

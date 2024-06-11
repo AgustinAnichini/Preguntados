@@ -29,7 +29,6 @@ class PartidaController
             $esCorrecta = $this->model->verificarRespuesta($idPregunta,$idRespuesta);
 
             if ($esCorrecta) {
-                // si es correcta entra en la tabla preguntaUsuario--> primer insert
                 $this->model->agregarPreguntaRespondida($idPregunta);
                 $this->siguientePregunta();
             } else {
@@ -46,16 +45,19 @@ class PartidaController
     public function siguientePregunta()
     {
         // Obtén la siguiente pregunta
-        $pregunta = $this->model->siguientePregunta();
         // se busco una pregunta, hay que verif. que el usuario no la haya respondido --> preguntaUsuario
+        $contestoTodas = $this->model->verificarSiContestoTodasLasPreguntas();
+        do{
+            $pregunta = $this->model->siguientePregunta();
+            $preguntaYaRespondida = !$this->model->verificarPregunta($pregunta);
+        } while ($preguntaYaRespondida && !$contestoTodas);
 
-        $this->model->verificarPregunta($pregunta);
 
-        if (!$pregunta) {
-            // Manejar el caso en el que no hay más preguntas
-            $this->presenter->render("finalJuego", []);
-            return;
-        }
+//        if (!$pregunta) {
+//            // Manejar el caso en el que no hay más preguntas
+//            $this->presenter->render("finalJuego", []);
+//            return;
+//        }
 
         // Obtén las respuestas para la pregunta
         $respuestas = $this->model->respuestas($pregunta['id']); // array
@@ -66,7 +68,7 @@ class PartidaController
         // Almacena la pregunta y las respuestas en el array
         $preguntaData["pregunta"] = $pregunta;
         $preguntaData["respuesta"] = $respuestas;
-        $preguntaData["idUsuario"] = $_POST["idUsuario"];
+        //$preguntaData["idUsuario"] = $_POST["idUsuario"];
 
         // Renderiza la vista pasando los datos
         $this->presenter->render("siguientePregunta", $preguntaData);

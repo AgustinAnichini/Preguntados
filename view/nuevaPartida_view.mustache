@@ -3,19 +3,19 @@
         {{#mensajeUsuario}}
             <h1 class="text-light mt-3">{{mensajeUsuario}}</h1>
         {{/mensajeUsuario}}
+
         {{#error}}
             <h1 class="text-light">{{error}}</h1>
         {{/error}}
+
         <h1 class="text-light p-5">¿Estas listo para perder?</h1>
 
-        <form action="/Partida/siguientePregunta" method="post" class="botones">
+        <form action="/Partida/iniciarPartida" method="post" class="botones">
             <input type="submit" name="comenzar" id="tienda" value="Comenzar">
         </form>
 
 <!--        CONDICIONES:
 
-- En comenazar nueva partida se debe hacer un insert de la nueva partida, para asi luego agregar puntaje, tiempo, etc.
-- Los usuarios no deben ver preguntas que ya hayan visto, salvo que ya no haya más preguntas
 - Cada respuesta válida acumula un punto.
 - En cuanto nos equivocamos, perdemos la partida y nos indica que ganamos X puntos, o que la respuesta correcta era otra.
 - Se debe pintar la pantalla de un color segun la categoria

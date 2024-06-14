@@ -4,12 +4,14 @@ include_once ("controller/RegistroController.php");
 include_once ("controller/HomeController.php");
 include_once ("controller/PartidaController.php");
 include_once ("controller/LobbyController.php");
+include_once ("controller/PreguntaController.php");
 
 
 include_once ("model/RegistroModel.php");
 include_once ("model/HomeModel.php");
 include_once ("model/PartidaModel.php");
 include_once ("model/LobbyModel.php");
+include_once ("model/PreguntaModel.php");
 
 
 include_once ("helper/Router.php");
@@ -33,13 +35,21 @@ Class Configuration{
         return new LobbyController(self::getLobbyModel(),self::getPresenter());
     }
     public static function getPartidaController(){
-        return new PartidaController(self::getPartidaModel(),self::getPresenter());
+        return new PartidaController(self::getPartidaModel(),self::getPresenter(), self::getPreguntaModel());
+    }
+    public static function getPreguntaController(){
+        return new PreguntaController(self::getPreguntaModel(),self::getPresenter());
     }
 
     //MODELS---------------------------------------------------------------------------------------------------------------------------
     private static function getRegistroModel()
     {
         return new RegistroModel(self::getsabiondosDatabase());
+    }
+
+    private static function getPreguntaModel()
+    {
+        return new PreguntaModel(self::getsabiondosDatabase());
     }
 
     private static function getHomeModel()

@@ -9,6 +9,13 @@ class LobbyController{
 
     public function home()
     {
-        $this->presenter->render("lobby", []);
+        $this->model->actualizarUsuario();
+        $partidasActualizadas = $this->model->actualizarPartidas();
+
+        $usuario = $_SESSION["usuario"];
+        $lobbyData = array();
+        $lobbyData["usuario"] = $usuario;
+        $lobbyData["partidasActualizadas"] = $partidasActualizadas;
+        $this->presenter->render("lobby", $lobbyData);
     }
 }

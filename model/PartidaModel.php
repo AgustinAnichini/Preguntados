@@ -53,14 +53,13 @@ class   PartidaModel
         function iniciarPartida($idUsuario){
             $idUsuario = (int)$idUsuario; // Asegúrate de que $idUsuario es un entero
             $this->database->execute(
-                "INSERT INTO partida (idUsuario, tiempo, puntaje, duracion, preguntasAcertadas, activa)
-                 VALUES ($idUsuario, 0.0, 0, 0, 0, true)"
+                "INSERT INTO partida (idUsuario, puntaje, duracion, preguntasAcertadas, activa)
+                 VALUES ($idUsuario, 0, 0, 0, true)"
 
                 // debemos poner en false cuando el usuario pierde
             );
 
-            $partida = $this->database->query("SELECT * FROM partida WHERE idUsuario = $idUsuario AND activa like true");
-            $_SESSION["partida"] = $partida[0];
+            $this->actualizarPartida();
         }
 
     function buscarPreguntaPorId($idPregunta){
@@ -70,7 +69,6 @@ class   PartidaModel
 
     function agregarPuntos($idPregunta)
     {
-        $usuario = $_SESSION["usuario"];
         $partida = $_SESSION["partida"];
         $puntaje = $partida["puntaje"];
         $idPartida = $partida["id"];
@@ -79,6 +77,38 @@ class   PartidaModel
         $puntajePartida = $puntaje;
         $puntajePartida += $valorDePregunta;
 
-        $this->database->execute("UPDATE partida set puntaje = $puntajePartida where id = $idPartida");
+        $this->database->execute("UPDATE partida set puntaje = $puntajePartida WHERE id = $idPartida");
+    }
+    function cerrarPartida()
+    {
+        $partida = $_SESSION["partida"];
+        $puntaje = $partida["puntaje"];
+        $idPartida = $partida["id"];
+
+        $this->database->execute("UPDATE partida set activa = false WHERE id = $idPartida");
+    }
+
+    function agregarPreguntasAcertadasALaPartida()
+    {
+        $partida = $_SESSION["partida"];
+        $idPartida = $partida["id"];
+
+            $this->database->execute("UPDATE partida SET preguntasAcertadas = preguntasAcertadas + 1 WHERE id = $idPartida", [$idPartida]);
+
+    }
+
+    function actualizarPartida(){
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+        $partida = $this->database->query("SELECT * FROM partida WHERE idUsuario = $idUsuario AND activa like true");
+        $_SESSION["partida"] = $partida[0];
+    }
+
+
+    function actualizarUsuario(){
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+        $partida = $this->database->query("SELECT * FROM usuarios WHERE id = $idUsuario");
+        $_SESSION["partida"] = $partida[0];
     }
 }

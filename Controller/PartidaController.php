@@ -17,7 +17,9 @@ class PartidaController
     {
         $this->presenter->render("nuevaPartida", []);
     }
-    public function iniciarPartida(){
+
+    public function iniciarPartida()
+    {
         $usuario = $_SESSION["usuario"];
         $idUsuario = $usuario["id"];
 
@@ -41,7 +43,6 @@ class PartidaController
     }
 
 
-
     public function verificarRespuesta()
     {
         if (isset($_GET['respuestaSeleccionada']) && isset($_GET['idPregunta'])) {
@@ -53,14 +54,22 @@ class PartidaController
 
                 if ($esCorrecta) {
                     $this->model->agregarPreguntaRespondida($idPregunta);
+                    $this->model->agregarPreguntasAcertadasALaPartida();
                     $this->model->agregarPuntos($idPregunta);
+                    $this->model->actualizarPartida();
+
                     $dataPausa = array();
                     $dataPausa["mensajeUsuario"] = "CORRECTA";
                     $dataPausa["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
                     $dataPausa["partida"] = $_SESSION["partida"];
-                    $this->presenter->render("pausa",$dataPausa);
+                    $this->presenter->render("pausa", $dataPausa);
                 } else {
-                    $this->presenter->render("finDelJuego", ['mensajeUsuario' => "INCORRECTA"]);
+                    $this->model->cerrarPartida();
+
+                    $dataFin["mensajeUsuario"] = "INCORRECTA";
+                    $dataFin["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
+                    $dataFin["partida"] = $_SESSION["partida"];
+                    $this->presenter->render("finDelJuego", $dataFin);
                 }
             } else {
                 // Datos inválidos proporcionados
@@ -84,84 +93,5 @@ class PartidaController
 
         $this->presenter->render("siguientePregunta", $preguntaData);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-// entra en loop porque no hay mas preguntas de esa categoria
-
-    //do {
-    //$pregunta = $this->model->siguientePregunta();
-    //  $preguntaYaRespondida = !$this->model->verificarPregunta($pregunta);
-    //} while ($preguntaYaRespondida);
-
-
-//    public function siguientePregunta()
-//    {
-//        if (isset($_POST["idCategoria"])) {
-//            $idCategoria = $_POST["idCategoria"];
-//            $maxIntentos = 10; // Para evitar bucles infinitos
-//            $intentos = 0;
-//            $pregunta = null;
-//
-//            // Bucle para encontrar una pregunta no respondida
-//            while ($intentos < $maxIntentos) {
-//                $pregunta = $this->model->siguientePregunta($idCategoria);
-//                if (!$pregunta || !$this->model->verificarPregunta($pregunta)) {
-//                    // Si no se encuentra una pregunta no respondida, se rompe el bucle
-//                    break;
-//                }
-//                $intentos++;
-//            }
-//
-//            if ($pregunta && !$this->model->verificarPregunta($pregunta)) {
-//                // Obtiene las respuestas de la pregunta seleccionada
-//                $respuestas = $this->model->respuestas($pregunta['id']);
-//                // Prepara los datos para la vista
-//                $preguntaData = array(
-//                    "pregunta" => $pregunta,
-//                    "respuesta" => $respuestas
-//                );
-//                // Renderiza la vista con los datos de la pregunta y las respuestas
-//                $this->presenter->render("siguientePregunta", $preguntaData);
-//            } else {
-//                // Maneja el caso en el que no se encontró una pregunta no respondida
-//                $this->ruleta();
-////                $this->presenter->render("finalJuego", ['mensaje' => 'No hay más preguntas disponibles en esta categoría.']);
-//            }
-//        } else {
-//            // Maneja el caso en el que no se envió el idCategoria
-//            $this->presenter->render("error", ['mensaje' => 'Categoría no seleccionada.']);
-//        }
-//    }
+    
 }
-//    public function verificarRespuesta()
-//    {
-//        if (isset($_GET['respuestaSeleccionada']) && isset($_GET['idPregunta'])) {
-//            $idRespuesta = $_GET['respuestaSeleccionada'];
-//            $idPregunta = $_GET['idPregunta'];
-//
-//            $esCorrecta = $this->model->verificarRespuesta($idPregunta,$idRespuesta);
-//
-//            if ($esCorrecta) {
-//                // si la respondio bien, se agrega a respondida y va a ruleta de nuevo
-//                $this->model->agregarPreguntaRespondida($idPregunta);
-//                $this->ruleta();
-//            } else {
-//                $mensajeUsuario = "La miseria te persigue, Perdiste";
-//                $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
-//            }
-//        } else {
-//            $mensajeUsuario = "Debes seleccionar una respuesta.";
-//            $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
-//        }
-//    }

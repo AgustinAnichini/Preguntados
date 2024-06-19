@@ -10,7 +10,7 @@ class LobbyController{
     public function home()
     {
         $this->model->actualizarUsuario();
-        $partidasActualizadas = $this->model->actualizarPartidas();
+        $partidasActualizadas = $this->model->partidasActualizadas();
 
         $usuario = $_SESSION["usuario"];
         $lobbyData = array();

@@ -82,7 +82,6 @@ class   PartidaModel
     function cerrarPartida()
     {
         $partida = $_SESSION["partida"];
-        $puntaje = $partida["puntaje"];
         $idPartida = $partida["id"];
 
         $this->database->execute("UPDATE partida set activa = false WHERE id = $idPartida");
@@ -110,5 +109,13 @@ class   PartidaModel
         $idUsuario = $usuario["id"];
         $partida = $this->database->query("SELECT * FROM usuarios WHERE id = $idUsuario");
         $_SESSION["partida"] = $partida[0];
+    }
+
+    function partidasActualizadas(){
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+
+        $partidasActualizadas = $this->database->query("SELECT * FROM partida WHERE idUsuario = $idUsuario LIMIT 5");
+        return $partidasActualizadas;
     }
 }

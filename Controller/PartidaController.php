@@ -93,5 +93,18 @@ class PartidaController
 
         $this->presenter->render("siguientePregunta", $preguntaData);
     }
+
+    function recargo()
+    {
+        $this->model->cerrarPartida();
+        $this->model->actualizarUsuario();
+        $partidasActualizadas = $this->model->partidasActualizadas();
+
+        $usuario = $_SESSION["usuario"];
+        $lobbyData = array();
+        $lobbyData["usuario"] = $usuario;
+        $lobbyData["partidasActualizadas"] = $partidasActualizadas;
+        $this->presenter->render("lobby", $lobbyData);
+    }
     
 }

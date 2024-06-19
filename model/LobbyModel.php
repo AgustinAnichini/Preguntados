@@ -17,7 +17,7 @@ class LobbyModel
         $_SESSION["usuario"] = $usuarioActualizado[0];
     }
 
-   function actualizarPartidas(){
+   function partidasActualizadas(){
         $usuario = $_SESSION["usuario"];
         $idUsuario = $usuario["id"];
 

@@ -63,7 +63,6 @@ class PartidaController
                     $this->preguntaAcertada($idPregunta, $mensajeUsuario);
                 } else {
                     $mensajeUsuario= "INCORRECTA";
-                    var_dump($_SESSION["tiempoInicioPartida"]);
                     $this->preguntaNOacertada($idPregunta,$mensajeUsuario);
                 }
             } else {
@@ -101,9 +100,9 @@ class PartidaController
     }
 
     function finDelJuego(){
-        $this->model->actualizarPartida();
         $duracion= $this->calcularDuracionPartida();
         $this->model->actualizarDuracionDePartida($duracion);
+        $this->model->actualizarPartida();
         $this->model->cerrarPartida();
         $mensajeUsuario = "Te quedaste sin tiempo!!";
 
@@ -127,9 +126,9 @@ class PartidaController
 
     function preguntaNOacertada($idPregunta,$mensajeUsuario)
     {
-        $this->model->actualizarPartida();
         $duracion= $this->calcularDuracionPartida();
         $this->model->actualizarDuracionDePartida($duracion);
+        $this->model->actualizarPartida();
         $this->model->cerrarPartida();
 
         $dataFin["mensajeUsuario"] = $mensajeUsuario;
@@ -145,13 +144,13 @@ class PartidaController
 
             $fechaActual = new DateTime();
             $diferencia = $tiempoInicio->diff($fechaActual);
-
             // Formatear la diferencia como 'HH:MM:SS'
             $duracion = $diferencia->format('%H:%I:%S');
+            var_dump($duracion);// llega bien
 
             return $duracion;
         } else {
-            return '00:00:00';
+            return '00:00:12';
         }
     }
 }

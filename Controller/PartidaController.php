@@ -22,6 +22,12 @@ class PartidaController
     {
         $usuario = $_SESSION["usuario"];
         $idUsuario = $usuario["id"];
+        // aca debe comenzar el timer (duracion total de la partida)
+
+        $fechaActual = new DateTime();
+        // Formatear la fecha para obtener solo los minutos y segundos actuales
+        $tiempoInicioPartida = $fechaActual->format('H:i:s');
+        $_SESSION["tiempoInicioPartida"] = $tiempoInicioPartida;
 
         $this->model->iniciarPartida($idUsuario);
         $this->ruleta();
@@ -53,28 +59,15 @@ class PartidaController
                 $esCorrecta = $this->preguntaModel->verificarRespuesta($idPregunta, $idRespuesta);
 
                 if ($esCorrecta) {
-                    $this->model->agregarPreguntaRespondida($idPregunta);
-                    $this->model->agregarPreguntasAcertadasALaPartida();
-                    $this->model->agregarPuntos($idPregunta);
-                    $this->model->actualizarPartida();
-
-                    $dataPausa = array();
-                    $dataPausa["mensajeUsuario"] = "CORRECTA";
-                    $dataPausa["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
-                    $dataPausa["partida"] = $_SESSION["partida"];
-                    $this->presenter->render("pausa", $dataPausa);
+                    $mensajeUsuario= "CORRECTA";
+                    $this->preguntaAcertada($idPregunta, $mensajeUsuario);
                 } else {
-                    $this->model->cerrarPartida();
-
-                    $dataFin["mensajeUsuario"] = "INCORRECTA";
-                    $dataFin["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
-                    $dataFin["partida"] = $_SESSION["partida"];
-                    $this->presenter->render("finDelJuego", $dataFin);
+                    $mensajeUsuario= "INCORRECTA";
+                    var_dump($_SESSION["tiempoInicioPartida"]);
+                    $this->preguntaNOacertada($idPregunta,$mensajeUsuario);
                 }
             } else {
-                // Datos inválidos proporcionados
-                $mensajeUsuario = "Error en la selección de respuesta.";
-                $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
+                $this->finDelJuego();
             }
         } else {
             $mensajeUsuario = "Debes seleccionar una respuesta.";
@@ -106,5 +99,59 @@ class PartidaController
         $lobbyData["partidasActualizadas"] = $partidasActualizadas;
         $this->presenter->render("lobby", $lobbyData);
     }
-    
+
+    function finDelJuego(){
+        $this->model->actualizarPartida();
+        $duracion= $this->calcularDuracionPartida();
+        $this->model->actualizarDuracionDePartida($duracion);
+        $this->model->cerrarPartida();
+        $mensajeUsuario = "Te quedaste sin tiempo!!";
+
+        $dataFin["mensajeUsuario"] = $mensajeUsuario;
+        $dataFin["partida"] = $_SESSION["partida"];
+        $this->presenter->render("finDelJuego", $dataFin);
+    }
+
+    function preguntaAcertada($idPregunta,$mensajeUsuario){
+        $this->model->agregarPreguntaRespondida($idPregunta);
+        $this->model->agregarPreguntasAcertadasALaPartida();
+        $this->model->agregarPuntos($idPregunta);
+        $this->model->actualizarPartida();
+
+        $dataPausa = array();
+        $dataPausa["mensajeUsuario"] = $mensajeUsuario;
+        $dataPausa["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
+        $dataPausa["partida"] = $_SESSION["partida"];
+        $this->presenter->render("pausa", $dataPausa);
+    }
+
+    function preguntaNOacertada($idPregunta,$mensajeUsuario)
+    {
+        $this->model->actualizarPartida();
+        $duracion= $this->calcularDuracionPartida();
+        $this->model->actualizarDuracionDePartida($duracion);
+        $this->model->cerrarPartida();
+
+        $dataFin["mensajeUsuario"] = $mensajeUsuario;
+        $dataFin["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
+        $dataFin["partida"] = $_SESSION["partida"];
+        $this->presenter->render("finDelJuego", $dataFin);
+    }
+
+    function calcularDuracionPartida()
+    {
+        if (isset($_SESSION["tiempoInicioPartida"])) {
+            $tiempoInicio = DateTime::createFromFormat('H:i:s', $_SESSION["tiempoInicioPartida"]);
+
+            $fechaActual = new DateTime();
+            $diferencia = $tiempoInicio->diff($fechaActual);
+
+            // Formatear la diferencia como 'HH:MM:SS'
+            $duracion = $diferencia->format('%H:%I:%S');
+
+            return $duracion;
+        } else {
+            return '00:00:00';
+        }
+    }
 }

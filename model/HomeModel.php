@@ -22,4 +22,12 @@ class HomeModel
         $result = $this->database->query("SELECT * FROM usuarios WHERE token_validacion = '$hash'");
         return $result;
     }
+
+    function partidasActualizadas(){
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+
+        $partidasActualizadas = $this->database->query("SELECT * FROM partida WHERE idUsuario = $idUsuario LIMIT 5");
+        return $partidasActualizadas;
+    }
 }

@@ -42,11 +42,15 @@ class HomeController
         $password = $_POST["password"];
 
         $usuario = $this->model->validarLogin($username,$password);
-//        var_dump($usuario);
 
         if ($usuario != null){
             $_SESSION["usuario"]=$usuario;
-            $this->presenter->render("lobby", ["usuario"=>$usuario]);
+            $partidasActualizadas = $this->model->partidasActualizadas();
+
+            $homeData = array();
+            $homeData["usuario"] = $_SESSION["usuario"];
+            $homeData["partidasActualizadas"] = $partidasActualizadas;
+            $this->presenter->render("lobby", $homeData);
         }else{
             header("Location: /Home");
             exit();

@@ -54,7 +54,7 @@ class   PartidaModel
             $idUsuario = (int)$idUsuario; // Asegúrate de que $idUsuario es un entero
             $this->database->execute(
                 "INSERT INTO partida (idUsuario, puntaje, duracion, preguntasAcertadas, activa)
-                 VALUES ($idUsuario, 0, 0, 0, true)"
+                 VALUES ($idUsuario, 0, '00:00:00', 0, true)"
 
                 // debemos poner en false cuando el usuario pierde
             );
@@ -92,7 +92,7 @@ class   PartidaModel
         $partida = $_SESSION["partida"];
         $idPartida = $partida["id"];
 
-            $this->database->execute("UPDATE partida SET preguntasAcertadas = preguntasAcertadas + 1 WHERE id = $idPartida", [$idPartida]);
+        $this->database->execute("UPDATE partida SET preguntasAcertadas = preguntasAcertadas + 1 WHERE id = $idPartida");
 
     }
 
@@ -118,4 +118,15 @@ class   PartidaModel
         $partidasActualizadas = $this->database->query("SELECT * FROM partida WHERE idUsuario = $idUsuario LIMIT 5");
         return $partidasActualizadas;
     }
+
+    function actualizarDuracionDePartida($duracion)
+    {
+        $partida = $_SESSION["partida"];
+        $idPartida = $partida["id"];
+
+        $sql = "UPDATE partida SET duracion = '$duracion' WHERE id = $idPartida";
+
+        $this->database->execute($sql);
+    }
+
 }

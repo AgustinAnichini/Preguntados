@@ -105,6 +105,7 @@ class PartidaController
     function finDelJuego(){
         $duracion= $this->calcularDuracionPartida();
         $this->model->actualizarDuracionDePartida($duracion);
+        $this->usuarioModel->agregarPuntosObtenidosAlUsuario();
         // metodo que consulta si el puntaje obtenido es el mas alto que obtuvo
 
         $this->model->actualizarPartida();

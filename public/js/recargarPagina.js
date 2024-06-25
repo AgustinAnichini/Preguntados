@@ -4,6 +4,6 @@ window.onload = function () {
         // El usuario ha recargado la página (F5) y el tiempo ha expirado
         // Puedes redirigir al usuario o mostrar un mensaje aquí
         // Ejemplo de redirección:
-        window.location.href = '/partida/recargo';
+        window.location.href = '/partida/finDelJuego';
     }
 };

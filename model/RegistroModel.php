@@ -45,7 +45,8 @@ class RegistroModel
                                         partidasJugadas,
                                         nivel,
                                         preguntasAcertadasTotales,
-                                        preguntasRespondidas
+                                        preguntasRespondidas,
+                                        puntajeRanking   
                                     ) VALUES (
                                         '$nombreComleto',
                                         '$fechaNac',
@@ -64,6 +65,7 @@ class RegistroModel
                                         0,
                                         0,
                                         'bajo',
+                                        0,
                                         0,
                                         0);"
         );

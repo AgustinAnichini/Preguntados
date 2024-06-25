@@ -5,7 +5,7 @@ include_once ("controller/HomeController.php");
 include_once ("controller/PartidaController.php");
 include_once ("controller/LobbyController.php");
 include_once ("controller/PreguntaController.php");
-include_once ("controller/UsuarioController.php");
+include_once ("controller/RankingController.php");
 
 
 include_once ("model/RegistroModel.php");
@@ -14,6 +14,7 @@ include_once ("model/PartidaModel.php");
 include_once ("model/LobbyModel.php");
 include_once ("model/PreguntaModel.php");
 include_once ("model/UsuarioModel.php");
+include_once ("model/RankingModel.php");
 
 
 include_once ("helper/Router.php");
@@ -31,7 +32,7 @@ Class Configuration{
     }
     public static function getHomeController()
     {
-        return new HomeController(self::getHomeModel() , self:: getPresenter());
+        return new HomeController(self::getHomeModel() , self:: getPresenter(), self::getLobbyModel());
     }
     public static function getLobbyController(){
         return new LobbyController(self::getLobbyModel(),self::getPresenter());
@@ -44,6 +45,9 @@ Class Configuration{
     }
     public static function getUsuarioController(){
         return new UsuarioController(self::getUsuarioModel(), self::getPresenter());
+    }
+    public static function getRankingController(){
+        return new RankingController(self::getRankingModel(), self::getPresenter());
     }
 
     //MODELS---------------------------------------------------------------------------------------------------------------------------
@@ -71,6 +75,10 @@ Class Configuration{
 
     private static function getUsuarioModel(){
         return new UsuarioModel(self::getsabiondosDatabase());
+    }
+
+    private static function getRankingModel(){
+        return new RankingModel(self::getsabiondosDatabase());
     }
 
 

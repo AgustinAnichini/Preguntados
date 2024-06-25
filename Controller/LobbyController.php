@@ -13,7 +13,6 @@ class LobbyController{
         $this->model->actualizarUsuario();
         $partidasActualizadas = $this->model->partidasActualizadas();
 
-
         $usuario = $_SESSION["usuario"];
         $lobbyData = array();
         $lobbyData["usuario"] = $usuario;

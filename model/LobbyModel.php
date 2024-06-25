@@ -30,15 +30,39 @@ class LobbyModel
         $idUsuario = $usuario["id"];
         $puntajeTotal = $usuario["puntajeTotal"];
         $partidasJugadas = $usuario["partidasJugadas"];
+        // ranking --> ahora es --> puntajeRanking --> calculado de PT/PJ
 
-        $ranking = $this->calcularRanking($puntajeTotal,$partidasJugadas);
-        $this->database->execute("UPDATE usuarios SET ranking = '$ranking' WHERE id = '$idUsuario'");
+        $puntajeRanking = $this->calcularPuntajeRanking($puntajeTotal,$partidasJugadas);
+        $this->database->execute("UPDATE usuarios SET puntajeRanking = '$puntajeRanking' WHERE id = '$idUsuario'");
 
-       $result= $this->database->query("SELECT ranking FROM usuarios WHERE id = '$idUsuario'");
-       return $result;
+        // obtener una lista de todos los usuarios ordenada por puntajeRanking
+
+        $listaUsuariosRanking = $this->traerUsuariosPorPuntajeRanking(); // Trae una lista
+        // con la lista debemos mostrar la posicion en la que se encuentra el usurio
+        $posicionUsuarioEnElRanking = $this->bucarPosicionUsuarioEnRanking($listaUsuariosRanking, $idUsuario);
+        // ranking --> posicion del usuario en la lista ordenda por puntaje ranking
+
+        $this->database->execute("UPDATE usuarios SET ranking = '$posicionUsuarioEnElRanking' WHERE id = '$idUsuario'");
     }
-    function calcularRanking($puntajeTotal,$partidasJugadas){
-       $ranking = $puntajeTotal/$partidasJugadas;
+    function traerUsuariosPorPuntajeRanking(){
+        $ranking = $this->database->query("SELECT * FROM usuarios ORDER BY puntajeRanking DESC");
         return $ranking;
+    }
+
+    function bucarPosicionUsuarioEnRanking($listaUsuariosRanking, $idUsuarioBuscado){
+        $posicion = 1;
+
+        foreach ($listaUsuariosRanking as $usuario) {
+            if ($usuario['id'] == $idUsuarioBuscado) {
+                break;
+            }
+            $posicion++;
+        }
+        return $posicion;
+    }
+
+    function calcularPuntajeRanking($puntajeTotal,$partidasJugadas){
+        $puntajeRanking = $puntajeTotal/$partidasJugadas;
+        return $puntajeRanking;
     }
 }

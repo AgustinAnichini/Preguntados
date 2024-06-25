@@ -3,12 +3,14 @@
 class HomeController
 {
     private $model;
+    private $lobbyModel;
     private $presenter;
 
-    public function __construct($model, $presenter)
+    public function __construct($model, $presenter,$lobbyModel)
     {
         $this->model = $model;
         $this->presenter = $presenter;
+        $this->lobbyModel = $lobbyModel;
     }
 
     public function home()
@@ -45,8 +47,9 @@ class HomeController
 
         if ($usuario != null){
             $_SESSION["usuario"]=$usuario;
-            $partidasActualizadas = $this->model->partidasActualizadas();
-            $this->model->obtenerRankingDeUsuario();
+            $this->lobbyModel->obtenerRankingDeUsuario();
+            $partidasActualizadas = $this->lobbyModel->partidasActualizadas();
+            $this->lobbyModel->actualizarUsuario();
 
             $homeData = array();
             $homeData["usuario"] = $_SESSION["usuario"];

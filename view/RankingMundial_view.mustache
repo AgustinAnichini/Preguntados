@@ -1,0 +1,43 @@
+<main>
+    {{#usuario}}
+        <p class="text-light text-right p-3">Bienvenido {{nombre_usuario}} -- Posicion de Ranking:  {{ranking}}</p>
+    {{/usuario}}
+
+    <section class="container d-flex justify-content-around ">
+        <form action="/Lobby" method="post" class="botones">
+            <input type="submit" name="nuevaPartida" id="nuevaPartida" value="Lobby">
+        </form>
+    </section>
+
+    <section class="container">
+        <h1 class="p-5 text-light">Ranking Mundial</h1>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" class="text-light">Posicion</th>
+                <th scope="col" class="text-light">Id</th>
+                <th scope="col" class="text-light">Nombre Usuario</th>
+                <th scope="col" class="text-light">Puntaje Total</th>
+                <th scope="col" class="text-light">Partidas Jugadas</th>
+                <th scope="col" class="text-light">Puntaje Ranking</th>
+                <th scope="col" class="text-light">Nivel</th>
+                <th scope="col" class="text-light">Pais</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#rankingMundial}}
+                <tr>
+                    <th scope="row" class="text-light">{{posicion}}</th>
+                    <th class="text-light">{{id}}</th>
+                    <td class="text-light">{{nombre_usuario}}</td>
+                    <td class="text-light">{{puntajeTotal}}</td>
+                    <td class="text-light">{{partidasJugadas}}</td>
+                    <td class="text-light">{{puntajeRanking}}</td>
+                    <td class="text-light">{{nivel}}</td>
+                    <td class="text-light">{{pais}}</td>
+                </tr>
+            {{/rankingMundial}}
+            </tbody>
+        </table>
+    </section>
+</main>

@@ -46,6 +46,7 @@ class HomeController
         if ($usuario != null){
             $_SESSION["usuario"]=$usuario;
             $partidasActualizadas = $this->model->partidasActualizadas();
+            $this->model->obtenerRankingDeUsuario();
 
             $homeData = array();
             $homeData["usuario"] = $_SESSION["usuario"];

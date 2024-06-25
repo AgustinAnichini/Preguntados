@@ -4,13 +4,15 @@ class PartidaController
 {
     private $model;
     private $preguntaModel;
+    private $usuarioModel;
     private $presenter;
 
-    public function __construct($model, $presenter, $preguntaModel)
+    public function __construct($model, $presenter, $preguntaModel, $usuarioModel)
     {
         $this->model = $model;
         $this->preguntaModel = $preguntaModel;
         $this->presenter = $presenter;
+        $this->usuarioModel = $usuarioModel;
     }
 
     public function home()
@@ -30,6 +32,7 @@ class PartidaController
         $_SESSION["tiempoInicioPartida"] = $tiempoInicioPartida;
 
         $this->model->iniciarPartida($idUsuario);
+        $this->usuarioModel->agregarPartidaJugada($idUsuario);
         $this->ruleta();
     }
 
@@ -102,6 +105,8 @@ class PartidaController
     function finDelJuego(){
         $duracion= $this->calcularDuracionPartida();
         $this->model->actualizarDuracionDePartida($duracion);
+        // metodo que consulta si el puntaje obtenido es el mas alto que obtuvo
+
         $this->model->actualizarPartida();
         $this->model->cerrarPartida();
         $mensajeUsuario = "Te quedaste sin tiempo!!";
@@ -115,6 +120,7 @@ class PartidaController
         $this->model->agregarPreguntaRespondida($idPregunta);
         $this->model->agregarPreguntasAcertadasALaPartida();
         $this->model->agregarPuntos($idPregunta);
+        $this->model->actualizarUsuario();
         $this->model->actualizarPartida();
 
         $dataPausa = array();
@@ -128,6 +134,8 @@ class PartidaController
     {
         $duracion= $this->calcularDuracionPartida();
         $this->model->actualizarDuracionDePartida($duracion);
+        $this->usuarioModel->agregarPuntosObtenidosAlUsuario();
+        $this->model->actualizarUsuario();
         $this->model->actualizarPartida();
         $this->model->cerrarPartida();
 

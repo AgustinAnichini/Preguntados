@@ -107,8 +107,8 @@ class   PartidaModel
     function actualizarUsuario(){
         $usuario = $_SESSION["usuario"];
         $idUsuario = $usuario["id"];
-        $partida = $this->database->query("SELECT * FROM usuarios WHERE id = $idUsuario");
-        $_SESSION["partida"] = $partida[0];
+        $usuarioBuscado = $this->database->query("SELECT * FROM usuarios WHERE id = $idUsuario");
+        $_SESSION["partida"] = $usuarioBuscado[0];
     }
 
     function partidasActualizadas(){
@@ -127,5 +127,6 @@ class   PartidaModel
         $sql = "UPDATE partida SET duracion = '$duracion' WHERE id = $idPartida";
         $this->database->execute($sql);
     }
+
 
 }

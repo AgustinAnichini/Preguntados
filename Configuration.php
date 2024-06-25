@@ -5,6 +5,7 @@ include_once ("controller/HomeController.php");
 include_once ("controller/PartidaController.php");
 include_once ("controller/LobbyController.php");
 include_once ("controller/PreguntaController.php");
+include_once ("controller/UsuarioController.php");
 
 
 include_once ("model/RegistroModel.php");
@@ -12,6 +13,7 @@ include_once ("model/HomeModel.php");
 include_once ("model/PartidaModel.php");
 include_once ("model/LobbyModel.php");
 include_once ("model/PreguntaModel.php");
+include_once ("model/UsuarioModel.php");
 
 
 include_once ("helper/Router.php");
@@ -35,10 +37,13 @@ Class Configuration{
         return new LobbyController(self::getLobbyModel(),self::getPresenter());
     }
     public static function getPartidaController(){
-        return new PartidaController(self::getPartidaModel(),self::getPresenter(), self::getPreguntaModel());
+        return new PartidaController(self::getPartidaModel(),self::getPresenter(), self::getPreguntaModel(), self::getUsuarioModel());
     }
     public static function getPreguntaController(){
         return new PreguntaController(self::getPreguntaModel(),self::getPresenter());
+    }
+    public static function getUsuarioController(){
+        return new UsuarioController(self::getUsuarioModel(), self::getPresenter());
     }
 
     //MODELS---------------------------------------------------------------------------------------------------------------------------
@@ -64,7 +69,9 @@ Class Configuration{
         return new PartidaModel(self::getsabiondosDatabase());
     }
 
-
+    private static function getUsuarioModel(){
+        return new UsuarioModel(self::getsabiondosDatabase());
+    }
 
 
     //HELPERS---------------------------------------------------------------------------------------------------------------------------

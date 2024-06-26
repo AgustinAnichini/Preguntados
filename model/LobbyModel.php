@@ -62,7 +62,10 @@ class LobbyModel
     }
 
     function calcularPuntajeRanking($puntajeTotal,$partidasJugadas){
-        $puntajeRanking = $puntajeTotal/$partidasJugadas;
+        $puntajeRanking = 0;
+        if($partidasJugadas != 0){
+            $puntajeRanking = $puntajeTotal/$partidasJugadas;
+        }
         return $puntajeRanking;
     }
 }

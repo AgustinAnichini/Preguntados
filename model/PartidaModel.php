@@ -127,6 +127,4 @@ class   PartidaModel
         $sql = "UPDATE partida SET duracion = '$duracion' WHERE id = $idPartida";
         $this->database->execute($sql);
     }
-
-
 }

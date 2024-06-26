@@ -44,6 +44,14 @@ class PartidaController
             $preguntaYaRespondida = !$this->preguntaModel->verificarPregunta($pregunta);
         } while ($preguntaYaRespondida && !$contestoTodas);
 
+        $Usuario = $_SESSION['usuario'];
+        $IdUsuario = $Usuario['id'];
+        $idPregunta = $pregunta['id'];
+
+        $this->model->agregarPreguntaRespondida($idPregunta);// a la tabla preguntaUsuario
+        $this->usuarioModel->sumarUnaPreguntaRespondidaAlUsuario($IdUsuario); //a la tabla Usuario
+        $this->usuarioModel->calcularDificultadUsuario($IdUsuario);
+
         $categoria = $this->preguntaModel->obtenerCategoriaPorId($pregunta);
         $data = array();
         $data["pregunta"] = $pregunta;
@@ -89,19 +97,6 @@ class PartidaController
         $this->presenter->render("siguientePregunta", $preguntaData);
     }
 
-    function recargo()
-    {
-        $this->model->cerrarPartida();
-        $this->model->actualizarUsuario();
-        $partidasActualizadas = $this->model->partidasActualizadas();
-
-        $usuario = $_SESSION["usuario"];
-        $lobbyData = array();
-        $lobbyData["usuario"] = $usuario;
-        $lobbyData["partidasActualizadas"] = $partidasActualizadas;
-        $this->presenter->render("lobby", $lobbyData);
-    }
-
     function finDelJuego(){
         $duracion= $this->calcularDuracionPartida();
         $this->model->actualizarDuracionDePartida($duracion);
@@ -118,8 +113,11 @@ class PartidaController
     }
 
     function preguntaAcertada($idPregunta,$mensajeUsuario){
-        $this->model->agregarPreguntaRespondida($idPregunta);
-        $this->model->agregarPreguntasAcertadasALaPartida();
+        $this->usuarioModel->agregarPreguntasAcertadasAlUsuario();// agregar una pregunta respondida correctamente al usuario
+        $this->model->agregarPreguntasAcertadasALaPartida(); // agregar una pregunta respondida correctamente a la partida
+        // para calcular el nivel
+        // debemos sumar las preguntas acertadas del usuario
+
         $this->model->agregarPuntos($idPregunta);
         $this->model->actualizarUsuario();
         $this->model->actualizarPartida();
@@ -162,4 +160,18 @@ class PartidaController
             return '00:00:12';
         }
     }
+
+    function recargo()
+    {
+        $this->model->cerrarPartida();
+        $this->model->actualizarUsuario();
+        $partidasActualizadas = $this->model->partidasActualizadas();
+
+        $usuario = $_SESSION["usuario"];
+        $lobbyData = array();
+        $lobbyData["usuario"] = $usuario;
+        $lobbyData["partidasActualizadas"] = $partidasActualizadas;
+        $this->presenter->render("lobby", $lobbyData);
+    }
+
 }

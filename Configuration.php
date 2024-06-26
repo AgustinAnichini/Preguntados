@@ -35,7 +35,7 @@ Class Configuration{
         return new HomeController(self::getHomeModel() , self:: getPresenter(), self::getLobbyModel());
     }
     public static function getLobbyController(){
-        return new LobbyController(self::getLobbyModel(),self::getPresenter());
+        return new LobbyController(self::getLobbyModel(),self::getPresenter(),self::getUsuarioModel());
     }
     public static function getPartidaController(){
         return new PartidaController(self::getPartidaModel(),self::getPresenter(), self::getPreguntaModel(), self::getUsuarioModel());

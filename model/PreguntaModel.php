@@ -36,6 +36,9 @@ class PreguntaModel
 
         if($cantDePreg == $cantPregUsuario){
             $this->borrarPreguntasDelUsuario($idUsuario);
+            // reiniciar preguntasAcertadas y respondidas
+            $this->reiniciarPreguntasRespondidas($idUsuario);
+            $this->reiniciarPreguntasAcertadasTotales($idUsuario);
             $respondioTodas = true;
         }
 
@@ -70,5 +73,11 @@ class PreguntaModel
     function verificarRespuesta($idPregunta, $idRespuesta){
         $result = $this->database->query("SELECT r.correcta FROM respuesta r WHERE r.pregunta_id = '$idPregunta' and $idRespuesta like r.id");
         return $result[0]["correcta"];
+    }
+    function reiniciarPreguntasRespondidas($idUsuario){
+        $this->database->execute("UPDATE usuarios SET preguntasRespondidas = 0 WHERE id = $idUsuario");
+    }
+    function reiniciarPreguntasAcertadasTotales($idUsuario){
+        $this->database->execute("UPDATE usuarios SET preguntasAcertadasTotales = 0 WHERE id = $idUsuario");
     }
 }

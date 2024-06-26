@@ -1,14 +1,19 @@
 <?php
 
 class LobbyController{
-    public function __construct($model, $presenter)
+    public function __construct($model, $presenter,$UsuarioModel)
     {
         $this->model = $model;
         $this->presenter = $presenter;
+        $this->UsuarioModel = $UsuarioModel;
     }
 
     public function home()
     {
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+
+        $this->UsuarioModel->calcularDificultadUsuario($idUsuario);
         $this->model->obtenerRankingDeUsuario();
         $this->model->actualizarUsuario();
         $partidasActualizadas = $this->model->partidasActualizadas();

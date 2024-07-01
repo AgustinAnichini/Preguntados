@@ -1,0 +1,16 @@
+<main>
+    <section class="container text-center">
+        <h1 class="text-light mt-3">La categoria es... </h1>
+        {{#categoria}}
+            <h2 class="text-light mt-3">{{tipo}}</h2>
+        {{/categoria}}
+
+        <form action="/Partida/siguientePregunta" method="post" class="botones">
+            {{#pregunta}}
+                <input type="hidden" value="{{id}}" name="id">
+            {{/pregunta}}
+
+            <input type="submit" name="comenzar" id="tienda" value="Jugar">
+        </form>
+    </section>
+</main>

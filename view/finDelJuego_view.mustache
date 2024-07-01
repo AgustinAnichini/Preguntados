@@ -1,0 +1,52 @@
+<main>
+    <section class="container text-center">
+        {{#mensajeUsuario}}
+            <h2 class="text-light mt-3">{{mensajeUsuario}}</h2>
+        {{/mensajeUsuario}}
+
+        <h1 class="text-light p-5">FIN DE LA PARTIDA</h1>
+
+        {{#pregunta}}
+            <h2 class="text-light mt-3">Pregunta respondida: </h2>
+            <h3 class="text-light mt-3">{{texto}}</h3>
+        {{/pregunta}}
+    </section>
+
+    <section class="container">
+        <h2 class="p-5 text-light">Estadistica:</h2>
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" class="text-light">Id</th>
+                <th scope="col" class="text-light">Activa</th>
+                <th scope="col" class="text-light">Puntaje</th>
+                <th scope="col" class="text-light">Duracion</th>
+                <th scope="col" class="text-light">Preguntas Acertadas</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#partida}}
+                <tr>
+                    <th scope="row" class="text-light">{{id}}</th>
+                    <td class="text-light">{{activa}}</td>
+                    <td class="text-light">{{puntaje}}</td>
+                    <td class="text-light">{{duracion}}</td>
+                    <td class="text-light">{{preguntasAcertadas}}</td>
+                </tr>
+            {{/partida}}
+            </tbody>
+        </table>
+
+        <form action="/Pregunta/reporte" method="post" class="botones">
+            {{#pregunta}}
+                <input type="hidden" value="{{id}}" name="id">
+            {{/pregunta}}
+            <input type="submit" name="comenzar" id="tienda" value="Reportar pregunta">
+        </form>
+
+        <form action="/Lobby" method="post" class="botones">
+            <input type="submit" name="comenzar" id="tienda" value="Lobby">
+        </form>
+
+    </section>
+</main>

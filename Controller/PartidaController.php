@@ -3,35 +3,83 @@
 class PartidaController
 {
     private $model;
+    private $preguntaModel;
+    private $usuarioModel;
     private $presenter;
 
-    public function __construct($model, $presenter)
+    public function __construct($model, $presenter, $preguntaModel, $usuarioModel)
     {
         $this->model = $model;
+        $this->preguntaModel = $preguntaModel;
         $this->presenter = $presenter;
+        $this->usuarioModel = $usuarioModel;
     }
 
     public function home()
     {
         $this->presenter->render("nuevaPartida", []);
     }
+
+    public function iniciarPartida()
+    {
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+        // aca debe comenzar el timer (duracion total de la partida)
+
+        $fechaActual = new DateTime();
+        // Formatear la fecha para obtener solo los minutos y segundos actuales
+        $tiempoInicioPartida = $fechaActual->format('H:i:s');
+        $_SESSION["tiempoInicioPartida"] = $tiempoInicioPartida;
+
+        $this->model->iniciarPartida($idUsuario);
+        $this->usuarioModel->agregarPartidaJugada($idUsuario);
+        $this->ruleta();
+    }
+
+    public function ruleta()
+    {
+        $contestoTodas = $this->preguntaModel->verificarSiContestoTodasLasPreguntas();
+        do {
+            $pregunta = $this->model->siguientePregunta();
+            $preguntaYaRespondida = !$this->preguntaModel->verificarPregunta($pregunta);
+        } while ($preguntaYaRespondida && !$contestoTodas);
+
+        $Usuario = $_SESSION['usuario'];
+        $IdUsuario = $Usuario['id'];
+        $idPregunta = $pregunta['id'];
+
+        $this->model->agregarPreguntaRespondida($idPregunta);// a la tabla preguntaUsuario
+        $this->usuarioModel->sumarUnaPreguntaRespondidaAlUsuario($IdUsuario); //a la tabla Usuario
+        $this->usuarioModel->calcularDificultadUsuario($IdUsuario);
+
+        $categoria = $this->preguntaModel->obtenerCategoriaPorId($pregunta);
+        $data = array();
+        $data["pregunta"] = $pregunta;
+        $data["categoria"] = $categoria;
+        $this->presenter->render("ruleta", $data);
+    }
+
+
     public function verificarRespuesta()
     {
         if (isset($_GET['respuestaSeleccionada']) && isset($_GET['idPregunta'])) {
-            $idRespuesta = $_GET['respuestaSeleccionada'];
-            $idPregunta = $_GET['idPregunta'];
+            $idRespuesta = intval($_GET['respuestaSeleccionada']);
+            $idPregunta = intval($_GET['idPregunta']);
 
-            $esCorrecta = $this->model->verificarRespuesta($idPregunta,$idRespuesta);
+            if ($idRespuesta > 0 && $idPregunta > 0) {
+                $esCorrecta = $this->preguntaModel->verificarRespuesta($idPregunta, $idRespuesta);
 
-            if ($esCorrecta) {
-                $this->siguientePregunta();
-//                $this->presenter->render("siguientePregunta", ['mensajeUsuario' => $mensajeUsuario]);
+                if ($esCorrecta) {
+                    $mensajeUsuario= "CORRECTA";
+                    $this->preguntaAcertada($idPregunta, $mensajeUsuario);
+                } else {
+                    $mensajeUsuario= "INCORRECTA";
+                    $this->preguntaNOacertada($idPregunta,$mensajeUsuario);
+                }
             } else {
-                $mensajeUsuario = "La miseria te persigue, Perdiste";
-                $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
+                $this->finDelJuego();
             }
         } else {
-            // Manejar el caso donde no se envió una respuesta o falta el idPregunta
             $mensajeUsuario = "Debes seleccionar una respuesta.";
             $this->presenter->render("nuevaPartida", ['mensajeUsuario' => $mensajeUsuario]);
         }
@@ -39,26 +87,91 @@ class PartidaController
 
     public function siguientePregunta()
     {
-        // Obtén la siguiente pregunta
-        $pregunta = $this->model->siguientePregunta();
-
-        if (!$pregunta) {
-            // Manejar el caso en el que no hay más preguntas
-            $this->presenter->render("finalJuego", []);
-            return;
-        }
-
-        // Obtén las respuestas para la pregunta
-        $respuestas = $this->model->respuestas($pregunta['id']); // array
-
-        // Inicializa un array para almacenar los datos
+        $idpregunta = $_POST["id"];
+        $pregunta = $this->model->buscarPreguntaPorId($idpregunta);
+        $respuestas = $this->preguntaModel->respuestas($pregunta['id']); // array
         $preguntaData = array();
-
-        // Almacena la pregunta y las respuestas en el array
         $preguntaData["pregunta"] = $pregunta;
         $preguntaData["respuesta"] = $respuestas;
 
-        // Renderiza la vista pasando los datos
         $this->presenter->render("siguientePregunta", $preguntaData);
     }
+
+    function finDelJuego(){
+        $duracion= $this->calcularDuracionPartida();
+        $this->model->actualizarDuracionDePartida($duracion);
+        $this->usuarioModel->agregarPuntosObtenidosAlUsuario();
+        // metodo que consulta si el puntaje obtenido es el mas alto que obtuvo
+
+        $this->model->actualizarPartida();
+        $this->model->cerrarPartida();
+        $mensajeUsuario = "Te quedaste sin tiempo!!";
+
+        $dataFin["mensajeUsuario"] = $mensajeUsuario;
+        $dataFin["partida"] = $_SESSION["partida"];
+        $this->presenter->render("finDelJuego", $dataFin);
+    }
+
+    function preguntaAcertada($idPregunta,$mensajeUsuario){
+        $this->usuarioModel->agregarPreguntasAcertadasAlUsuario();// agregar una pregunta respondida correctamente al usuario
+        $this->model->agregarPreguntasAcertadasALaPartida(); // agregar una pregunta respondida correctamente a la partida
+        // para calcular el nivel
+        // debemos sumar las preguntas acertadas del usuario
+
+        $this->model->agregarPuntos($idPregunta);
+        $this->model->actualizarUsuario();
+        $this->model->actualizarPartida();
+
+        $dataPausa = array();
+        $dataPausa["mensajeUsuario"] = $mensajeUsuario;
+        $dataPausa["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
+        $dataPausa["partida"] = $_SESSION["partida"];
+        $this->presenter->render("pausa", $dataPausa);
+    }
+
+    function preguntaNOacertada($idPregunta,$mensajeUsuario)
+    {
+        $duracion= $this->calcularDuracionPartida();
+        $this->model->actualizarDuracionDePartida($duracion);
+        $this->usuarioModel->agregarPuntosObtenidosAlUsuario();
+        $this->model->actualizarUsuario();
+        $this->model->actualizarPartida();
+        $this->model->cerrarPartida();
+
+        $dataFin["mensajeUsuario"] = $mensajeUsuario;
+        $dataFin["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
+        $dataFin["partida"] = $_SESSION["partida"];
+        $this->presenter->render("finDelJuego", $dataFin);
+    }
+
+    function calcularDuracionPartida()
+    {
+        if (isset($_SESSION["tiempoInicioPartida"])) {
+            $tiempoInicio = DateTime::createFromFormat('H:i:s', $_SESSION["tiempoInicioPartida"]);
+
+            $fechaActual = new DateTime();
+            $diferencia = $tiempoInicio->diff($fechaActual);
+            // Formatear la diferencia como 'HH:MM:SS'
+            $duracion = $diferencia->format('%H:%I:%S');
+            var_dump($duracion);// llega bien
+
+            return $duracion;
+        } else {
+            return '00:00:12';
+        }
+    }
+
+    function recargo()
+    {
+        $this->model->cerrarPartida();
+        $this->model->actualizarUsuario();
+        $partidasActualizadas = $this->model->partidasActualizadas();
+
+        $usuario = $_SESSION["usuario"];
+        $lobbyData = array();
+        $lobbyData["usuario"] = $usuario;
+        $lobbyData["partidasActualizadas"] = $partidasActualizadas;
+        $this->presenter->render("lobby", $lobbyData);
+    }
+
 }

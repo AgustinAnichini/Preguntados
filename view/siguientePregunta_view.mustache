@@ -5,32 +5,40 @@
     <title>Title</title>
 </head>
 <body>
-<section class="container">
-    {{#mensajeUsuario}}
-        <h1 class="text-light">{{mensajeUsuario}}</h1>
-    {{/mensajeUsuario}}
+    <main>
+        <section class="container">
+            {{#mensajeUsuario}}
+                <h1 class="text-light">{{mensajeUsuario}}</h1>
+            {{/mensajeUsuario}}
 
-    {{#pregunta}}
-        <h1 class="p-5 text-light text-center">{{texto}}</h1>
-    {{/pregunta}}
-
-    <form action="/Partida/verificarRespuesta" method="get" class="respuestas-juego d-flex flex-column container w-50">
-        {{#pregunta}}
-            <div>
-                <input type="hidden" name="idPregunta" id="{{id}}" value="{{id}}">
+            {{#pregunta}}
+            <div class="container timerContainer">
+                <h1 class="text-light">TIEMPO</h1>
+                <div id="timer" class="text-light">{{tiempo_respuesta}}</div>
             </div>
-        {{/pregunta}}
 
-        {{#respuesta}}
-            <div class="align-items-center">
-                <label id="{{id}}" class="text-light">{{texto}}</label>
-                <input type="radio" name="respuestaSeleccionada" id="{{id}}" value="{{id}}">
-            </div>
-        {{/respuesta}}
-        <div class="d-flex justify-content-center mt-4">
-            <input type="submit" value="Enviar" class="btn btn-warning w-25">
-        </div>
-    </form>
-</section>
-</body>
-</html>
+            <h1 class="p-5 text-light text-center">{{texto}}</h1>
+            {{/pregunta}}
+
+            <form action="/Partida/verificarRespuesta" method="get" class="respuestas-juego d-flex flex-column container w-50">
+                {{#pregunta}}
+                    <div>
+                        <input type="hidden" name="idPregunta" id="{{id}}" value="{{id}}">
+                    </div>
+                {{/pregunta}}
+
+                {{#respuesta}}
+                    <div class="align-items-center">
+                        <label id="{{id}}" class="text-light">{{texto}}</label>
+                        <input type="radio" name="respuestaSeleccionada" id="{{id}}" value="{{id}}">
+                    </div>
+                {{/respuesta}}
+                <div class="d-flex justify-content-center mt-4">
+                    <input type="submit" value="Enviar" class="btn btn-warning w-25">
+                </div>
+            </form>
+        </section>
+    </main>
+    <script src="/public/js/timer.js"></script>
+    <script src="/public/js/recargarPagina.js"></script>
+

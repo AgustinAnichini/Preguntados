@@ -40,7 +40,13 @@ class RegistroModel
                                         fecha_registro,
                                         cuenta_activa,
                                         ranking,
-                                        puntajeMasAlto
+                                        puntajeMasAlto,
+                                        puntajeTotal,
+                                        partidasJugadas,
+                                        nivel,
+                                        preguntasAcertadasTotales,
+                                        preguntasRespondidas,
+                                        puntajeRanking   
                                     ) VALUES (
                                         '$nombreComleto',
                                         '$fechaNac',
@@ -54,6 +60,12 @@ class RegistroModel
                                         '$username',
                                         '$fechaRegistro',
                                         false,
+                                        0,
+                                        0,
+                                        0,
+                                        0,
+                                        'bajo',
+                                        0,
                                         0,
                                         0);"
         );

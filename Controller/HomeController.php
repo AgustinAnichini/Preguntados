@@ -3,12 +3,14 @@
 class HomeController
 {
     private $model;
+    private $lobbyModel;
     private $presenter;
 
-    public function __construct($model, $presenter)
+    public function __construct($model, $presenter,$lobbyModel)
     {
         $this->model = $model;
         $this->presenter = $presenter;
+        $this->lobbyModel = $lobbyModel;
     }
 
     public function home()
@@ -42,15 +44,23 @@ class HomeController
         $password = $_POST["password"];
 
         $usuario = $this->model->validarLogin($username,$password);
-//        var_dump($usuario);
 
         if ($usuario != null){
-            $this->presenter->render("lobby", ["usuario"=>$usuario]);
+            $_SESSION["usuario"]=$usuario;
+            $this->lobbyModel->obtenerRankingDeUsuario();
+            $partidasActualizadas = $this->lobbyModel->partidasActualizadas();
+            $this->lobbyModel->actualizarUsuario();
+
+            $homeData = array();
+            $homeData["usuario"] = $_SESSION["usuario"];
+            $homeData["partidasActualizadas"] = $partidasActualizadas;
+            $this->presenter->render("lobby", $homeData);
         }else{
             header("Location: /Home");
             exit();
         }
     }
+
 
 
 }

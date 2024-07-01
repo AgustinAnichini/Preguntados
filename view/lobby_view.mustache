@@ -1,7 +1,8 @@
 <main>
     {{#usuario}}
-        <p class="text-light text-right p-3">Bienvenido {{nombre_usuario}} -- Ranking:  {{ranking}}</p>
+    <p class="text-light text-right p-3">Bienvenido {{nombre_usuario}} -- Posicion de Ranking:  {{ranking}}</p>
     {{/usuario}}
+
     <section class="container d-flex justify-content-around ">
         <form action="/partida" method="post" class="botones">
             <input type="submit" name="nuevaPartida" id="nuevaPartida" value="Nueva Partida">
@@ -21,23 +22,23 @@
         <table class="table">
             <thead>
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Tiempo</th>
-                <th scope="col">Puntaje</th>
-                <th scope="col">Duracion</th>
-                <th scope="col">Preguntas Acertadas</th>
+                <th scope="col" class="text-light">Id</th>
+                <th scope="col" class="text-light">Activa</th>
+                <th scope="col" class="text-light">Puntaje</th>
+                <th scope="col" class="text-light">Duracion</th>
+                <th scope="col" class="text-light">Preguntas Acertadas</th>
             </tr>
             </thead>
             <tbody>
-            {{#partida}}
+            {{#partidasActualizadas}}
                 <tr>
-                    <th scope="row">{{Id}}</th>
-                    <td>{{Tiempo}}</td>
-                    <td>{{Puntaje}}</td>
-                    <td>{{Duracion}}</td>
-                    <td>{{Preguntas Acertadas}}</td>
+                    <th scope="row" class="text-light">{{id}}</th>
+                    <td class="text-light">{{activa}}</td>
+                    <td class="text-light">{{puntaje}}</td>
+                    <td class="text-light">{{duracion}}</td>
+                    <td class="text-light">{{preguntasAcertadas}}</td>
                 </tr>
-            {{/partida}}
+            {{/partidasActualizadas}}
             </tbody>
         </table>
     </section>

@@ -45,12 +45,15 @@ class PartidaController
         do {
             // metodo de comparar nivel de usuario con pregunta
             $pregunta = $this->model->siguientePregunta();
-            $preguntaYaRespondida = !$this->preguntaModel->verificarPregunta($pregunta);
+            $preguntaYaRespondida = $this->preguntaModel->verificarPregunta($pregunta);
             $nivelPregunta = $pregunta['nivel_dificultad'];
-        } while ($preguntaYaRespondida && $nivelUsuario == $nivelPregunta);
+        } while (!$preguntaYaRespondida || $nivelUsuario !== $nivelPregunta);
+        //          TRUE                        TRUE
+// Condición del bucle: sigue buscando mientras la pregunta ya haya sido respondida o el nivel no coincida
 
-        var_dump($nivelUsuario); // false - false
-        var_dump($nivelPregunta);
+
+        var_dump($nivelUsuario); // alto
+        var_dump($nivelPregunta); // alto
 
         $IdUsuario = $Usuario['id'];
         $idPregunta = $pregunta['id'];

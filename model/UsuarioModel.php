@@ -59,11 +59,7 @@ class UsuarioModel
             $preguntasRespondidas = isset($filaRespondidas['preguntasRespondidas']) ? (int)$filaRespondidas['preguntasRespondidas'] : 0;
             $preguntasRespondidasCorrectamente = isset($filaAcertadas['preguntasAcertadasTotales']) ? (int)$filaAcertadas['preguntasAcertadasTotales'] : 0;
 
-            // Depuración: Verifica los valores obtenidos
-            var_dump($preguntasRespondidas);
-            var_dump($preguntasRespondidasCorrectamente);
-
-            if ($preguntasRespondidas >= 6) {
+            if ($preguntasRespondidas >= 10) {
                 $nivelUsuario = $preguntasRespondidasCorrectamente / (float)$preguntasRespondidas;
 
                 // Determina y actualiza el nivel del usuario

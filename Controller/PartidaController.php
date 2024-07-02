@@ -38,18 +38,26 @@ class PartidaController
 
     public function ruleta()
     {
+        $Usuario = $_SESSION['usuario'];
+        $nivelUsuario = $Usuario['nivel'];
+
         $contestoTodas = $this->preguntaModel->verificarSiContestoTodasLasPreguntas();
         do {
+            // metodo de comparar nivel de usuario con pregunta
             $pregunta = $this->model->siguientePregunta();
             $preguntaYaRespondida = !$this->preguntaModel->verificarPregunta($pregunta);
-        } while ($preguntaYaRespondida && !$contestoTodas);
+            $nivelPregunta = $pregunta['nivel_dificultad'];
+        } while ($preguntaYaRespondida && $nivelUsuario == $nivelPregunta);
 
-        $Usuario = $_SESSION['usuario'];
+        var_dump($nivelUsuario); // false - false
+        var_dump($nivelPregunta);
+
         $IdUsuario = $Usuario['id'];
         $idPregunta = $pregunta['id'];
 
         $this->model->agregarPreguntaRespondida($idPregunta);// a la tabla preguntaUsuario
         $this->usuarioModel->sumarUnaPreguntaRespondidaAlUsuario($IdUsuario); //a la tabla Usuario
+        $this->preguntaModel->sumarCantidadEntregadas($idPregunta); //a la tabla Pregunta
         $this->usuarioModel->calcularDificultadUsuario($IdUsuario);
 
         $categoria = $this->preguntaModel->obtenerCategoriaPorId($pregunta);
@@ -114,6 +122,8 @@ class PartidaController
 
     function preguntaAcertada($idPregunta,$mensajeUsuario){
         $this->usuarioModel->agregarPreguntasAcertadasAlUsuario();// agregar una pregunta respondida correctamente al usuario
+        $this->preguntaModel->sumarCantidadPreguntaAcertada($idPregunta);// agregar uno a pregunta respondida correctamente
+        $this->preguntaModel->calcularNivelDePregunta($idPregunta);//calcular el nivel de dificultad de la pregunta
         $this->model->agregarPreguntasAcertadasALaPartida(); // agregar una pregunta respondida correctamente a la partida
         // para calcular el nivel
         // debemos sumar las preguntas acertadas del usuario

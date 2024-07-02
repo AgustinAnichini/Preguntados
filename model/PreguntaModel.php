@@ -80,4 +80,45 @@ class PreguntaModel
     function reiniciarPreguntasAcertadasTotales($idUsuario){
         $this->database->execute("UPDATE usuarios SET preguntasAcertadasTotales = 0 WHERE id = $idUsuario");
     }
+
+    function sumarCantidadEntregadas($idPregunta){
+        $this->database->execute("UPDATE pregunta SET cantidadEntregadas = cantidadEntregadas + 1 WHERE id = $idPregunta");
+    }
+
+    function sumarCantidadPreguntaAcertada($idPregunta)
+    {
+        $this->database->execute("UPDATE pregunta SET cantidadAcertadas = cantidadAcertadas + 1 WHERE id = $idPregunta");
+    }
+
+    function calcularNivelDePregunta($idPregunta)
+    {
+        $resultadoEntregadas = $this->database->query("SELECT cantidadEntregadas FROM pregunta WHERE id = $idPregunta");
+        $resultadoAcertadas = $this->database->query("SELECT cantidadAcertadas FROM pregunta WHERE id = $idPregunta");
+
+        if ($resultadoEntregadas && $resultadoAcertadas) {
+            $filaRespondidas = $resultadoEntregadas[0];
+            $filaAcertadas = $resultadoAcertadas[0];
+
+            $cantidadEntregadas = isset($filaRespondidas['cantidadEntregadas']) ? (int)$filaRespondidas['cantidadEntregadas'] : 0;
+            $preguntasRespondidasCorrectamente = isset($filaAcertadas['cantidadAcertadas']) ? (int)$filaAcertadas['cantidadAcertadas'] : 0;
+
+            if ($cantidadEntregadas >= 10) {
+                $nivelPregunta = $preguntasRespondidasCorrectamente / (float)$cantidadEntregadas;
+
+                if ($nivelPregunta >= 0.0 && $nivelPregunta < 0.3) {
+                    $nivel = 'alto';
+                } elseif ($nivelPregunta >= 0.3 && $nivelPregunta < 0.7) {
+                    $nivel = 'medio';
+                } elseif ($nivelPregunta >= 0.7 && $nivelPregunta <= 1.0) {
+                    $nivel = 'bajo';
+                } else {
+                    $nivel = 'bajo'; // Manejo del caso por defecto
+                }
+            } else {
+                $nivel = 'bajo';
+            }
+            $this->database->execute("UPDATE pregunta SET nivel_dificultad = '$nivel' WHERE id = $idPregunta");
+        }
+    }
+
 }

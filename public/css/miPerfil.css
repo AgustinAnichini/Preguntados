@@ -1,0 +1,14 @@
+.main-perfil{
+    color: white;
+}
+.h1-perfil{
+    text-align: center;
+}
+.datos-usuario{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+    align-items: start;
+    width: 70%;
+}

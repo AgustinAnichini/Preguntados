@@ -2,6 +2,7 @@
 
 class PreguntaController
 {
+
     private $model;
     private $presenter;
 
@@ -15,6 +16,5 @@ class PreguntaController
     {
         $this->presenter->render("login", []);
     }
-
 
 }

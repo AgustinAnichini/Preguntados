@@ -1,0 +1,33 @@
+<main class="main-perfil">
+
+    {{#usuario}}
+        <div class="nombreYFoto">
+            <h1 class="h1-perfil">{{nombre_completo}}</h1>
+            <img src="/public/{{foto_perfil}}.jpg">
+        </div>
+
+    <section class="datos-usuario">
+        <ul class="lista-datos-personales">
+            <li class="dato">Nombre de usuario: {{nombre_usuario}}</li>
+            <li class="dato">Mail: {{mail}}</li>
+            <li class="dato">Fecha de nacimiento: {{fecha_nacimiento}}</li>
+            <li class="dato">Pais: {{pais}}</li>
+            <li class="dato">Ciudad: {{ciudad}}</li>
+        </ul>
+        <ul class="lista-datos-partida">
+            <li class="dato">Ranking: {{ranking}}</li>
+            <li class="dato">Puntaje de ranking: {{puntajeRanking}}</li>
+            <li class="dato">Nivel de usuario: {{nivel}}</li>
+            <li class="dato">Puntaje mas alto: {{puntajeMasAlto}}</li>
+            <li class="dato">Puntaje total: {{puntajeTotal}}</li>
+            <li class="dato">Total de partidas jugadas: {{partidasJugadas}}</li>
+            <li class="dato">Total de preguntas acertadas: {{preguntasAcertadasTotales}}</li>
+        </ul>
+    </section>
+
+        <form action="/Lobby" method="post" class="botones">
+            <input type="submit" name="comenzar"  value="Lobby">
+        </form>
+
+    {{/usuario}}
+</main>

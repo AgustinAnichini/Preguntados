@@ -1,0 +1,41 @@
+<main>
+    <div class="container">
+        <h2 class="text-light">Sugerir una Pregunta</h2>
+        <form action="/CrearPregunta/preguntaSugerida" method="post" id="suggestionForm" novalidate>
+            <div class="mb-3">
+                <label for="categoria" class="form-labe text-light">Categoría</label>
+                <select id="categoria" name="categoria" class="form-select" required>
+                    {{#categorias}}
+                        <option value="{{id}}">{{tipo}}</option>
+                    {{/categorias}}
+                </select>
+                <div class="invalid-feedback">Por favor, selecciona una categoría.</div>
+            </div>
+            <div class="mb-3">
+                <label for="preguntaSugerida" class="form-label text-light">Texto de la Pregunta</label>
+                <textarea id="preguntaSugerida" name="preguntaSugerida" class="form-control" rows="3" maxlength="200" placeholder="Escribe tu pregunta aquí..." required></textarea>
+                <div class="invalid-feedback">Por favor, ingresa el texto de la pregunta.</div>
+            </div>
+
+
+            <div class="mb-3">
+                <label for="respuestaCorrecta" class="form-label text-light">Ingrese la respuesta correcta</label>
+                <input type="text" id="respuestaCorrecta" name="respuestaCorrecta" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="respuestaIncorrecta1" class="form-label text-light">Ingrese la respuesta incorrecta 1</label>
+                <input type="text" id="respuestaIncorrecta1" name="respuestaIncorrecta1" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="respuestaIncorrecta2" class="form-label text-light">Ingrese la respuesta incorrecta 2</label>
+                <input type="text" id="respuestaIncorrecta2" name="respuestaIncorrecta2" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label for="respuestaIncorrecta3" class="form-label text-light">Ingrese la respuesta incorrecta 3</label>
+                <input type="text" id="respuestaIncorrecta3" name="respuestaIncorrecta3" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-50">Enviar Sugerencia</button>
+        </form>
+    </div>
+
+</main>

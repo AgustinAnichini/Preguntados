@@ -51,7 +51,6 @@ class PartidaController
         //          TRUE                        TRUE
 // Condición del bucle: sigue buscando mientras la pregunta ya haya sido respondida o el nivel no coincida
 
-
         var_dump($nivelUsuario); // alto
         var_dump($nivelPregunta); // alto
 
@@ -112,7 +111,6 @@ class PartidaController
         $duracion= $this->calcularDuracionPartida();
         $this->model->actualizarDuracionDePartida($duracion);
         $this->usuarioModel->agregarPuntosObtenidosAlUsuario();
-        // metodo que consulta si el puntaje obtenido es el mas alto que obtuvo
 
         $this->model->actualizarPartida();
         $this->model->cerrarPartida();

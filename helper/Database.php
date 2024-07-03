@@ -45,4 +45,10 @@ class Database
         mysqli_close($this->conn);
     }
 
+    public function obtenerUltimoIdinsertado()
+    {
+        return mysqli_insert_id($this->conn);
+    }
+
+
 }

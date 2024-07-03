@@ -17,9 +17,13 @@ class UsuarioController
     }
     public function verPerfil()
     {
-        $idPerfil = $_GET["id"];
-        // busco el perfil por ID
-        $this->presenter->render("Perfil", []);
+        $idUsuario = $_GET["id"];
+
+        $usuario = $this->model->buscarUsuario($idUsuario);
+        $usuarioData = array();
+        $usuarioData["usuario"] = $usuario;
+
+        $this->presenter->render("perfil", $usuarioData);
     }
 
 }

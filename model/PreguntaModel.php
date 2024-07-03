@@ -120,5 +120,4 @@ class PreguntaModel
             $this->database->execute("UPDATE pregunta SET nivel_dificultad = '$nivel' WHERE id = $idPregunta");
         }
     }
-
 }

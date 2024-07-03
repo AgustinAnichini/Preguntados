@@ -3,6 +3,11 @@
     <p class="text-light text-right p-3">Bienvenido {{nombre_usuario}} -- Posicion de Ranking:  {{ranking}}</p>
     {{/usuario}}
 
+    {{#mensajeUsuario}}
+        <p class="text-light text-center">{{mensajeUsuario}}</p>
+    {{/mensajeUsuario}}
+
+
     <section class="container d-flex justify-content-around ">
         <form action="/partida" method="post" class="botones">
             <input type="submit" name="nuevaPartida" id="nuevaPartida" value="Nueva Partida">
@@ -14,6 +19,9 @@
 
         <form action="/Tienda" method="post" class="botones">
             <input type="submit" name="tienda" id="tienda" value="Tienda">
+        </form>
+        <form action="/CrearPregunta" method="post" class="botones">
+            <input type="submit" name="CrearPregunta" id="CrearPregunta" value="Sugerir Pregunta">
         </form>
     </section>
 

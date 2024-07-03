@@ -5,8 +5,10 @@ include_once ("controller/HomeController.php");
 include_once ("controller/PartidaController.php");
 include_once ("controller/LobbyController.php");
 include_once ("controller/PreguntaController.php");
+include_once ("controller/UsuarioController.php");
 include_once ("controller/RankingController.php");
-
+include_once ("controller/ReporteController.php");
+include_once ("controller/CrearPreguntaController.php");
 
 include_once ("model/RegistroModel.php");
 include_once ("model/HomeModel.php");
@@ -15,6 +17,8 @@ include_once ("model/LobbyModel.php");
 include_once ("model/PreguntaModel.php");
 include_once ("model/UsuarioModel.php");
 include_once ("model/RankingModel.php");
+include_once ("model/ReporteModel.php");
+include_once ("model/CrearPreguntaModel.php");
 
 
 include_once ("helper/Router.php");
@@ -49,6 +53,12 @@ Class Configuration{
     public static function getRankingController(){
         return new RankingController(self::getRankingModel(), self::getPresenter());
     }
+    public static function getReporteController(){
+        return new ReporteController(self::getReporteModel(), self::getPresenter(), self::getPartidaModel());
+    }
+    public static function getCrearPreguntaController(){
+        return new CrearPreguntaController(self::getCrearPreguntaModel(), self::getPresenter(), self::getLobbyModel());
+    }
 
     //MODELS---------------------------------------------------------------------------------------------------------------------------
     private static function getRegistroModel()
@@ -80,7 +90,12 @@ Class Configuration{
     private static function getRankingModel(){
         return new RankingModel(self::getsabiondosDatabase());
     }
-
+    private static function getReporteModel(){
+        return new ReporteModel(self::getsabiondosDatabase());
+    }
+    private static function getCrearPreguntaModel(){
+        return new CrearPreguntaModel(self::getsabiondosDatabase());
+    }
 
     //HELPERS---------------------------------------------------------------------------------------------------------------------------
     public static function getsabiondosDatabase()

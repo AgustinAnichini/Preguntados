@@ -79,5 +79,9 @@ class UsuarioModel
         }
     }
 
+    function buscarUsuario($idUsuario){
+        $usuario = $this->database->query("SELECT * FROM usuarios WHERE id = '$idUsuario'");
+        return $usuario[0];
+    }
 
 }

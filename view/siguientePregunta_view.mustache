@@ -1,10 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
     <main>
         <section class="container">
             {{#mensajeUsuario}}
@@ -36,6 +29,17 @@
                 <div class="d-flex justify-content-center mt-4">
                     <input type="submit" value="Enviar" class="btn btn-warning w-25">
                 </div>
+            </form>
+        </section>
+
+        <section class="container">
+            <form action="/Reporte" method="get" class="d-flex flex-column container w-50">
+                {{#pregunta}}
+                    <div>
+                        <input type="hidden" name="idPregunta" id="{{id}}" value="{{id}}">
+                    </div>
+                {{/pregunta}}
+                <input type="submit" value="Reportar" class="btn btn-warning w-25">
             </form>
         </section>
     </main>

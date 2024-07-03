@@ -8,10 +8,17 @@
     <link rel="stylesheet"  href="/public/css/header.css">
     <link rel="stylesheet"  href="/public/css/footer.css">
     <link rel="stylesheet" href="/public/css/general.css">
+    <link rel="stylesheet" href="/public/css/ruleta.css">
+    <link rel="stylesheet" href="/public/css/miPerfil.css">
     <title>Sabiondos - Juego de Preguntas</title>
 
 </head>
-<body class="bg-dark">
+{{#categoria}}
+    <body class="{{tipo}}">
+{{/categoria}}
+{{^categoria}}
+    <body class="bg-dark">
+{{/categoria}}
 {{#header}}
     <header class="text-light">
         <h1 class="text-center mt-5">Sabiondos - ¡Demuestra tu conocimiento!</h1>
@@ -21,5 +28,4 @@
 <!--
  Aquí puedes agregar el contenido del juego, como las preguntas y las opciones
   -->
-</body>
-</html>
+

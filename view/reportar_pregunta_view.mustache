@@ -1,0 +1,26 @@
+<main>
+    <h1>Reportar pregunta</h1>
+
+    <div class="datos-pregunta">
+        {{#pregunta}}
+        <h2>{{texto}}</h2>
+        {{/pregunta}}
+        <ul class="lista-respuestas">
+            {{#respuesta}}
+                <li class="respuesta">{{texto}}</li>
+            {{/respuesta}}
+        </ul>
+    </div>
+
+    <h3>Por que crees que es necesario reportar esta pregunta?</h3>
+
+    <form action="/Reporte/reportarPregunta" method="get" class="form-reporte">
+        {{#pregunta}}
+        <input type="hidden" name="idPregunta" id="idPregunta" value="{{id}}">
+        {{/pregunta}}
+        <input type="text" name="texto" id="texto" placeholder="Dejanos una breve explicacion...">
+
+        <input type="submit" name="reportar" id="reportar" value="Enviar Reporte">
+    </form>
+
+</main>

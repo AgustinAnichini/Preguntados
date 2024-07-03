@@ -1,9 +1,13 @@
 <main>
-    <div class="container">
-        <h2 class="text-light">Sugerir una Pregunta</h2>
+    <div class="bg-warning p-3">
+        <h3 class="text-center p-1 text-dark">Sugerir una Pregunta</h3>
+        <p class="text-center text-dark">¡Tus preguntas pueden cambiar el juego!</p>
+    </div>
+
+    <div class="container w-50">
         <form action="/CrearPregunta/preguntaSugerida" method="post" id="suggestionForm" novalidate>
             <div class="mb-3">
-                <label for="categoria" class="form-labe text-light">Categoría</label>
+                <label for="categoria" class="form-labe text-warning mt-5 p-1">Seleccione la Categoría</label>
                 <select id="categoria" name="categoria" class="form-select" required>
                     {{#categorias}}
                         <option value="{{id}}">{{tipo}}</option>
@@ -12,30 +16,37 @@
                 <div class="invalid-feedback">Por favor, selecciona una categoría.</div>
             </div>
             <div class="mb-3">
-                <label for="preguntaSugerida" class="form-label text-light">Texto de la Pregunta</label>
+                <label for="preguntaSugerida" class="form-label text-warning">Texto de la Pregunta</label>
                 <textarea id="preguntaSugerida" name="preguntaSugerida" class="form-control" rows="3" maxlength="200" placeholder="Escribe tu pregunta aquí..." required></textarea>
                 <div class="invalid-feedback">Por favor, ingresa el texto de la pregunta.</div>
             </div>
 
 
             <div class="mb-3">
-                <label for="respuestaCorrecta" class="form-label text-light">Ingrese la respuesta correcta</label>
+                <label for="respuestaCorrecta" class="form-label text-warning">Ingrese la respuesta correcta</label>
                 <input type="text" id="respuestaCorrecta" name="respuestaCorrecta" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="respuestaIncorrecta1" class="form-label text-light">Ingrese la respuesta incorrecta 1</label>
+                <label for="respuestaIncorrecta1" class="form-label text-warning">Ingrese la respuesta incorrecta 1</label>
                 <input type="text" id="respuestaIncorrecta1" name="respuestaIncorrecta1" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="respuestaIncorrecta2" class="form-label text-light">Ingrese la respuesta incorrecta 2</label>
+                <label for="respuestaIncorrecta2" class="form-label text-warning">Ingrese la respuesta incorrecta 2</label>
                 <input type="text" id="respuestaIncorrecta2" name="respuestaIncorrecta2" class="form-control" required>
             </div>
             <div class="mb-3">
-                <label for="respuestaIncorrecta3" class="form-label text-light">Ingrese la respuesta incorrecta 3</label>
+                <label for="respuestaIncorrecta3" class="form-label text-warning">Ingrese la respuesta incorrecta 3</label>
                 <input type="text" id="respuestaIncorrecta3" name="respuestaIncorrecta3" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-primary w-50">Enviar Sugerencia</button>
+            <div class="text-center my-3">
+                <button type="submit" class="btn btn-outline-warning" >Enviar Sugerencia</button>
+            </div>
         </form>
+        <div class="text-center my-3">
+            <form action="/Lobby" method="post" class="botones">
+                <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+            </form>
+        </div>
     </div>
 
 </main>

@@ -22,6 +22,12 @@ class LobbyController{
         $lobbyData = array();
         $lobbyData["usuario"] = $usuario;
         $lobbyData["partidasActualizadas"] = $partidasActualizadas;
+
+        if (isset($_GET["mensajeUsuarioSugerir"])){
+            $mensajeUsuarioSugerir = $_GET["mensajeUsuarioSugerir"];
+            $lobbyData["mensajeUsuarioSugerir"] = $mensajeUsuarioSugerir;
+            $_GET["mensajeUsuarioSugerir"]=null;
+        }
         $this->presenter->render("lobby", $lobbyData);
     }
 }

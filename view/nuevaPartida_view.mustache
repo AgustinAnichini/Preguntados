@@ -1,4 +1,8 @@
 <main>
+    <div class="bg-warning p-3">
+        <h3 class="text-center p-1 text-dark">¡Comienza a jugar!</h3>
+        <p class="text-center text-dark">¡Contesta la mayor cantidad de preguntas en el menor tiempo!</p>
+    </div>
     <section class="container text-center">
         {{#mensajeUsuario}}
             <h1 class="text-light mt-3">{{mensajeUsuario}}</h1>
@@ -8,17 +12,15 @@
             <h1 class="text-light">{{error}}</h1>
         {{/error}}
 
-        <h1 class="text-light p-5">¿Estas listo para perder?</h1>
+        <h1 class="text-warning p-5">¿Estas listo para perder?</h1>
 
         <form action="/Partida/iniciarPartida" method="post" class="botones">
-            <input type="submit" name="comenzar" id="tienda" value="Comenzar">
+            <input type="submit" name="comenzar" id="tienda" class="btn btn-outline-warning" value="Comenzar">
         </form>
-
-<!--        CONDICIONES:
-
-- Cada respuesta válida acumula un punto.
-- En cuanto nos equivocamos, perdemos la partida y nos indica que ganamos X puntos, o que la respuesta correcta era otra.
-- Se debe pintar la pantalla de un color segun la categoria
--->
+        <div class="text-center my-3">
+            <form action="/Lobby" method="post" class="botones">
+                <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+            </form>
+        </div>
     </section>
 </main>

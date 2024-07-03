@@ -6,7 +6,7 @@
 
             {{#pregunta}}
             <div class="container timerContainer">
-                <h1 class="text-light">TIEMPO</h1>
+                <h1 class="text-warning">TIEMPO</h1>
                 <div id="timer" class="text-light">{{tiempo_respuesta}}</div>
             </div>
 
@@ -27,7 +27,7 @@
                     </div>
                 {{/respuesta}}
                 <div class="d-flex justify-content-center mt-4">
-                    <input type="submit" value="Enviar" class="btn btn-warning w-25">
+                    <input type="submit" value="Enviar" class="btn btn-outline-warning w-25">
                 </div>
             </form>
         </section>
@@ -39,7 +39,7 @@
                         <input type="hidden" name="idPregunta" id="{{id}}" value="{{id}}">
                     </div>
                 {{/pregunta}}
-                <input type="submit" value="Reportar" class="btn btn-warning w-25">
+                <input type="submit" value="Reportar" class="btn btn-outline-warning w-25">
             </form>
         </section>
     </main>

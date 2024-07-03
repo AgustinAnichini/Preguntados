@@ -17,15 +17,18 @@ class CrearPreguntaModel
 
     function sugerirPregunta($categoria,
                              $preguntaSugerida,
+                             $respuestaCorrecta,
                              $respuestaIncorrecta1,
                              $respuestaIncorrecta2,
                              $respuestaIncorrecta3){
         $sePropuso = false;
         $idPreguntaSugerida = $this->insertarPregunta($categoria, $preguntaSugerida);
+
         if ($idPreguntaSugerida !== null){
             $sql = "INSERT INTO respuestaSugerida (texto, pregunta_id, correcta) 
                                                                     VALUES 
-                                                                    ('$respuestaIncorrecta1','$idPreguntaSugerida' ,true),
+                                                                    ('$respuestaCorrecta','$idPreguntaSugerida' ,true),
+                                                                    ('$respuestaIncorrecta1','$idPreguntaSugerida' ,false),
                                                                     ('$respuestaIncorrecta2','$idPreguntaSugerida' ,false),
                                                                     ('$respuestaIncorrecta3','$idPreguntaSugerida' ,false)
                                                                         ";

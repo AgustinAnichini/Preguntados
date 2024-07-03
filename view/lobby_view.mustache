@@ -1,29 +1,39 @@
 <main>
+
+    <div class="bg-warning p-3">
+        <h1 class="text-center p-3 text-dark">SABIONDOS</h1>
+        <h3 class="text-center p-1 text-dark">¡Demuestra tu conocimiento!</h3>
+        <p class="text-center text-dark">Bienvenido al juego de preguntas donde podrás poner a prueba tu sabiduría.</p>
+    </div>
     {{#usuario}}
-    <p class="text-light text-right p-3">Bienvenido {{nombre_usuario}} -- Posicion de Ranking:  {{ranking}}</p>
+        <p class="text-light text-center p-3">Bienvenido <strong>{{nombre_usuario}}</strong> -- Posicion de Ranking: <strong>{{ranking}}</strong></p>
     {{/usuario}}
-
-    {{#mensajeUsuario}}
-        <p class="text-light text-center">{{mensajeUsuario}}</p>
-    {{/mensajeUsuario}}
-
-
-    <section class="container d-flex justify-content-around ">
+    <section class="container d-flex justify-content-around mt-5">
         <form action="/partida" method="post" class="botones">
-            <input type="submit" name="nuevaPartida" id="nuevaPartida" value="Nueva Partida">
+            <input type="submit" name="nuevaPartida" id="nuevaPartida"  class="btn btn-outline-warning" value="Nueva Partida">
         </form>
 
         <form action="/Ranking" method="post" class="botones">
-            <input type="submit" name="rankingMundial" id="rankingMundial" value="Ranking Mundial">
+            <input type="submit" name="rankingMundial" id="rankingMundial" class="btn btn-outline-warning" value="Ranking Mundial">
         </form>
 
         <form action="/Tienda" method="post" class="botones">
-            <input type="submit" name="tienda" id="tienda" value="Tienda">
+            <input type="submit" name="tienda" id="tienda" class="btn btn-outline-warning" value="Tienda">
         </form>
         <form action="/CrearPregunta" method="post" class="botones">
-            <input type="submit" name="CrearPregunta" id="CrearPregunta" value="Sugerir Pregunta">
+            <input type="submit" name="CrearPregunta" id="CrearPregunta" class="btn btn-outline-warning" value="Sugerir Pregunta">
         </form>
     </section>
+
+
+
+    <div class="container w-25 contendorMSJ" id="mensajeSugerir">
+        {{#mensajeUsuarioSugerir}}
+            <a id="boton" class="cerrar"><img src="../public/img/x-circle.svg"></a>
+            <p class="text-light text-center bg-primary p-1 rounded">{{mensajeUsuarioSugerir}}</p>
+        {{/mensajeUsuarioSugerir}}
+
+    </div>
 
     <section class="container">
         <h1 class="p-5 text-light">Partidas jugadas</h1>
@@ -51,3 +61,4 @@
         </table>
     </section>
 </main>
+<script src="/public/js/mensajeUsuario.js"></script>

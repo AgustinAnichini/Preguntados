@@ -26,25 +26,16 @@ class CrearPreguntaController{
 
         $sePropuso = $this->model->sugerirPregunta($categoria,
                                     $preguntaSugerida,
+                                    $respuestaCorrecta,
                                     $respuestaIncorrecta1,
                                     $respuestaIncorrecta2,
                                     $respuestaIncorrecta3);
         if ($sePropuso){
-
-            $this->lobbyModel->actualizarUsuario();
-            $partidasActualizadas = $this->lobbyModel->partidasActualizadas();
-
-            $usuario = $_SESSION["usuario"];
-            $lobbyData = array();
-            $lobbyData["usuario"] = $usuario;
-            $lobbyData["partidasActualizadas"] = $partidasActualizadas;
-            $lobbyData["mensajeUsuario"] = "La pregunta fue sugerida con exito";
-            $this->presenter->render("lobby", $lobbyData);
-
+            header("Location: /lobby?mensajeUsuarioSugerir=" . urlencode("La pregunta fue sugerida con éxito"));
+            exit;
         }else{
-            $crearPreguntaData = array();
-            $crearPreguntaData["mensajeUsuario"] = "La pregunta NO pudo ser sugerida";
-            $this->presenter->render("lobby",$crearPreguntaData);
+            header("Location: /lobby?mensajeUsuarioSugerir=" . urlencode("La pregunta fue sugerida con éxito"));
+            exit;
         }
 
     }

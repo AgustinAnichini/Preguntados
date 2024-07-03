@@ -1,16 +1,19 @@
 <main>
-    {{#usuario}}
-        <p class="text-light text-right p-3">Bienvenido {{nombre_usuario}} -- Posicion de Ranking:  {{ranking}}</p>
-    {{/usuario}}
+    <div class="bg-warning p-3">
+        <h3 class="text-center p-1 text-dark">¡Ranking Global de Sabiondos!</h3>
+        <p class="text-center text-dark">Descubre a los mejores jugadores del mundo</p>
+    </div>
 
-    <section class="container d-flex justify-content-around ">
-        <form action="/Lobby" method="post" class="botones">
-            <input type="submit" name="nuevaPartida" id="nuevaPartida" value="Lobby">
-        </form>
-    </section>
 
-    <section class="container">
-        <h1 class="p-5 text-light">Ranking Mundial</h1>
+
+    <section class="container mt-5">
+        <div class="container d-flex justify-content-between align-items-center mb-5">
+            <h1 class="p-2 text-light">Ranking Mundial</h1>
+            <form action="/Lobby" method="post" class="botones">
+                <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+            </form>
+        </div>
+
         <table class="table">
             <thead>
             <tr>

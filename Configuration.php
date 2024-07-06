@@ -9,6 +9,7 @@ include_once ("controller/UsuarioController.php");
 include_once ("controller/RankingController.php");
 include_once ("controller/ReporteController.php");
 include_once ("controller/CrearPreguntaController.php");
+include_once ("controller/EditorController.php");
 
 include_once ("model/RegistroModel.php");
 include_once ("model/HomeModel.php");
@@ -19,6 +20,7 @@ include_once ("model/UsuarioModel.php");
 include_once ("model/RankingModel.php");
 include_once ("model/ReporteModel.php");
 include_once ("model/CrearPreguntaModel.php");
+include_once ("model/EditorModel.php");
 
 
 include_once ("helper/Router.php");
@@ -59,6 +61,9 @@ Class Configuration{
     public static function getCrearPreguntaController(){
         return new CrearPreguntaController(self::getCrearPreguntaModel(), self::getPresenter(), self::getLobbyModel());
     }
+    public static function getEditorController(){
+        return new EditorController(self::getEditorModel(), self::getPreguntaModel(),self::getPresenter());
+    }
 
     //MODELS---------------------------------------------------------------------------------------------------------------------------
     private static function getRegistroModel()
@@ -95,6 +100,9 @@ Class Configuration{
     }
     private static function getCrearPreguntaModel(){
         return new CrearPreguntaModel(self::getsabiondosDatabase());
+    }
+    private static function getEditorModel(){
+        return new EditorModel(self::getsabiondosDatabase());
     }
 
     //HELPERS---------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,38 @@
+<main>
+    <section class="contenedor-lista-preguntas">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col" class="text-light">Numero</th>
+                <th scope="col" class="text-light">Texto pregunta</th>
+                <th scope="col" class="text-light">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {{#preguntas-existentes}}
+                <tr>
+                    <td scope="row" class="text-light">{{posicion}}</td>
+                    <td class="text-light">{{texto}}</td>
+                    <td class="text-light"><a href="/Editor/gestionarPreguntaExistente?id={{id}}">{{Gestion}}</a></td>
+                </tr>
+            {{/preguntas-existentes}}
+            {{#preguntas-sugeridas}}
+                <tr>
+                    <td scope="row" class="text-light">{{posicion}}</td>
+                    <td class="text-light">{{texto}}</td>
+                    <td class="text-light"><a href="/Editor/gestionarPreguntaSugerida?id={{id}}">{{Gestion}}</a></td>
+                </tr>
+            {{/preguntas-sugeridas}}
+            {{#preguntas-reportadas}}
+                <tr>
+                    <td scope="row" class="text-light">{{posicion}}</td>
+                    <td class="text-light">{{texto}}</td>
+                    <td class="text-light"><a href="/Editor/gestionarPreguntaReportada?id={{id}}">Gestionar Pregunta</a></td>
+                </tr>
+            {{/preguntas-reportadas}}
+            </tbody>
+        </table>
+    </section>
+</main>

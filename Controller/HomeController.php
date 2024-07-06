@@ -20,23 +20,24 @@ class HomeController
     public function validarHash()
     {
         if(!isset($_GET['hash'])){
-            $this->presenter->render("registro", ["mensaje" => "El hash no fue proporcionado"]);
-            return;
-        }
+            $lobbyData = array();
+            $lobbyData["mensajeUsuarioValidado"] = "El hash NO fue proporcionado";
+            $this->presenter->render("login", $lobbyData);
+        }else {
+            $hash = $_GET['hash'];
+            $usuario = $this->model->buscarUsuarioPorHash($hash);
 
-        $hash = $_GET['hash'];
-        $usuario = $this->model->buscarUsuarioPorHash($hash);
-
-            if($usuario != null){
-                $this->model->activarCuenta($usuario);
-                var_dump($usuario);
-                header("Location: /");
-                exit();
-            }else{
-                $this->presenter->render("login",["mensaje"=>"El enlace no es valido"]);
+            if ($usuario != null) {
+                $this->model->activarCuenta($hash);
+                $lobbyData = array();
+                $lobbyData["mensajeUsuarioValidado"] = "El usuario fue validado con exito";
+                $this->presenter->render("login", $lobbyData);
+            } else {
+                $lobbyData = array();
+                $lobbyData["mensajeUsuarioValidado"] = "El usuario NO fue validado con exito";
+                $this->presenter->render("login", $lobbyData);
             }
-
-//        $this->presenter->render("login", []);
+        }
     }
     public function login()
     {
@@ -45,20 +46,43 @@ class HomeController
 
         $usuario = $this->model->validarLogin($username,$password);
 
-        if ($usuario != null){
-            $_SESSION["usuario"]=$usuario;
-            $this->lobbyModel->obtenerRankingDeUsuario();
-            $partidasActualizadas = $this->lobbyModel->partidasActualizadas();
-            $this->lobbyModel->actualizarUsuario();
+        if ($usuario !== null) {
+            $_SESSION["usuario"] = $usuario;
+            $roll = $usuario["roll"];
 
             $homeData = array();
             $homeData["usuario"] = $_SESSION["usuario"];
-            $homeData["partidasActualizadas"] = $partidasActualizadas;
-            $this->presenter->render("lobby", $homeData);
-        }else{
+
+            switch ($roll) {
+                case 'jugador':
+                    $this->handleJugador();
+                    break;
+                case 'editor':
+                    $this->presenter->render("lobby_editor", $homeData);
+                    break;
+                case 'admin':
+                    $this->presenter->render("lobby_admin", $homeData);
+                    break;
+                default:
+                    header("Location: /Home");
+                    exit();
+            }
+        } else {
             header("Location: /Home");
             exit();
         }
+    }
+
+    private function handleJugador()
+    {
+        $partidasActualizadas = $this->lobbyModel->partidasActualizadas();
+        $this->lobbyModel->actualizarUsuario();
+
+        $homeData = array();
+        $homeData["usuario"] = $_SESSION["usuario"];
+        $homeData["partidasActualizadas"] = $partidasActualizadas;
+
+        $this->presenter->render("lobby", $homeData);
     }
 
 

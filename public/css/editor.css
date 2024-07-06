@@ -1,0 +1,24 @@
+h1,h2{
+    text-align: center;
+}
+.contenedor-gestiones{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 80%;
+    align-items: center;
+}
+.gestion{
+    color: gray;
+    background-color: gold;
+    width: 20vh;
+    transition: .2s all;
+    text-decoration: none;
+    border: 1px solid gold;
+    border-radius: 5px;
+}
+.gestion:hover{
+    background-color: darkgoldenrod;
+    border: 1px solid darkgoldenrod;
+    scale: 1.1;
+}

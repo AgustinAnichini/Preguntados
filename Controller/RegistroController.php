@@ -1,5 +1,4 @@
 <?php
-
 class RegistroController
 {
     private $model;
@@ -17,17 +16,28 @@ class RegistroController
     }
 
     public function registrar()
-    {  // todo esto hay que llevarlo al servicio
+    {
+        if (isset($_POST["nombreCompleto"], $_POST["fechaNacimiento"], $_POST["sexo"],
+                $_POST["pais"], $_POST["ciudad"], $_POST["email"], $_POST["password"], $_POST["confirmPassword"], $_POST["username"])
+            && isset($_FILES["fotoPerfil"])) {
 
-      if(  isset($_POST["nombreCompleto"],$_POST["fechaNacimiento"],$_POST["sexo"],
-          $_POST["pais"],$_POST["ciudad"],$_POST["email"],$_POST["password"],$_POST["confirmPassword"],$_POST["username"],
-              $_POST["fotoPerfil"]) || isset($_FILES["fotoPerfil"]['name'])){
+            $formData = $_POST;
 
-          $formData = $_POST;
-          $formData['fotoPerfil']['name'] =  $_FILES['fotoPerfil']['name'];
+            $fotoPerfil = $_FILES['fotoPerfil'];
+            $nombreArchivo = $fotoPerfil['name'];
+            $rutaTemporal = $fotoPerfil['tmp_name'];
+            $extension = pathinfo($nombreArchivo, PATHINFO_EXTENSION);
+            $nombreUnico = uniqid('perfil_') . '.' . $extension;
+            $rutaDestino = "./public/img/" . $nombreUnico;
 
-          $this->model->sendEmail($formData);
-          $this->presenter->render("login", []);
-      }
+            // Mueve el archivo subido a la ubicación deseada
+            if (move_uploaded_file($rutaTemporal, $rutaDestino)) {
+                $formData['fotoPerfil'] = $nombreUnico; // Guarda solo el nombre del archivo
+            }
+            $this->model->sendEmail($formData);
+            $this->presenter->render("login", []);
+        }else{
+            $this->presenter->render("login", []);
+        }
     }
 }

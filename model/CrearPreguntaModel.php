@@ -43,7 +43,7 @@ class CrearPreguntaModel
                                                                 VALUES (
                                                                 '$categoria'
                                                                 ,'$preguntaSugerida'
-                                                                ,'bajo',0,0,0,0)";
+                                                                ,'bajo',10,0,0,30)";
         $this->database->execute($sql);
 
         $idPreguntaSugerida = $this->database->obtenerUltimoIdinsertado();

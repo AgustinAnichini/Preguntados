@@ -127,4 +127,31 @@ class   PartidaModel
         $sql = "UPDATE partida SET duracion = '$duracion' WHERE id = $idPartida";
         $this->database->execute($sql);
     }
+
+    function calcularPuntajeMasAltoDelUsuario()
+    {
+        $usuario = $_SESSION["usuario"];
+        $idUsuario = $usuario["id"];
+
+        $sql = "SELECT MAX(puntaje) AS maxPuntaje FROM partida WHERE idUsuario = $idUsuario";
+        $resultado = $this->database->query($sql);
+
+        if ($resultado && count($resultado) > 0) {
+            $maxPuntaje = $resultado[0]['maxPuntaje'];
+            $this->asignarPuntajeMasAlto($maxPuntaje, $idUsuario);
+        } else {
+            // Si no hay resultado, manejar el caso, por ejemplo, asignar un puntaje por defecto o lanzar un error.
+            $this->asignarPuntajeMasAlto(0, $idUsuario);
+        }
+    }
+
+    function asignarPuntajeMasAlto($puntajeMasAltoDelUsuario, $idUsuario)
+    {
+        $puntajeMasAltoDelUsuario = (int)$puntajeMasAltoDelUsuario;  // Asegurar que sea un entero
+        $idUsuario = (int)$idUsuario;  // Asegurar que sea un entero
+
+        $sql = "UPDATE usuarios SET puntajeMasAlto = $puntajeMasAltoDelUsuario WHERE id = $idUsuario";
+        $this->database->execute($sql);
+    }
+
 }

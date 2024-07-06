@@ -25,6 +25,7 @@ class RegistroModel
         $username= $formData["username"];
         $tokenValidacion = $formData["passwordHash"];
         $fechaRegistro = date('Y-m-d H:i:s');
+        $fotoPerfil = $formData['fotoPerfil'];
 
         $this->database->execute(" INSERT INTO usuarios (
                                         nombre_completo,
@@ -56,7 +57,7 @@ class RegistroModel
                                         '$email',
                                         '$pais',
                                         '$ciudad',
-                                        'null',
+                                        '$fotoPerfil',
                                         '$username',
                                         '$fechaRegistro',
                                         false,
@@ -72,8 +73,11 @@ class RegistroModel
     }
     public function sendEmail ($formData)
     {
-        // Crear el hash MD5 de la contraseña
-        $passwordHash = md5($formData["password"]);
+       $PHash= $formData["password"];
+       $EHash= $formData["email"];
+       $dataToHash = $PHash . $EHash;
+
+        $passwordHash = md5($dataToHash);
         $formData["passwordHash"] = $passwordHash;
         $this->crearUsuario($formData);
 
@@ -95,11 +99,11 @@ class RegistroModel
 
             // Contenido del correo
             $mail->isHTML(true);
-            $mail->Subject = 'Si no sale me MATO';
+            $mail->Subject = 'Solo nos queda un paso';
             $mail->Body    = 'El hash MD5 de tu contraseña es: ' . $passwordHash. "<br>".
                 'Tu email es ' . $formData["email"]."<br>".
                 'Tu nombre de usuario es ' . $formData["username"] .
-                'haz click <a href="http://localhost:8080/home/validarHash?hash=' . $passwordHash . '">aquí</a> para ir al home de nuestra aplicación.';
+                'haz click <a href="http://localhost:8080/home/validarHash?hash=' . $passwordHash . '">aquí</a> para validar tu cuenta.';
             $mail->send();
         } catch (Exception $e) {
             echo "El mensaje no pudo ser enviado.'.  'Error de PHPMailer:' . {$mail->ErrorInfo}";

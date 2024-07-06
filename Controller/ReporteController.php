@@ -35,6 +35,4 @@ class ReporteController{
         $dataFin["partida"] = $_SESSION["partida"];
         $this->presenter->render("finDelJuego", $dataFin);
     }
-
-    
 }

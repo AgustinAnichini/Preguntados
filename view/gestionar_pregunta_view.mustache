@@ -1,0 +1,36 @@
+<main>
+    <h1>Gestion Pregunta</h1>
+    <section class="contenedor-datos-pregunta">
+        <h2>Datos:</h2>
+        <ul>
+            {{#pregunta}}
+                <li>Pregunta: {{texto}}</li>
+            {{/pregunta}}
+            {{#respuestas}}
+                <li>Respuesta: {{texto}} (Correcta: {{correcta}})</li>
+            {{/respuestas}}
+        </ul>
+    </section>
+    {{#pregunta}}
+        {{#gestiones-preguntas-sugeridas}}
+            <section class="contenedor-gestiones">
+                <a href="/Editor/darDeAltaPreguntaSugerida?id={{id}}" class="gestion">Aceptar</a> --> hecho
+                <a href="/Editor/darDeBajaPreguntaSugerida?id={{id}}" class="gestion">Rechazar</a> --> hecho
+            </section>
+        {{/gestiones-preguntas-sugeridas}}
+
+        {{#gestiones-preguntas-reportadas}}
+            <section class="contenedor-gestiones">
+                <a href="/Editor/darDeBajaPreguntaReportada?id={{id}}" class="gestion">Dar de baja</a> --> hecho
+                <a href="/Editor/mostrarFormModificarPreguntaReportada?id={{id}}" class="gestion">Modificar</a>
+            </section>
+        {{/gestiones-preguntas-reportadas}}
+
+        {{#gestiones-preguntas-existentes}}
+            <section class="contenedor-gestiones">
+                <a href="/Editor/darDeBajaExistente?id={{id}}" class="gestion">Dar de baja</a> --> hecho
+            </section>
+        {{/gestiones-preguntas-existentes}}
+    {{/pregunta}}
+
+</main>

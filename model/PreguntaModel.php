@@ -59,14 +59,11 @@ class PreguntaModel
 
     public function respuestas($idPregunta)
     {
-        // Realiza la consulta para obtener las respuestas de una pregunta específica
         $result = $this->database->query("SELECT * FROM respuesta WHERE pregunta_id = '$idPregunta'");
 
         if (!$result) {
-            return []; // Manejar el caso de error en la consulta
+            return [];
         }
-
-        // Retorna directamente el resultado como un array de respuestas
         return $result;
     }
 
@@ -120,4 +117,33 @@ class PreguntaModel
             $this->database->execute("UPDATE pregunta SET nivel_dificultad = '$nivel' WHERE id = $idPregunta");
         }
     }
+
+    public function obtenerPreguntaPorId($idPregunta)
+    {
+        $sql = "SELECT * FROM pregunta where id = $idPregunta";
+        $pregunta = $this->database->query($sql);
+        return $pregunta;
+    }
+    public function obtenerPreguntaSugeridaPorId($idPregunta)
+    {
+        $sql = "SELECT * FROM preguntaSugerida where id = $idPregunta";
+        $pregunta = $this->database->query($sql);
+        return $pregunta;
+    }
+
+    public function respuestasSugeridas($idPregunta)
+    {
+        $result = $this->database->query("SELECT * FROM respuestaSugerida WHERE pregunta_id = '$idPregunta'");
+
+        if (!$result) {
+            return [];
+        }
+        return $result;
+    }
+
+    public function darDeBajaRespuestaSugerida($idPregunta){
+        $sql = "DELETE * FROM respuestaSugerida where id = $idPregunta";
+        $this->database->execute($sql);
+    }
+
 }

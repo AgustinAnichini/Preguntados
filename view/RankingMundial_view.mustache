@@ -21,10 +21,12 @@
                 <th scope="col" class="text-light">Id</th>
                 <th scope="col" class="text-light">Nombre Usuario</th>
                 <th scope="col" class="text-light">Puntaje Total</th>
+                <th scope="col" class="text-light">Puntaje mas alto</th>
                 <th scope="col" class="text-light">Partidas Jugadas</th>
                 <th scope="col" class="text-light">Puntaje Ranking</th>
                 <th scope="col" class="text-light">Nivel</th>
                 <th scope="col" class="text-light">Pais</th>
+                <th scope="col" class="text-light">QR</th>
             </tr>
             </thead>
             <tbody>
@@ -34,10 +36,14 @@
                     <th class="text-light">{{id}}</th>
                     <td class="text-light"><a href="/Usuario/verPerfil?id={{id}}">{{nombre_usuario}}</a></td>
                     <td class="text-light">{{puntajeTotal}}</td>
+                    <td class="text-light">{{puntajeMasAlto}}</td>
                     <td class="text-light">{{partidasJugadas}}</td>
                     <td class="text-light">{{puntajeRanking}}</td>
                     <td class="text-light">{{nivel}}</td>
                     <td class="text-light">{{pais}}</td>
+                    <td class="text-light">
+                        <img src="/public/QR/{{qr_code_path}}" alt="QR Code" style="width: 100px; height: 100px;">
+                    </td>
                 </tr>
             {{/rankingMundial}}
             </tbody>

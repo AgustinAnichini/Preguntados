@@ -18,5 +18,25 @@
             </form>
             <p class="mt-3 text-center">¿No estás registrado? <a href="/registro">Regístrate</a></p>
         </div>
+
+        <div class="container w-50 contendorMSJ" id="mensajeSugerir">
+            {{#mensajeUsuarioValidado}}
+                <a id="boton" class="cerrar"><img src="../public/img/x-circle.svg"></a>
+                <p class="text-light text-center bg-primary p-1 rounded">{{mensajeUsuarioValidado}}</p>
+            {{/mensajeUsuarioValidado}}
+         </div>
     </div>
 </main>
+<script src="/public/js/mensajeUsuario.js"></script>
+
+
+
+
+
+<!--Por otro lado debe existir el usuario administrador, capaz de ver la cantidad de jugadores que tiene-->
+<!--la aplicación, cantidad de partidas jugadas, cantidad de preguntas en el juego, cantidad de-->
+<!--preguntas creadas, cantidad de usuarios nuevos, porcentaje de preguntas respondidas-->
+<!--correctamente por usuario, cantidad de usuarios por pais, cantidad de usuarios por sexo, cantidad-->
+<!--de usuarios por grupo de edad (menores, jubilados, medio). Todos estos gráficos deben poder-->
+<!--filtrarse por día, semana, mes o año. Estos reportes tienen que poder imprimirse (al menos las-->
+<!--tablas de datos)-->

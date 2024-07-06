@@ -114,6 +114,8 @@ class PartidaController
 
         $this->model->actualizarPartida();
         $this->model->cerrarPartida();
+        $this->model->calcularPuntajeMasAltoDelUsuario();
+
         $mensajeUsuario = "Te quedaste sin tiempo!!";
 
         $dataFin["mensajeUsuario"] = $mensajeUsuario;
@@ -126,9 +128,6 @@ class PartidaController
         $this->preguntaModel->sumarCantidadPreguntaAcertada($idPregunta);// agregar uno a pregunta respondida correctamente
         $this->preguntaModel->calcularNivelDePregunta($idPregunta);//calcular el nivel de dificultad de la pregunta
         $this->model->agregarPreguntasAcertadasALaPartida(); // agregar una pregunta respondida correctamente a la partida
-        // para calcular el nivel
-        // debemos sumar las preguntas acertadas del usuario
-
         $this->model->agregarPuntos($idPregunta);
         $this->model->actualizarUsuario();
         $this->model->actualizarPartida();
@@ -148,6 +147,7 @@ class PartidaController
         $this->model->actualizarUsuario();
         $this->model->actualizarPartida();
         $this->model->cerrarPartida();
+        $this->model->calcularPuntajeMasAltoDelUsuario();
 
         $dataFin["mensajeUsuario"] = $mensajeUsuario;
         $dataFin["pregunta"] = $this->model->buscarPreguntaPorId($idPregunta);
@@ -164,7 +164,6 @@ class PartidaController
             $diferencia = $tiempoInicio->diff($fechaActual);
             // Formatear la diferencia como 'HH:MM:SS'
             $duracion = $diferencia->format('%H:%I:%S');
-            var_dump($duracion);// llega bien
 
             return $duracion;
         } else {
@@ -177,6 +176,7 @@ class PartidaController
         $this->model->cerrarPartida();
         $this->model->actualizarUsuario();
         $partidasActualizadas = $this->model->partidasActualizadas();
+        $this->model->calcularPuntajeMasAltoDelUsuario();
 
         $usuario = $_SESSION["usuario"];
         $lobbyData = array();

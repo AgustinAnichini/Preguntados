@@ -1,0 +1,26 @@
+<main>
+    <div class="bg-warning p-3">
+        <h1 class="text-center p-3 text-dark">SABIONDOS</h1>
+        <h3 class="text-center p-1 text-dark">¡Demuestra tu conocimiento!</h3>
+        <p class="text-center text-dark">Bienvenido al juego de preguntas donde podrás poner a prueba tu sabiduría.</p>
+    </div>
+
+    {{#usuario}}
+        <p class="text-light text-center p-3">Bienvenido <strong>{{nombre_usuario}}</strong> -- Roll: <strong>{{roll}}</strong></p>
+    {{/usuario}}
+
+    <h2>Que desea hacer:</h2>
+    <section class="contenedor-gestiones">
+        <a href="/Editor/crearPregunta" class="gestion">Crear pregunta</a>
+        <a href="/Editor/gestionarPreguntasExistentes" class="gestion">Gestionar preguntas existentes</a>
+        <a href="/Editor/gestionarPreguntasReportadas" class="gestion">Gestionar ppreguntas reportadas</a>
+        <a href="/Editor/gestionarPreguntasSugeridas" class="gestion">Gestionar preguntas sugeridas</a>
+    </section>
+    <div class="container w-25 contendorMSJ" id="mensajeSugerir">
+        {{#mensajeUsuarioSugerir}}
+            <a id="boton" class="cerrar"><img src="../public/img/x-circle.svg"></a>
+            <p class="text-light text-center bg-primary p-1 rounded">{{mensajeUsuarioSugerir}}</p>
+        {{/mensajeUsuarioSugerir}}
+    </div>
+</main>
+<script src="/public/js/mensajeUsuario.js"></script>

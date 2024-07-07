@@ -1,60 +1,86 @@
 <main>
+
+
     {{#preguntaReportada}}
-        <h1>Modificar pregunta reportada</h1>
+        <h1 class="text-warning mt-3">Modificar pregunta reportada</h1>
     {{/preguntaReportada}}
     {{^preguntaReportada}}
-        <h1>Crear nueva pregunta</h1>
+        <h1 class="text-warning mt-3">Crear nueva pregunta</h1>
     {{/preguntaReportada}}
 
-    <section class="contenedor-form-pregunta">
+    <div class="container d-flex justify-content-between align-items-center mb-5">
+        <form action="/Editor" method="post" class="botones">
+            <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+        </form>
+    </div>
+
+    {{#mensajeReporte}}
+        <h3 class="text-center">Mensaje:</h3>
+        <h4 class="text-warning text-center">"{{mensajeReporte}}"</h4>
+    {{/mensajeReporte}}
+    <section class="container mt-5 bg-warning p-5 w-75">
         {{#preguntaReportada}}
-        <form action="Editor/modificarPreguntaReportada" method="post">
+        <form action="/Editor/modificarPreguntaReportada" method="post">
+            <input type="hidden" name="id" value="{{id}}">
         {{/preguntaReportada}}
         {{^preguntaReportada}}
-        <form action="Editor/altaPregunta" method="post">
+        <form action="/Editor/altaPregunta" method="post">
         {{/preguntaReportada}}
-            {{#preguntaReportadas}}
-            <label for="pregunta">Pregunta:</label>
-            <input type="text" name="pregunta" value="{{texto}}">
-            {{/preguntaReportadas}}
-            {{^preguntaReportada}}
-                <label for="pregunta">Pregunta:</label>
-                <input type="text" name="pregunta">
-            {{/preguntaReportada}}
-
-            {{#respuestasIncorrectas}}
-                <label for="respuesta-incorrecta-{{posicion}}">Respuesta incorrecta:</label>
-                <input type="text" name="respuesta-incorrecta-{{posicion}}">
-            {{/respuestasIncorrectas}}
-            {{^respuestasIncorectas}}
-                <label for="respuesta-incorrecta-1">Respuesta correcta:</label>
-                <input type="text" name="respuesta-incorrecta-1" value="{{texto}}">
-                <label for="respuesta-incorrecta-2">Respuesta correcta:</label>
-                <input type="text" name="respuesta-incorrecta-2"  value="{{texto}}">
-                <label for="respuesta-incorrecta-3">Respuesta correcta:</label>
-                <input type="text" name="respuesta-incorrecta-3"  value="{{texto}}">
-            {{/respuestasIncorectas}}
-
-            {{#respuestaCorrecta}}
-                <label for="respuesta-correcta">Respuesta correcta:</label>
-                <input type="text" name="respuesta-correcta"  value="{{texto}}">
-            {{/respuestaCorrecta}}
-            {{^respuestaCorrecta}}
-                <label for="respuesta-correcta">Respuesta correcta:</label>
-                <input type="text" name="respuesta-correcta">
-            {{/respuestaCorrecta}}
-
-                <label for="categoria">Categoria:</label>
-                <select type="text" name="categoria">
-                    <option value="arte">Arte</option>
-                    <option value="entretenimiento">Entretenimiento</option>
-                    <option value="deporte">Deporte</option>
-                    <option value="geografia">Geografia</option>
-                    <option value="historia">Historia</option>
-                </select>
-
-
-            <input type="submit" value="Dar de alta">
+        <div class="mb-3">
+            <label for="pregunta" class="form-label">Pregunta:</label>
+            <input type="text" id="pregunta" name="pregunta" class="form-control" value="{{#preguntaReportada}}{{texto}}{{/preguntaReportada}}">
+        </div>
+        {{#respuestasIncorrectas}}
+            <div class="mb-3">
+                <label for="respuesta-incorrecta-{{index}}" class="form-label">Respuesta incorrecta:</label>
+                <input type="text" id="respuesta-incorrecta-{{index}}" name="respuesta-incorrecta-{{index}}" class="form-control" value="{{texto}}">
+            </div>
+        {{/respuestasIncorrectas}}
+        {{^respuestasIncorrectas}}
+            <div class="mb-3">
+                <label for="respuesta-incorrecta-1" class="form-label">Respuesta incorrecta:</label>
+                <input type="text" id="respuesta-incorrecta-1" name="respuesta-incorrecta-1" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="respuesta-incorrecta-2" class="form-label">Respuesta incorrecta:</label>
+                <input type="text" id="respuesta-incorrecta-2" name="respuesta-incorrecta-2" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label for="respuesta-incorrecta-3" class="form-label">Respuesta incorrecta:</label>
+                <input type="text" id="respuesta-incorrecta-3" name="respuesta-incorrecta-3" class="form-control">
+            </div>
+        {{/respuestasIncorrectas}}
+        <div class="mb-3">
+            <label for="respuesta-correcta" class="form-label">Respuesta correcta:</label>
+            <input type="text" id="respuesta-correcta" name="respuesta-correcta" class="form-control" value="{{#respuestaCorrecta}}{{respuestaCorrecta.texto}}{{/respuestaCorrecta}}">
+        </div>
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría:</label>
+            <select id="categoria" name="categoria" class="form-select">
+                <option value="5">Arte</option>
+                <option value="4">Entretenimiento</option>
+                <option value="2">Deporte</option>
+                <option value="3">Geografía</option>
+                <option value="1">Historia</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="valor" class="form-label">Valor:</label>
+            <input type="text" id="valor" name="valor" class="form-control" value="{{#preguntaReportada}}{{valor}}{{/preguntaReportada}}">
+        </div>
+        <div class="mb-3">
+            <label for="nivel_dificultad" class="form-label">Dificultad:</label>
+            <select id="dificultad" name="nivel_dificultad" class="gorm-select">
+                <option value="bajo">Bajo</option>
+                <option value="medio">Medio</option>
+                <option value="alto">Alto</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Modificar</button>
+        {{#preguntaReportada}}
         </form>
+        {{/preguntaReportada}}
+    </form>
     </section>
+
 </main>

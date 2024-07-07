@@ -9,12 +9,12 @@
         <p class="text-light text-center p-3">Bienvenido <strong>{{nombre_usuario}}</strong> -- Roll: <strong>{{roll}}</strong></p>
     {{/usuario}}
 
-    <h2>Que desea hacer:</h2>
-    <section class="contenedor-gestiones">
-        <a href="/Editor/crearPregunta" class="gestion">Crear pregunta</a>
-        <a href="/Editor/gestionarPreguntasExistentes" class="gestion">Gestionar preguntas existentes</a>
-        <a href="/Editor/gestionarPreguntasReportadas" class="gestion">Gestionar ppreguntas reportadas</a>
-        <a href="/Editor/gestionarPreguntasSugeridas" class="gestion">Gestionar preguntas sugeridas</a>
+    <h3  class="text-light text-center">¿Que desea hacer?</h3>
+    <section class="container d-flex justify-content-around mt-5">
+        <a href="/Editor/crearPregunta" class="btn btn-outline-warning">Crear pregunta</a>
+        <a href="/Editor/gestionarPreguntasExistentes" class="btn btn-outline-warning">Gestionar preguntas existentes</a>
+        <a href="/Editor/gestionarPreguntasReportadas" class="btn btn-outline-warning">Gestionar preguntas reportadas</a>
+        <a href="/Editor/gestionarPreguntasSugeridas" class="btn btn-outline-warning">Gestionar preguntas sugeridas</a>
     </section>
     <div class="container w-25 contendorMSJ" id="mensajeSugerir">
         {{#mensajeUsuarioSugerir}}

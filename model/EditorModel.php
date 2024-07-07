@@ -12,7 +12,7 @@ class EditorModel
     //------------------------------------DAR DE ALTA PREGUNTAS----------------------------------------------------
 
 
-    function altaPregunta(   $categoria,
+    function altaPreguntaSugerida(   $categoria,
                              $pregunta,
                              $respuestaCorrecta,
                              $respuestaIncorrecta1,
@@ -20,6 +20,38 @@ class EditorModel
                              $respuestaIncorrecta3,
                              $nivel_dificultad,
                              $valor){
+
+
+        $sePropuso = false;
+        $idPreguntaSugerida = $this->insertAltaPregunta($categoria, $pregunta,$nivel_dificultad,$valor);
+
+        if ($idPreguntaSugerida !== null){
+            $textoRespuestaCorrecta = $respuestaCorrecta["texto"];
+            $textoRespuestaIncorrecta1 = $respuestaIncorrecta1["texto"];
+            $textoRespuestaIncorrecta2 = $respuestaIncorrecta2["texto"];
+            $textoRespuestaIncorrecta3 = $respuestaIncorrecta3["texto"];
+
+            $sql = "INSERT INTO respuesta (texto, pregunta_id, correcta) 
+                                                                    VALUES 
+                                                                    ('$textoRespuestaCorrecta','$idPreguntaSugerida' ,true),
+                                                                    ('$textoRespuestaIncorrecta1','$idPreguntaSugerida' ,false),
+                                                                    ('$textoRespuestaIncorrecta2','$idPreguntaSugerida' ,false),
+                                                                    ('$textoRespuestaIncorrecta3','$idPreguntaSugerida' ,false) ";
+            $this->database->execute($sql);
+            $sePropuso = true;
+        }
+        return $sePropuso;
+    }
+    function altaNuevaPregunta(   $categoria,
+                             $pregunta,
+                             $respuestaCorrecta,
+                             $respuestaIncorrecta1,
+                             $respuestaIncorrecta2,
+                             $respuestaIncorrecta3,
+                             $nivel_dificultad,
+                             $valor){
+
+
         $sePropuso = false;
         $idPreguntaSugerida = $this->insertAltaPregunta($categoria, $pregunta,$nivel_dificultad,$valor);
 
@@ -29,8 +61,7 @@ class EditorModel
                                                                     ('$respuestaCorrecta','$idPreguntaSugerida' ,true),
                                                                     ('$respuestaIncorrecta1','$idPreguntaSugerida' ,false),
                                                                     ('$respuestaIncorrecta2','$idPreguntaSugerida' ,false),
-                                                                    ('$respuestaIncorrecta3','$idPreguntaSugerida' ,false)
-                                                                        ";
+                                                                    ('$respuestaIncorrecta3','$idPreguntaSugerida' ,false) ";
             $this->database->execute($sql);
             $sePropuso = true;
         }
@@ -42,7 +73,7 @@ class EditorModel
                                                                 VALUES (
                                                                 '$categoria'
                                                                 ,'$pregunta'
-                                                                ,$nivel_dificultad,$valor,0,0,30)";
+                                                                ,'$nivel_dificultad','$valor',0,0,30)";
         $this->database->execute($sql);
 
         $idPreguntaSugerida = $this->database->obtenerUltimoIdinsertado();
@@ -53,91 +84,87 @@ class EditorModel
 //------------------------------------DAR DE BAJA PREGUNTAS----------------------------------------------------
     function darDeBajaExistente($idPregunta)
     {
-        $sql="DELETE FROM pregunta where id = $idPregunta";
+        $sql="DELETE FROM respuesta where pregunta_id = '$idPregunta'";
         $this->database->execute($sql);
 
-        $sql="DELETE FROM respuesta where pregunta_id = $idPregunta";
-        $this->database->execute($sql);
 
+        $sql="DELETE FROM pregunta where id = '$idPregunta'";
+        $this->database->execute($sql);
     }
 
     function darDeBajaPreguntaSugerida($idPregunta)
     {
-        $sql="DELETE FROM preguntaSugerida where id = $idPregunta";
+        $sql="DELETE FROM respuestaSugerida where pregunta_id = '$idPregunta'";
         $this->database->execute($sql);
 
-        $sql="DELETE FROM respuestaSugerida where pregunta_id = $idPregunta";
+        $sql="DELETE FROM preguntaSugerida where id = '$idPregunta'";
         $this->database->execute($sql);
     }
     function darDeBajaPreguntaReportada($idPregunta)
     {
-        $sql="DELETE FROM reporte where id_pregunta = $idPregunta";
+        $sql="DELETE FROM reporte where id_pregunta = '$idPregunta'";
+        $this->database->execute($sql);
+    }
+
+    function darDeBajaPreguntaUsuario($idPregunta)
+    {
+        $sql="DELETE FROM preguntaUsuario where idPregunta = $idPregunta";
         $this->database->execute($sql);
     }
 
 //------------------------------------MODIFICAR PREGUNTA----------------------------------------------------
 
 
-    function modificarPregunta($categoria,
-                               $idPregunta,
-                               $texto,
-                               $respuestaCorrecta,
-                               $respuestaIncorrecta1,
-                               $respuestaIncorrecta2,
-                               $respuestaIncorrecta3,
-                               $nivel_dificultad,
-                               $valor){
-        $this->modificarCategoria($categoria, $idPregunta); // id
-        $this->modificarDificultad($nivel_dificultad, $idPregunta);
-        $this->modificarTexto($texto, $idPregunta);
-        $this->modificarValor($valor, $idPregunta);
-        $this->modificarRespuestas($idPregunta,$respuestaCorrecta,$respuestaIncorrecta1,$respuestaIncorrecta2,$respuestaIncorrecta3);
-    }
-
 
     public function modificarCategoria($categoria, $idPregunta)
     {
-        $sql = "update pregunta set categoria = $categoria where id = $idPregunta";
+        $sql = "update pregunta set id_categoria = '$categoria' where id = '$idPregunta'";
         $this->database->execute($sql);
     }
     public function modificarDificultad($nivel_dificultad, $idPregunta)
     {
-        $sql = "update pregunta set nivel_dificultad = $nivel_dificultad where id = $idPregunta";
+        $sql = "update pregunta set nivel_dificultad = '$nivel_dificultad' where id = '$idPregunta'";
         $this->database->execute($sql);
     }
     public function modificarTexto($texto, $idPregunta)
     {
-        $sql = "update pregunta set texto = $texto where id = $idPregunta";
+        $sql = "update pregunta set texto = '$texto' where id = '$idPregunta'";
         $this->database->execute($sql);
     }
     public function modificarValor($valor, $idPregunta)
     {
-        $sql = "update pregunta set valor = $valor where id = $idPregunta";
+        $sql = "update pregunta set valor = '$valor' where id = '$idPregunta'";
         $this->database->execute($sql);
     }
 
-    function modificarRespuestas($idPregunta,$respuestaCorrecta,$respuestaIncorrecta1,$respuestaIncorrecta2,$respuestaIncorrecta3){
+    function modificarRespuestas($idPregunta,$idDeRespuestas,$respuestaCorrecta,$respuestaIncorrecta1,$respuestaIncorrecta2,$respuestaIncorrecta3){
+        $idDeRespuestas;
+        $idRespuestaCorrecta = $idDeRespuestas[0]['id'];
+        $idRespuestaIncorrecta1 = $idDeRespuestas[1]['id'];
+        $idRespuestaIncorrecta2 = $idDeRespuestas[2]['id'];
+        $idRespuestaIncorrecta3 = $idDeRespuestas[3]['id'];
 
-        $sql = "UPDATE respuesta SET texto = $respuestaCorrecta, correcta = 1 WHERE pregunta_id = $idPregunta";
+        $sql = "UPDATE respuesta SET texto = '$respuestaCorrecta', correcta = 1 WHERE pregunta_id = '$idPregunta' and id = '$idDeRespuestas[0]['id']'";
         $this->database->execute($sql);
 
-        $sql = "update respuesta set texto = $respuestaIncorrecta1 , correcta = 0 where pregunta_id = $idPregunta";
+        $sql = "UPDATE respuesta SET texto = '$respuestaIncorrecta1' , correcta = 0 where pregunta_id = '$idPregunta'and id = '$idRespuestaIncorrecta1'";
         $this->database->execute($sql);
 
-        $sql = "update respuesta set texto = $respuestaIncorrecta2, correcta = 0 where pregunta_id = $idPregunta";
+        $sql = "UPDATE respuesta SET texto = '$respuestaIncorrecta2', correcta = 0 where pregunta_id = '$idPregunta' and id = '$idRespuestaIncorrecta2'";
         $this->database->execute($sql);
 
-        $sql = "update respuesta set texto = $respuestaIncorrecta3, correcta = 0 where pregunta_id = $idPregunta";
+        $sql = "UPDATE respuesta SET texto = '$respuestaIncorrecta3', correcta = 0 where pregunta_id = '$idPregunta' and id ='$idRespuestaIncorrecta3'";
         $this->database->execute($sql);
+
     }
 
 
     //------------------------------------OBTENER PREGUNTAS----------------------------------------------------
 
     public function obtenerPreguntasReportadas(){
-        $sql = "SELECT DISTINCT  id_pregunta FROM reporte";
+        $sql = "SELECT DISTINCT id_pregunta FROM reporte";
         $result = $this->database->query($sql);
-    var_dump($result);
+//        var_dump($result); // 5 y 7
 
         $preguntasReportadas = $this->obtenerPreguntas($result);
         return $preguntasReportadas;
@@ -147,11 +174,13 @@ class EditorModel
         if (empty($idReportadas)) {
             return [];
         }
-        $ids = implode(',', array_map('intval', $idReportadas));
-        $sql = "SELECT * FROM pregunta WHERE id IN ($ids)";
-        $preguntasReportadas = $this->database->query($sql);
+        $idList = array_column($idReportadas, 'id_pregunta');
+        $ids = implode(',', $idList);
 
-        return $preguntasReportadas;
+        $sql = "SELECT * FROM pregunta WHERE id IN ($ids)";
+        $result = $this->database->query($sql);
+
+        return $result;
     }
 
     public function obtenerPreguntasSugeridas(){
@@ -167,10 +196,22 @@ class EditorModel
     }
 
     //------------------------------------OBTENER PREGUNTA INDIVIDUAL----------------------------------------------------
-    public function obtenerPreguntaReportadaPorId($idReportada){
+    public function obtenerPreguntaPorId($idReportada){
         $sql = "SELECT * FROM pregunta WHERE id = $idReportada";
         $preguntaReportada = $this->database->query($sql);
         return $preguntaReportada;
+    }
+    //------------------------------------OBTENER MENSAJE REPORTE----------------------------------------------------
+
+    public function obtenerMensajeReporte($idPregunta) {
+        $sql = "SELECT texto FROM reporte WHERE id_pregunta = $idPregunta";
+        $result = $this->database->query($sql);
+
+        if (!empty($result)) {
+            return $result[0]['texto'];
+        } else {
+            return null;
+        }
     }
 
 }

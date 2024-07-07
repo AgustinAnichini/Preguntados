@@ -15,8 +15,11 @@ class EditorController
 
     public function home()
     {
+        $usuario = $_SESSION["usuario"];
 
-        $this->presenter->render("lobby_editor", []);
+        $homeData = array();
+        $homeData["usuario"] = $usuario;
+        $this->presenter->render("lobby_editor", $homeData);
     }
 
     public function crearPregunta(){
@@ -26,18 +29,20 @@ class EditorController
 
     public function altaPregunta()
     {
+        $usuario = $_SESSION["usuario"];
+
         $categoria =$_POST["categoria"];
         $pregunta = $_POST["pregunta"]; // texto
-        $respuestaCorrecta= $_POST["respuestaCorrecta"];
-        $respuestaIncorrecta1 = $_POST["respuestaIncorrecta1"];
-        $respuestaIncorrecta2 = $_POST["respuestaIncorrecta2"];
-        $respuestaIncorrecta3 = $_POST["respuestaIncorrecta3"];
+        $respuestaCorrecta= $_POST["respuesta-correcta"];
+        $respuestaIncorrecta1 = $_POST["respuesta-incorrecta-1"];
+        $respuestaIncorrecta2 = $_POST["respuesta-incorrecta-2"];
+        $respuestaIncorrecta3 = $_POST["respuesta-incorrecta-3"];
         $nivel_dificultad = $_POST["nivel_dificultad"];
         $valor = $_POST["valor"];
         // cantidadAcertadas,cantidadEntregadas,tiempo_respuesta
         // 0                    0               30 --> SIEMPRE
 
-        $sePropuso = $this->model->altaPregunta( $categoria,
+        $sePropuso = $this->model->altaNuevaPregunta( $categoria,
                                     $pregunta, // tetxto
                                     $respuestaCorrecta,
                                     $respuestaIncorrecta1,
@@ -46,17 +51,22 @@ class EditorController
                                     $nivel_dificultad,
                                     $valor);
         if ($sePropuso){
-            header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta fue dada de ALTA"));
-            exit;
+            $homeData = array();
+            $homeData["usuario"] = $usuario;
+            $homeData["mensajeUsuarioSugerir"] = "La pregunta repotada fue dada de ALTA";
+            $this->presenter->render("lobby_editor", $homeData);
         }else{
-            header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta NO pudo ser dada de alta"));
-            exit;
+            $homeData = array();
+            $homeData["usuario"] = $usuario;
+            $homeData["mensajeUsuarioSugerir"] = "La pregunta repotada NO fue dada de ALTA";
+            $this->presenter->render("lobby_editor", $homeData);
         }
     }
     public function darDeAltaPreguntaSugerida(){
         $idPregunta=$_GET["id"];
+        $usuario = $_SESSION["usuario"];
 
-        $pregunta = $this->model->obtenerPreguntaSugeridaPorId($idPregunta);
+        $pregunta = $this->preguntaModel->obtenerPreguntaSugeridaPorId($idPregunta);
         $respuestas = $this->preguntaModel->respuestasSugeridas($idPregunta);
 
         $respuestasIncorrectas = array();
@@ -69,17 +79,17 @@ class EditorController
             }
         }
 
-        $categoria =$pregunta["categoria"];
-        $pregunta = $pregunta["pregunta"]; // texto
-        $nivel_dificultad = $pregunta["nivel_dificultad"];
-        $valor = $pregunta["valor"];
+        $categoria =$pregunta[0]['id_categoria'];
+        $textoPregunta = $pregunta[0]['texto'];
+        $nivel_dificultad = $pregunta[0]["nivel_dificultad"];
+        $valor = $pregunta[0]["valor"];
         $respuestaIncorrecta1 = $respuestasIncorrectas[0];
         $respuestaIncorrecta2 = $respuestasIncorrectas[1];
         $respuestaIncorrecta3 = $respuestasIncorrectas[2];
 
 
-        $seInserto = $this->model->altaPregunta( $categoria,
-            $pregunta, // tetxto
+        $seInserto = $this->model->altaPreguntaSugerida( $categoria,
+            $textoPregunta, // texto
             $respuestaCorrecta,
             $respuestaIncorrecta1,
             $respuestaIncorrecta2,
@@ -88,13 +98,17 @@ class EditorController
             $valor);
 
         $this->model->darDeBajaPreguntaSugerida($idPregunta);
-        $this->preguntaModel->darDeBajaRespuestaSugerida($idPregunta);
+        //$this->preguntaModel->darDeBajaRespuestaSugerida($idPregunta);
         if ($seInserto){
-            header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta  sugerida fue dada de ALTA"));
-            exit;
+            $homeData = array();
+            $homeData["usuario"] = $usuario;
+            $homeData["mensajeUsuarioSugerir"] = "La pregunta sugerida fue dada de ALTA";
+            $this->presenter->render("lobby_editor", $homeData);
         }else{
-            header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta  sugerida NO pudo ser dada de alta"));
-            exit;
+            $homeData = array();
+            $homeData["usuario"] = $usuario;
+            $homeData["mensajeUsuarioSugerir"] = "La pregunta sugerida NO fue dada de ALTA";
+            $this->presenter->render("lobby_editor", $homeData);
         }
     }
 
@@ -104,25 +118,40 @@ class EditorController
 
     public function darDeBajaExistente(){
         $idPregunta =$_GET["id"];
+        $usuario = $_SESSION["usuario"];
 
         $this->model->darDeBajaExistente($idPregunta);
-        header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta fue dada de BAJA"));
-        exit;
+
+        $homeData = array();
+        $homeData["usuario"] = $usuario;
+        $homeData["mensajeUsuarioSugerir"] = "La pregunta existente fue dada de BAJA";
+        $this->presenter->render("lobby_editor", $homeData);
     }
     public function darDeBajaPreguntaSugerida(){
         $idPregunta =$_GET["id"];
+        $usuario = $_SESSION["usuario"];
 
         $this->model->darDeBajaPreguntaSugerida($idPregunta);
-        header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta fue dada de BAJA"));
-        exit;
+
+        $homeData = array();
+        $homeData["usuario"] = $usuario;
+        $homeData["mensajeUsuarioSugerir"] = "La pregunta sugerida fue RECHAZADA";
+        $this->presenter->render("lobby_editor", $homeData);
     }
     public function darDeBajaPreguntaReportada(){
         $idPregunta =$_GET["id"];
+        $usuario = $_SESSION["usuario"];
 
-        $this->model->darDeBajaPreguntaReportada($idPregunta);
         $this->model->darDeBajaExistente($idPregunta);
-        header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta fue dada de BAJA"));
-        exit;
+        $this->model->darDeBajaPreguntaUsuario($idPregunta);
+        $this->model->darDeBajaPreguntaReportada($idPregunta);
+
+
+        $homeData = array();
+        $homeData["usuario"] = $usuario;
+        $homeData["mensajeUsuarioSugerir"] = "La pregunta repotada fue dada de BAJA";
+        $this->presenter->render("lobby_editor", $homeData);
+
     }
 
 
@@ -135,6 +164,7 @@ class EditorController
 
         $reportadasData = array();
         $reportadasData["preguntas-reportadas"] = $preguntasReportadas;
+        $reportadasData["titulo-preguntas-reportadas"] = "Gestionar preguntas reportadas";
         $this->presenter->render("lista_gestion_preguntas", $reportadasData);
     }
 
@@ -144,6 +174,8 @@ class EditorController
 
         $sugeridasData = array();
         $sugeridasData["preguntas-sugeridas"] = $preguntasSugeridas;
+        $sugeridasData["titulo-preguntas-sugeridas"] = "Gestionar preguntas sugeridas";
+
         $this->presenter->render("lista_gestion_preguntas", $sugeridasData);
     }
     public function gestionarPreguntasExistentes()
@@ -152,6 +184,7 @@ class EditorController
 
         $existenteData = array();
         $existentesData["preguntas-existentes"] = $preguntasExistentes;
+        $existentesData["titulo-preguntas-existentes"] = "Gestionar preguntas existentes";
         $this->presenter->render("lista_gestion_preguntas", $existentesData);
     }
 
@@ -199,54 +232,68 @@ class EditorController
 
 //------------------------------------MODIFICAR PREGUNTA ----------------------------------------------------
 
-    public function modificarPregunta( $categoria,
-                                       $idPregunta,
-                                       $texto,
-                                       $respuestaCorrecta,
-                                       $respuestaIncorrecta1,
-                                       $respuestaIncorrecta2,
-                                       $respuestaIncorrecta3,
-                                       $nivel_dificultad,
-                                       $valor){
-
-        // la modifico completa
-        $this->model->modificarPregunta($categoria,
-            $idPregunta,
-            $texto,
-            $respuestaCorrecta,
-            $respuestaIncorrecta1,
-            $respuestaIncorrecta2,
-            $respuestaIncorrecta3,
-            $nivel_dificultad,
-            $valor);
-
-        header("Location: /lobby_editor?mensajeUsuarioSugerir=" . urlencode("La pregunta fue MODIFICADA"));
-        exit;
-    }
-
     public function mostrarFormModificarPreguntaReportada(){
         $idPregunta=$_GET["id"];
-        $preguntaReportada = $this->model->obtenerPreguntaReportadaPorId($idPregunta);
-        $respuestasReportadas = $this->model->obtenerRespuestasReportadas($preguntaReportada);
+
+        $preguntaReportada = $this->model->obtenerPreguntaPorId($idPregunta);
+        $respuestasReportadas = $this->preguntaModel->respuestas($idPregunta);// id
+        $mensajeReporte = $this->model->obtenerMensajeReporte($idPregunta);
 
         $respuestasIncorrectas = array();
         $respuestaCorrecta = null;
-        foreach ($respuestasReportadas as $respuesta){
-            if($respuesta["correcta"]==1){
+        foreach ($respuestasReportadas as $index => $respuesta) {
+            $respuesta['index'] = $index; // Asignar índices comenzando en 1
+            if (isset($respuesta["correcta"]) && $respuesta["correcta"] == 1) {
                 $respuestaCorrecta = $respuesta;
-            }else{
+            } else {
                 array_push($respuestasIncorrectas, $respuesta);
             }
+            $index + 1;
         }
+
         $gestionData = array();
         $gestionData["preguntaReportada"] = $preguntaReportada;
-        $gestionData["respuestasIncorrectas"] = $respuestasIncorrectas;
+        $gestionData["mensajeReporte"] = $mensajeReporte;
+        $gestionData["respuestasIncorrectas"] = $respuestasIncorrectas;// array
         $gestionData["respuestaCorrecta"] = $respuestaCorrecta;
 
         $this->presenter->render("formulario_editor", $gestionData);
+
     }
 
+    public function modificarPreguntaReportada(){
+        $usuario = $_SESSION["usuario"];
+        $idPregunta = $_POST["id"];
 
+
+        $categoria =$_POST["categoria"];
+        $pregunta = $_POST["pregunta"]; // texto
+        $respuestaCorrecta= $_POST["respuesta-correcta"];
+        $respuestaIncorrecta1 = $_POST["respuesta-incorrecta-1"];
+        $respuestaIncorrecta2 = $_POST["respuesta-incorrecta-2"];
+        $respuestaIncorrecta3 = $_POST["respuesta-incorrecta-3"];
+        $nivel_dificultad = $_POST["nivel_dificultad"];
+        $valor = $_POST["valor"];
+        // en el post --> llega bien
+
+
+            $this->model->darDeBajaPreguntaReportada($idPregunta);
+            $this->model->modificarCategoria($categoria, $idPregunta);
+            $this->model->modificarDificultad($nivel_dificultad, $idPregunta);
+            $this->model->modificarTexto($pregunta, $idPregunta);
+            $this->model->modificarValor($valor, $idPregunta);
+
+            $idDeRespuestas = $this->preguntaModel->obtenerIdDeRespuestas($idPregunta);
+            $this->model->modificarRespuestas($idPregunta,$idDeRespuestas,$respuestaCorrecta,$respuestaIncorrecta1,$respuestaIncorrecta2,$respuestaIncorrecta3);
+
+            $homeData = array();
+            $homeData["usuario"] = $usuario;
+            $homeData["mensajeUsuarioSugerir"] = "La pregunta repotada fue MODIFICADA";
+            $this->presenter->render("lobby_editor", $homeData);
+
+    }
+
+}
 // Debe existir un tipo de usuario editor, que le permite dar de alta, baja y modificar las preguntas. --> HECHO
 // DE TODAS LAS PREGUNTAS
 
@@ -256,4 +303,4 @@ class EditorController
 // BAJA --> problema ID --> HECHO
 // MODIFICAR --> problema ID --> que se modifica ? que ingrese toda la pregunta de nuevo con las respuestas --> HECHO
 
-}
+

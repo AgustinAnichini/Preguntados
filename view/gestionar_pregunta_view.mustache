@@ -1,36 +1,54 @@
 <main>
-    <h1>Gestion Pregunta</h1>
-    <section class="contenedor-datos-pregunta">
-        <h2>Datos:</h2>
-        <ul>
+    <h1 class="text-warning mt-3">Gestion Pregunta</h1>
+    <section class="container">
+        <h2 class="text-left text-warning">Datos:</h2>
+        <ul class="list-group m-3">
             {{#pregunta}}
-                <li>Pregunta: {{texto}}</li>
+                <li class="list-group-item active">Pregunta: {{texto}}</li>
             {{/pregunta}}
             {{#respuestas}}
-                <li>Respuesta: {{texto}} (Correcta: {{correcta}})</li>
+                <li class="list-group-item {{#correcta}}list-group-item-success{{/correcta}}{{^correcta}}list-group-item-danger{{/correcta}}">
+                    Respuesta: {{texto}}
+                </li>
             {{/respuestas}}
         </ul>
+
     </section>
-    {{#pregunta}}
         {{#gestiones-preguntas-sugeridas}}
-            <section class="contenedor-gestiones">
-                <a href="/Editor/darDeAltaPreguntaSugerida?id={{id}}" class="gestion">Aceptar</a> --> hecho
-                <a href="/Editor/darDeBajaPreguntaSugerida?id={{id}}" class="gestion">Rechazar</a> --> hecho
+            <section class="container d-flex justify-content-center align-items-center gap-5 my-5">
+                {{#pregunta}}
+                    <a href="/Editor/darDeAltaPreguntaSugerida?id={{id}}" class="btn btn-outline-warning">Aceptar</a>
+                    <a href="/Editor/darDeBajaPreguntaSugerida?id={{id}}" class="btn btn-outline-warning">Rechazar</a>
+                    <form action="/Editor" method="post" class="botones">
+                        <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+                    </form>
+                {{/pregunta}}
             </section>
         {{/gestiones-preguntas-sugeridas}}
 
         {{#gestiones-preguntas-reportadas}}
-            <section class="contenedor-gestiones">
-                <a href="/Editor/darDeBajaPreguntaReportada?id={{id}}" class="gestion">Dar de baja</a> --> hecho
-                <a href="/Editor/mostrarFormModificarPreguntaReportada?id={{id}}" class="gestion">Modificar</a>
+            <section class="container d-flex justify-content-center align-items-center gap-5 my-5">
+                {{#pregunta}}
+                    <a href="/Editor/darDeBajaPreguntaReportada?id={{id}}" class="btn btn-outline-warning">Dar de baja</a>
+                    <a href="/Editor/mostrarFormModificarPreguntaReportada?id={{id}}" class="btn btn-outline-warning">Modificar</a>
+                    <form action="/Editor" method="post" class="botones">
+                        <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+                    </form>
+                {{/pregunta}}
             </section>
         {{/gestiones-preguntas-reportadas}}
 
         {{#gestiones-preguntas-existentes}}
-            <section class="contenedor-gestiones">
-                <a href="/Editor/darDeBajaExistente?id={{id}}" class="gestion">Dar de baja</a> --> hecho
+            <section class="container d-flex justify-content-center align-items-center gap-5 my-5">
+                {{#pregunta}}
+                    <a href="/Editor/darDeBajaExistente?id={{id}}" class="btn btn-outline-warning">Dar de baja</a>
+                        <form action="/Editor" method="post" class="botones">
+                            <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+                        </form>
+                {{/pregunta}}
             </section>
         {{/gestiones-preguntas-existentes}}
-    {{/pregunta}}
+
+
 
 </main>

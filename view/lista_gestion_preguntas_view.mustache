@@ -1,9 +1,33 @@
 <main>
-    <section class="contenedor-lista-preguntas">
+
+    {{#titulo-preguntas-existentes}}
+        <h1 class="text-warning">{{titulo-preguntas-existentes}}</h1>
+    {{/titulo-preguntas-existentes}}
+
+    {{#titulo-preguntas-sugeridas}}
+        <h1 class="text-warning">{{titulo-preguntas-sugeridas}}</h1>
+    {{/titulo-preguntas-sugeridas}}
+
+    {{#titulo-preguntas-reportadas}}
+        <h1 class="text-warning">{{titulo-preguntas-reportadas}}</h1>
+    {{/titulo-preguntas-reportadas}}
+
+    <div class="container d-flex justify-content-between align-items-center mb-5">
+        <form action="/Editor" method="post" class="botones">
+            <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+        </form>
+    </div>
+
+    <section class="container">
         <table class="table">
             <thead>
             <tr>
-                <th scope="col" class="text-light">Numero</th>
+                {{#preguntas-sugeridas}}
+
+                {{/preguntas-sugeridas}}
+                {{^preguntas-sugeridas}}
+                    <th scope="col" class="text-light">Numero</th>
+                {{/preguntas-sugeridas}}
                 <th scope="col" class="text-light">Texto pregunta</th>
                 <th scope="col" class="text-light">Acción</th>
             </tr>
@@ -13,21 +37,20 @@
 
             {{#preguntas-existentes}}
                 <tr>
-                    <td scope="row" class="text-light">{{posicion}}</td>
+                    <td scope="row" class="text-light">{{id}}</td>
                     <td class="text-light">{{texto}}</td>
-                    <td class="text-light"><a href="/Editor/gestionarPreguntaExistente?id={{id}}">{{Gestion}}</a></td>
+                    <td class="text-light"><a href="/Editor/gestionarPreguntaExistente?id={{id}}">Gestionar pregunta</a></td>
                 </tr>
             {{/preguntas-existentes}}
             {{#preguntas-sugeridas}}
                 <tr>
-                    <td scope="row" class="text-light">{{posicion}}</td>
                     <td class="text-light">{{texto}}</td>
-                    <td class="text-light"><a href="/Editor/gestionarPreguntaSugerida?id={{id}}">{{Gestion}}</a></td>
+                    <td class="text-light"><a href="/Editor/gestionarPreguntaSugerida?id={{id}}">Gestionar pregunta</a></td>
                 </tr>
             {{/preguntas-sugeridas}}
             {{#preguntas-reportadas}}
                 <tr>
-                    <td scope="row" class="text-light">{{posicion}}</td>
+                    <td scope="row" class="text-light">{{id}}</td>
                     <td class="text-light">{{texto}}</td>
                     <td class="text-light"><a href="/Editor/gestionarPreguntaReportada?id={{id}}">Gestionar Pregunta</a></td>
                 </tr>
@@ -35,4 +58,7 @@
             </tbody>
         </table>
     </section>
+
+
+
 </main>

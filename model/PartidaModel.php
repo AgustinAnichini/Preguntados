@@ -62,9 +62,12 @@ class   PartidaModel
             $this->actualizarPartida();
         }
 
+
     function buscarPreguntaPorId($idPregunta){
-        $result = $this->database->query("SELECT * FROM pregunta p WHERE p.id = '$idPregunta'");
-        return $result[0];
+        $sql = "SELECT * FROM pregunta WHERE id = $idPregunta";
+        $result = $this->database->query($sql);
+        //antes era -> return $result[0];
+        return $result;
     }
 
     function agregarPuntos($idPregunta)
@@ -73,7 +76,7 @@ class   PartidaModel
         $puntaje = $partida["puntaje"];
         $idPartida = $partida["id"];
         $pregunta = $this->buscarPreguntaPorId($idPregunta);
-        $valorDePregunta = $pregunta["valor"];
+        $valorDePregunta = $pregunta[0]["valor"];
         $puntajePartida = $puntaje;
         $puntajePartida += $valorDePregunta;
 

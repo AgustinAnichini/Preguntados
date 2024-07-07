@@ -99,7 +99,8 @@ class PartidaController
     {
         $idpregunta = $_POST["id"];
         $pregunta = $this->model->buscarPreguntaPorId($idpregunta);
-        $respuestas = $this->preguntaModel->respuestas($pregunta['id']); // array
+
+        $respuestas = $this->preguntaModel->respuestas($pregunta[0]['id']); // array
         $preguntaData = array();
         $preguntaData["pregunta"] = $pregunta;
         $preguntaData["respuesta"] = $respuestas;

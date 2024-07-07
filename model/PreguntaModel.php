@@ -66,6 +66,16 @@ class PreguntaModel
         }
         return $result;
     }
+    public function obtenerIdDeRespuestas($idPregunta)
+    {
+        $idRespuestas = $this->database->query("SELECT id FROM respuesta WHERE pregunta_id = '$idPregunta'");
+        var_dump("ESPACIO");
+        if (!$idRespuestas) {
+            return [];
+        }
+
+        return $idRespuestas;
+    }
 
     function verificarRespuesta($idPregunta, $idRespuesta){
         $result = $this->database->query("SELECT r.correcta FROM respuesta r WHERE r.pregunta_id = '$idPregunta' and $idRespuesta like r.id");
@@ -142,7 +152,7 @@ class PreguntaModel
     }
 
     public function darDeBajaRespuestaSugerida($idPregunta){
-        $sql = "DELETE * FROM respuestaSugerida where id = $idPregunta";
+        $sql = "DELETE FROM respuestaSugerida where id = $idPregunta";
         $this->database->execute($sql);
     }
 

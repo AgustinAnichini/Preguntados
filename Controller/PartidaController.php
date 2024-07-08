@@ -17,6 +17,10 @@ class PartidaController
 
     public function home()
     {
+        if(!isset($_SESSION["usuario"])){
+            $this->presenter->render("login", []);
+            exit();
+        }
         $this->presenter->render("nuevaPartida", []);
     }
 
@@ -51,8 +55,7 @@ class PartidaController
         //          TRUE                        TRUE
 // Condición del bucle: sigue buscando mientras la pregunta ya haya sido respondida o el nivel no coincida
 
-        var_dump($nivelUsuario); // alto
-        var_dump($nivelPregunta); // alto
+
 
         $IdUsuario = $Usuario['id'];
         $idPregunta = $pregunta['id'];
@@ -102,6 +105,7 @@ class PartidaController
 
         $respuestas = $this->preguntaModel->respuestas($pregunta[0]['id']); // array
         $preguntaData = array();
+        shuffle($respuestas);
         $preguntaData["pregunta"] = $pregunta;
         $preguntaData["respuesta"] = $respuestas;
 

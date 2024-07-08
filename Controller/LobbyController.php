@@ -10,6 +10,10 @@ class LobbyController{
 
     public function home()
     {
+        if(!isset($_SESSION["usuario"])){
+            $this->presenter->render("login", []);
+            exit();
+        }
         $usuario = $_SESSION["usuario"];
         $idUsuario = $usuario["id"];
 

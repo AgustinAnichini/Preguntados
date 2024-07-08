@@ -17,6 +17,11 @@ class HomeController
     {
         $this->presenter->render("login", []);
     }
+    public function logOut()
+    {
+        $_SESSION=[];
+        $this->presenter->render("login", []);
+    }
     public function validarHash()
     {
         if(!isset($_GET['hash'])){
@@ -85,6 +90,10 @@ class HomeController
         $this->presenter->render("lobby", $homeData);
     }
 
-
+// temas a resolver
+// Cuando reescribo la url, me ingresa a la app pero sin session
+// Los jugadores en base de datos, no son coherentes con las preguntas que hay
+//
+// temas a resolver
 
 }

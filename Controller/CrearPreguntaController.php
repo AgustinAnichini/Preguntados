@@ -10,6 +10,10 @@ class CrearPreguntaController{
 
     public function home()
     {
+        if(!isset($_SESSION["usuario"])){
+            $this->presenter->render("login", []);
+            exit();
+        }
         $categorias = $this->model->obtenerCategorias();
         $crearPreguntaData = array();
         $crearPreguntaData["categorias"] = $categorias;

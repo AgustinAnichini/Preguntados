@@ -14,6 +14,10 @@ class PreguntaController
 
     public function home()
     {
+        if(!isset($_SESSION["usuario"])){
+            $this->presenter->render("login", []);
+            exit();
+        }
         $this->presenter->render("login", []);
     }
 

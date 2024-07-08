@@ -47,7 +47,9 @@ class RegistroModel
                                         nivel,
                                         preguntasAcertadasTotales,
                                         preguntasRespondidas,
-                                        puntajeRanking   
+                                        puntajeRanking,
+                                       qr_code_path,
+                                        roll
                                     ) VALUES (
                                         '$nombreComleto',
                                         '$fechaNac',
@@ -68,7 +70,9 @@ class RegistroModel
                                         'bajo',
                                         0,
                                         0,
-                                        0);"
+                                        0,
+                                        ' ',
+                                        'jugador');"
         );
     }
     public function sendEmail ($formData)

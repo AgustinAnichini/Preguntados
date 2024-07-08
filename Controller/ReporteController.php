@@ -10,6 +10,10 @@ class ReporteController{
 
     public function home()
     {
+        if(!isset($_SESSION["usuario"])){
+            $this->presenter->render("login", []);
+            exit();
+        }
         $idPregunta = $_GET["idPregunta"];
         $pregunta = $this->partidaModel->buscarPreguntaPorId($idPregunta);
         $respuestas = $this->model->obtenerRespuestasPorIdPregunta($idPregunta);

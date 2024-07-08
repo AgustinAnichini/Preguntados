@@ -13,6 +13,10 @@ class RankingController
 
     public function home()
     {
+        if(!isset($_SESSION["usuario"])){
+            $this->presenter->render("login", []);
+            exit();
+        }
         $rankingMundial = $this->model->obtenerRanking();
         $rankingData = array();
         $rankingData["rankingMundial"] = $rankingMundial;

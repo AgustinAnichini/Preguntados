@@ -15,6 +15,10 @@ class EditorController
 
     public function home()
     {
+        if(!isset($_SESSION["usuario"])){
+            $this->presenter->render("login", []);
+            exit();
+        }
         $usuario = $_SESSION["usuario"];
 
         $homeData = array();

@@ -5,15 +5,15 @@
         {{/mensajeUsuario}}
 
         {{#pregunta}}
-            <h2 class="text-light mt-3">Pregunta respondida: </h2>
+            <h2 class="text-warning mt-3">Pregunta respondida: </h2>
             <h3 class="text-light mt-3">{{texto}}</h3>
         {{/pregunta}}
-
+<br>
         {{#partida}}
-            <h2 class="text-light mt-3">Puntaje acumulado: {{puntaje}}</h2>
+            <h2 class="text-warning mt-3">Puntaje acumulado: {{puntaje}}</h2>
         {{/partida}}
 
-        <form action="/Partida/ruleta" method="post" class="botones">
+        <form action="/Partida/ruleta" method="post" class="btn btn-outline-warning">
             {{#pregunta}}
                 <input type="hidden" value="{{id}}" name="id">
             {{/pregunta}}
@@ -22,11 +22,11 @@
         </form>
 
 
-        <form action="/Pregunta/reporte" method="post" class="botones">
+        <form action="/Pregunta/reporte" method="post" class="btn btn-outline-warning">
             {{#pregunta}}
                 <input type="hidden" value="{{id}}" name="id">
             {{/pregunta}}
-            <input type="submit" name="comenzar" id="tienda" value="Reportar pregunta">
+            <input type="submit" name="comenzar" id="tienda" value="Reportar pregunta" class="btn btn-outline-warning">
         </form>
 
     </section>

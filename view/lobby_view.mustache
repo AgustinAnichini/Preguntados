@@ -20,7 +20,13 @@
         <form action="/Ranking" method="post" class="botones">
             <input type="submit" name="rankingMundial" id="rankingMundial" class="btn btn-outline-warning" value="Ranking Mundial">
         </form>
-        
+        {{#usuario}}
+        <form action="/Usuario/verPerfilDesdeLobby" method="post" class="botones">
+            <input type="hidden" name="id" id="{{id}}" value="{{id}}">
+            <input type="submit" name="tienda" id="tienda" class="btn btn-outline-warning" value="Ver perfil">
+        </form>
+            {{/usuario}}
+
         <form action="/CrearPregunta" method="post" class="botones">
             <input type="submit" name="CrearPregunta" id="CrearPregunta" class="btn btn-outline-warning" value="Sugerir Pregunta">
         </form>

@@ -155,6 +155,11 @@ class UsuarioModel
         $result = $this->database->query($sql);
         return $result[0]['preguntasAcertadasTotales'];
     }
+    public function buscarUsuario($idUsuario){
+        $sql = "SELECT * FROM usuarios WHERE id = '$idUsuario'";
+        $result = $this->database->query($sql);
+        return $result[0];
+    }
 
 
 }

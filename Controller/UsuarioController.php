@@ -29,5 +29,17 @@ class UsuarioController
 
         $this->presenter->render("perfil", $usuarioData);
     }
+    public function verPerfilDesdeLobby()
+    {
+
+        $idUsuario = $_POST["id"];
+
+        $usuario = $this->model->buscarUsuario($idUsuario);
+        $usuarioData = array();
+        $usuarioData["usuario"] = $usuario;
+
+        $this->presenter->render("perfil", $usuarioData);
+    }
+
 
 }

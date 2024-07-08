@@ -39,11 +39,12 @@ class CrearPreguntaModel
     }
 
     function insertarPregunta($categoria,$preguntaSugerida){
-        $sql = "INSERT INTO preguntaSugerida (id_categoria, texto, nivel_dificultad,valor,cantidadAcertadas,cantidadEntregadas,tiempo_respuesta) 
+        $sql = "INSERT INTO preguntaSugerida (id_categoria, texto, nivel_dificultad,valor
+                                            ,cantidadAcertadas,cantidadEntregadas,tiempo_respuesta,pendiente) 
                                                                 VALUES (
                                                                 '$categoria'
                                                                 ,'$preguntaSugerida'
-                                                                ,'bajo',10,0,0,30)";
+                                                                ,'bajo',10,0,0,30,true)";
         $this->database->execute($sql);
 
         $idPreguntaSugerida = $this->database->obtenerUltimoIdinsertado();

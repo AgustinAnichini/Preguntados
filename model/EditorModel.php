@@ -92,12 +92,9 @@ class EditorModel
         $this->database->execute($sql);
     }
 
-    function darDeBajaPreguntaSugerida($idPregunta)
+    function cambiarEstadoPreguntaSugerida($idPregunta)
     {
-        $sql="DELETE FROM respuestaSugerida where pregunta_id = '$idPregunta'";
-        $this->database->execute($sql);
-
-        $sql="DELETE FROM preguntaSugerida where id = '$idPregunta'";
+        $sql="UPDATE preguntaSugerida SET pendiente = false WHERE id = '$idPregunta'";
         $this->database->execute($sql);
     }
     function darDeBajaPreguntaReportada($idPregunta)
@@ -184,7 +181,7 @@ class EditorModel
     }
 
     public function obtenerPreguntasSugeridas(){
-        $sql = "SELECT * FROM preguntaSugerida";
+        $sql = "SELECT * FROM preguntaSugerida WHERE pendiente = true";
         $preguntasSugeridas = $this->database->query($sql);
         return $preguntasSugeridas;
     }

@@ -136,7 +136,7 @@ class PreguntaModel
     }
     public function obtenerPreguntaSugeridaPorId($idPregunta)
     {
-        $sql = "SELECT * FROM preguntaSugerida where id = $idPregunta";
+        $sql = "SELECT * FROM preguntaSugerida where id = $idPregunta AND pendiente = true";
         $pregunta = $this->database->query($sql);
         return $pregunta;
     }

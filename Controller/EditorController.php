@@ -97,8 +97,7 @@ class EditorController
             $nivel_dificultad,
             $valor);
 
-        $this->model->darDeBajaPreguntaSugerida($idPregunta);
-        //$this->preguntaModel->darDeBajaRespuestaSugerida($idPregunta);
+        $this->model->cambiarEstadoPreguntaSugerida($idPregunta);
         if ($seInserto){
             $homeData = array();
             $homeData["usuario"] = $usuario;
@@ -131,7 +130,7 @@ class EditorController
         $idPregunta =$_GET["id"];
         $usuario = $_SESSION["usuario"];
 
-        $this->model->darDeBajaPreguntaSugerida($idPregunta);
+        $this->model->cambiarEstadoPreguntaSugerida($idPregunta);
 
         $homeData = array();
         $homeData["usuario"] = $usuario;
@@ -294,13 +293,3 @@ class EditorController
     }
 
 }
-// Debe existir un tipo de usuario editor, que le permite dar de alta, baja y modificar las preguntas. --> HECHO
-// DE TODAS LAS PREGUNTAS
-
-// A su vez puede revisar las PREGUNTAS REPORTADAS, para aprobar o dar de baja, y PREGUNTAS SUGERIDAS sugeridas por usuarios.
-
-// ALTA --> HECHO
-// BAJA --> problema ID --> HECHO
-// MODIFICAR --> problema ID --> que se modifica ? que ingrese toda la pregunta de nuevo con las respuestas --> HECHO
-
-

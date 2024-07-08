@@ -1,0 +1,47 @@
+<main>
+    <div class="bg-warning p-3">
+        <h1 class="text-center p-3 text-dark">SABIONDOS</h1>
+    </div>
+
+    <div class="container d-flex justify-content-between align-items-center mt-5">
+        <form action="/Admin" method="post" class="botones">
+            <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
+        </form>
+    </div>
+
+    {{#tituloGestionUsuarios}}
+        <h1 class="text-center p-3 text-light"> {{tituloGestionUsuarios}}</h1>
+    {{/tituloGestionUsuarios}}
+    {{#tituloGestionPreguntas}}
+        <h1 class="text-center p-3 text-light"> {{tituloGestionPregunta}}</h1>
+    {{/tituloGestionPreguntas}}
+    {{#tituloGestionPartidas}}
+        <h1 class="text-center p-3 text-light"> {{tituloGestionPartida}}</h1>
+    {{/tituloGestionPartidas}}
+
+    <section class="container d-flex flex-column w-25">
+        {{#gestionesUsuarios}}
+            <a href="/Admin/obtenerJugadoresTotales" class="btn btn-outline-warning mt-2">Jugadores totales</a>
+            <a href="/Admin/generarGraficoUsuariosPorPais" class="btn btn-outline-warning mt-2">Cantidad usuarios por pais</a>
+            <a href="/Admin/generarGraficoUsuariosPorSexo" class="btn btn-outline-warning mt-2">Cantidad usuarios por sexo</a>
+            <a href="/Admin/verListaUsuarios" class="btn btn-outline-warning mt-2">Porcentaje de preguntas respondidas por usuario</a>
+            <a href="/Admin/generarGraficoUsuariosPorGrupoEdad" class="btn btn-outline-warning mt-2">Cantidad de usuarios por grupo de edad</a>
+        {{/gestionesUsuarios}}
+
+        {{#gestionesPreguntas}}
+            <a href="/Admin/obtenerCantidadPreguntasDelJuego" class="btn btn-outline-warning mt-2">Cantiad de preguntas del juego</a>
+            <a href="/Admin/cantidadPreguntasCreadas" class="btn btn-outline-warning mt-2">Cantidad de preguntas creadas</a>
+        {{/gestionesPreguntas}}
+
+        {{#gestionesPartidas}}
+            <a href="/Admin/obtenerCantidadPartidasJugadas" class="btn btn-outline-warning mt-2">Cantidad partidas jugadas</a>
+        {{/gestionesPartidas}}
+
+        <div class="container w-25 contendorMSJ" id="mensajeSugerir">
+            {{#mensajeUsuarioSugerir}}
+                <a id="boton" class="cerrar"><img src="../public/img/x-circle.svg"></a>
+                <p class="text-light text-center bg-primary p-1 rounded">{{mensajeUsuarioSugerir}}</p>
+            {{/mensajeUsuarioSugerir}}
+        </div>
+    </section>
+</main>

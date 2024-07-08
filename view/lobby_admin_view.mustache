@@ -1,0 +1,26 @@
+<main>
+    <div class="bg-warning p-3">
+        <h1 class="text-center p-3 text-dark">SABIONDOS</h1>
+        <h3 class="text-center p-1 text-dark">¡Demuestra tu conocimiento!</h3>
+
+    </div>
+
+    {{#usuario}}
+        <p class="text-light text-center p-3">Bienvenido <strong>{{nombre_usuario}}</strong> -- Roll: <strong>{{roll}}</strong></p>
+    {{/usuario}}
+
+    <h3  class="text-light text-center">¿Que desea hacer?</h3>
+    <section class="container d-flex justify-content-around mt-5">
+        <a href="/Admin/adminUsuarios" class="btn btn-outline-warning">Usuarios</a>
+        <a href="/Admin/adminPreguntas" class="btn btn-outline-warning">Preguntas</a>
+        <a href="/Admin/adminPartidas" class="btn btn-outline-warning">Partidas</a>
+    </section>
+    <div class="container w-25 contendorMSJ" id="mensajeSugerir">
+        {{#mensajeUsuarioSugerir}}
+            <a id="boton" class="cerrar"><img src="../public/img/x-circle.svg"></a>
+            <p class="text-light text-center bg-primary p-1 rounded">{{mensajeUsuarioSugerir}}</p>
+        {{/mensajeUsuarioSugerir}}
+    </div>
+
+</main>
+<script src="/public/js/mensajeUsuario.js"></script>

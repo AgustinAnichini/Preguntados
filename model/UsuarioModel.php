@@ -79,9 +79,82 @@ class UsuarioModel
         }
     }
 
-    function buscarUsuario($idUsuario){
-        $usuario = $this->database->query("SELECT * FROM usuarios WHERE id = '$idUsuario'");
-        return $usuario[0];
+    function obtenerPorcentajeUsuario($usuario) {
+        $idUsuario = $usuario['id'];
+        $totalPreguntas = $this->obtenerCantidadTotalPreguntas();
+
+        $sql = "SELECT COUNT(*) AS preguntasAcertadasTotales FROM usuarios WHERE id = '$idUsuario'";
+        $result = $this->database->query($sql);
+
+        if ($result && count($result) > 0) {
+            $preguntasAcertadasTotales = $result[0]['preguntasAcertadasTotales'];
+
+            $porcentaje = ($preguntasAcertadasTotales / $totalPreguntas) * 100;
+            return $porcentaje;
+        } else {
+            return 0;
+        }
     }
+
+    function obtenerCantidadTotalPreguntas()
+    {
+        $sql = "SELECT  COUNT(*) AS cantidad FROM pregunta";
+        $result = $this->database->query($sql);
+        return $result [0]['cantidad'];
+    }
+
+    function buscarUsuarioPorID($idUsuario){
+        $sql = "SELECT * FROM usuarios WHERE id = '$idUsuario'";
+        $result = $this->database->query($sql);
+        return $result[0];
+    }
+
+    public function obtenerCantidadUsuariosMenores()
+    {
+        $limiteSuperiorMenores = 18; // Menores de 18 años (ejemplo)
+
+        $sql = "SELECT COUNT(*) AS cantidadMenores FROM usuarios 
+            WHERE DATEDIFF(CURRENT_DATE, fecha_nacimiento) / 365.25 < $limiteSuperiorMenores";
+
+        $result = $this->database->query($sql);
+
+        return $result[0]['cantidadMenores'];
+    }
+
+    public function obtenerCantidadUsuariosAdultos()
+    {
+        $limiteInferiorAdultos = 18; // Adultos mayores de 18 años (ejemplo)
+
+        $sql = "SELECT COUNT(*) AS cantidadAdultos FROM usuarios 
+            WHERE DATEDIFF(CURRENT_DATE, fecha_nacimiento) / 365.25 >= $limiteInferiorAdultos";
+
+        $result = $this->database->query($sql);
+        return $result[0]['cantidadAdultos'];
+    }
+
+    public function obtenerCantidadUsuariosJubilados()
+    {
+        $limiteSuperiorJubilados = 65; // Jubilados mayores de 65 años (ejemplo)
+
+        $sql = "SELECT COUNT(*) AS cantidad FROM usuarios 
+            WHERE DATEDIFF(CURRENT_DATE, fecha_nacimiento) / 365.25 >= $limiteSuperiorJubilados";
+
+        $result = $this->database->query($sql);
+        return $result[0]['cantidad'];
+    }
+
+    public function obtenerListaUsuarios(){
+        $sql  = "SELECT * FROM usuarios WHERE roll = 'jugador'";
+        $result = $this->database->query($sql);
+
+        return $result;
+    }
+
+    public function obtenerCantidadPreguntasRespondidasCorrectas($idUsuario){
+        $sql  = "SELECT preguntasAcertadasTotales FROM usuarios WHERE id = $idUsuario";
+        $result = $this->database->query($sql);
+        return $result[0]['preguntasAcertadasTotales'];
+    }
+
 
 }

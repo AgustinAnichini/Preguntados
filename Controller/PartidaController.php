@@ -189,5 +189,4 @@ class PartidaController
         $lobbyData["partidasActualizadas"] = $partidasActualizadas;
         $this->presenter->render("lobby", $lobbyData);
     }
-
 }

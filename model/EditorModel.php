@@ -135,7 +135,7 @@ class EditorModel
     }
 
     function modificarRespuestas($idPregunta,$idDeRespuestas,$respuestaCorrecta,$respuestaIncorrecta1,$respuestaIncorrecta2,$respuestaIncorrecta3){
-        $idDeRespuestas;
+        $idDeRespuestas;// aca exploto
         $idRespuestaCorrecta = $idDeRespuestas[0]['id'];
         $idRespuestaIncorrecta1 = $idDeRespuestas[1]['id'];
         $idRespuestaIncorrecta2 = $idDeRespuestas[2]['id'];

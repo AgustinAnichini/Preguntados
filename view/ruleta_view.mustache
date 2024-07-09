@@ -7,12 +7,12 @@
             <h2 class="text-light mt-3">{{tipo}}</h2>
         {{/categoria}}
 
-        <form action="/Partida/siguientePregunta" method="post" class="btn btn-outline-warning>
+        <form action="/Partida/siguientePregunta" method="post" >
             {{#pregunta}}
                 <input type="hidden" value="{{id}}" name="id">
             {{/pregunta}}
 
-            <input type="submit" name="comenzar" id="tienda" value="Jugar">
+            <input type="submit" class="btn btn-outline-warning" name="comenzar" id="tienda" value="Jugar">
         </form>
     </section>
 </main>

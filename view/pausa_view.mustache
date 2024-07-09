@@ -13,16 +13,16 @@
             <h2 class="text-warning mt-3">Puntaje acumulado: {{puntaje}}</h2>
         {{/partida}}
 
-        <form action="/Partida/ruleta" method="post" class="btn btn-outline-warning">
+        <form action="/Partida/ruleta" method="post" >
             {{#pregunta}}
                 <input type="hidden" value="{{id}}" name="id">
             {{/pregunta}}
 
-            <input type="submit" name="comenzar" id="tienda" value="seguir">
+            <input type="submit" class="btn btn-outline-warning" name="comenzar" id="tienda" value="seguir">
         </form>
 
 
-        <form action="/Pregunta/reporte" method="post" class="btn btn-outline-warning">
+        <form action="/Pregunta/reporte" method="post"
             {{#pregunta}}
                 <input type="hidden" value="{{id}}" name="id">
             {{/pregunta}}

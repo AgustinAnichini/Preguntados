@@ -1,17 +1,17 @@
-<main class="main-perfil container py-5">
+<main class="main-perfil container py-5 border border-warning rounded">
     {{#usuario}}
-        <div class="row align-items-center mb-4">
-            <div class="col-md-4 text-center container">
+        <div class="mb-5 w-100">
+            <div class="text-center container w-50">
                 <img src="/public/img/{{foto_perfil}}" class="img-fluid rounded shadow-sm" alt="Foto de {{nombre_completo}}">
             </div>
-            <div class="col-md-8">
-                <h1 class="h1-perfil text-warning">{{nombre_completo}}</h1>
+            <div class="pt-5">
+                <h1 class="h1-perfil text-warning text-center ">{{nombre_completo}}</h1>
             </div>
         </div>
 
-        <section class="datos-usuario">
-            <div class="row">
-                <div class="col-md-6 mb-4">
+        <section class="container mt-5">
+            <div class="d-flex justify-content-around border border-warning rounded mb-5 p-5">
+                <div class="mb-4 datos">
                     <div class="card shadow-sm">
                         <div class="card-header bg-warning text-white">
                             <h3 class="card-title mb-0 text-dark">Datos Personales</h3>
@@ -26,7 +26,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 mb-4">
+                <div class="mb-4 datos">
                     <div class="card shadow-sm">
                         <div class="card-header bg-warning text-white">
                             <h3 class="card-title mb-0 text-dark">Datos de Partida</h3>

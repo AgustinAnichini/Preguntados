@@ -5,7 +5,6 @@
     transform: translate(-50%, -50%);
     z-index: 99;
 }
-
 .ocultar{
     display: none;
 }
@@ -29,3 +28,77 @@
 .datos-usuario .list-group-item {
     font-size: 1rem;
 }
+
+
+.reloj img{
+    width: 30%;
+    height: auto;
+}
+
+.subida img{
+    width: 34%;
+    height: auto;
+}
+
+.mas img{
+    width: 50%;
+    height: auto;
+}
+.container-tip{
+    width: 30rem;
+}
+
+.container-tips{
+    margin-top: 5rem;
+    gap: 4rem;
+    width: 100%;
+    padding: 5rem 1rem 0rem 1rem;
+}
+
+.container-text{
+    gap: 4rem;
+    width: 100%;
+}
+
+.ruleta-container{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: 100%;
+    border-radius: 1rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1),
+                0px -4px 8px rgba(0, 0, 0, 0.1),
+                4px 0px 8px rgba(0, 0, 0, 0.1),
+                -4px 0px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ruleta img{
+    width: 50%;
+    height: auto;
+}
+
+
+.respuestas-juego .d-flex {
+    justify-content: space-between;
+}
+
+.respuestas-juego label {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.respuesta{
+    border: solid 1px rgb(255, 193, 7);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.respuesta:hover{
+    background-color: rgb(255, 193, 7);
+    border: solid 1px white;
+}
+
+.respuesta:hover label {
+    color: black;
+}
+

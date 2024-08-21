@@ -1,7 +1,11 @@
+<div class="bg-warning p-3">
+    <h3 class="text-center p-1 text-dark">¡Comienza a jugar!</h3>
+    <p class="text-center text-dark">¡Contesta la mayor cantidad de preguntas en el menor tiempo!</p>
+</div>
 {{#categoria}}
 <main class="{{tipo}}">
 {{/categoria}}
-    <section class="container text-center">
+    <section class="container text-center mt-5 p-5 ruleta-container bg-dark">
         <h1 class="text-light mt-3">La categoria es... </h1>
         {{#categoria}}
             <h2 class="text-light mt-3">{{tipo}}</h2>
@@ -14,6 +18,14 @@
 
             <input type="submit" class="btn btn-outline-warning" name="comenzar" id="tienda" value="Jugar">
         </form>
+
+        {{#categoria}}
+        <div class="ruleta mt-5" id="{{tipo}}">
+        {{/categoria}}
+                <!--    inserta img segun categoria -->
+        </div>
+
     </section>
 </main>
 <script src="/public/js/recargarPagina.js"></script>
+<script src="/public/js/ruleta.js"></script>

@@ -12,11 +12,11 @@ class RegistroController
 
     public function home()
     {
-        if(!isset($_SESSION["usuario"])){
+        if(isset($_SESSION["usuario"])){
             $this->presenter->render("login", []);
             exit();
         }
-        $this->presenter->render("Registro", []);
+        $this->presenter->render("registro", []);
     }
 
     public function registrar()

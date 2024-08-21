@@ -1,5 +1,4 @@
 <main>
-
     <div class="bg-warning p-3">
         <form action="/Home/logOut" method="post">
             <input type="submit" name="logOut" id="logOut" class="btn btn-outline-secondary position-absolute top-0 end-0 m-3" value="Cerrar Sesion">
@@ -21,7 +20,7 @@
             <input type="submit" name="rankingMundial" id="rankingMundial" class="btn btn-outline-warning" value="Ranking Mundial">
         </form>
         {{#usuario}}
-        <form action="/Usuario/verPerfilDesdeLobby" method="post" class="botones">
+        <form action="/Usuario/verPerfil" method="get" class="botones">
             <input type="hidden" name="id" id="{{id}}" value="{{id}}">
             <input type="submit" name="tienda" id="tienda" class="btn btn-outline-warning" value="Ver perfil">
         </form>

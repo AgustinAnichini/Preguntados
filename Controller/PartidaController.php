@@ -54,9 +54,7 @@ class PartidaController
         } while (!$preguntaYaRespondida || $nivelUsuario !== $nivelPregunta);
         //          TRUE                        TRUE
 // Condición del bucle: sigue buscando mientras la pregunta ya haya sido respondida o el nivel no coincida
-
-
-
+        
         $IdUsuario = $Usuario['id'];
         $idPregunta = $pregunta['id'];
 

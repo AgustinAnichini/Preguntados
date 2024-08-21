@@ -11,16 +11,54 @@
         {{#error}}
             <h1 class="text-light">{{error}}</h1>
         {{/error}}
-
+        <div class="mt-4">
         <h1 class="text-warning p-5">¿Estas listo para perder?</h1>
 
-        <form action="/Partida/iniciarPartida" method="post" class="botones">
-            <input type="submit" name="comenzar" id="tienda" class="btn btn-outline-warning" value="Comenzar">
-        </form>
-        <div class="text-center my-3">
+        <div class="d-flex justify-content-center my-3">
+            <form action="/Partida/iniciarPartida" method="post" class="botones mr-5">
+                <input type="submit" name="comenzar" id="tienda" class="btn btn-outline-warning" value="Comenzar">
+            </form>
+
             <form action="/Lobby" method="post" class="botones">
                 <input type="submit" name="volverLobby" id="volverLobby" class="btn btn-outline-warning" value="Lobby">
             </form>
         </div>
+
+        </div>
+
+        <div class="w-100 d-flex justify-content-around container-tips align-items-center">
+            <div class="container-tip reloj">
+                <img src="/public/img/reloj.svg">
+            </div>
+
+            <div class="container-tip subida">
+                <img src="/public/img/subida.svg">
+            </div>
+
+            <div class="container-tip mas">
+                <img src="/public/img/mas.svg">
+            </div>
+        </div>
+
+        <div class="w-100  d-flex justify-content-around align-items-center container-text">
+            <div class="container-tip ">
+                <p class="text-warning mt-5">Responde correctamente el mayor número de preguntas antes de que se acabe el tiempo.</p>
+            </div>
+
+            <div class="container-tip ">
+                <p class="text-warning mt-5">A medida que respondes correctamente, las preguntas se volverán más difíciles.</p>
+            </div>
+
+            <div class="container-tip">
+                <p class="text-warning mt-5">Las preguntas al ser mas dificiles, aumentarán su valor.</p>
+            </div>
+        </div>
+
+
     </section>
 </main>
+
+
+
+<!--                <h3 class="text-warning mt-5"> <span>¡Demuestra tus conocimientos y supera a tus amigos en el ranking!</span> </h3>-->
+<!--            <h4 class="text-light mt-4">Tip: ¡La velocidad es importante, pero la precisión es la clave!</h4>-->

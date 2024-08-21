@@ -1,5 +1,5 @@
 <main>
-    <section class="container text-center">
+    <section class="container text-center mt-5">
         {{#mensajeUsuario}}
             <h1 class="text-light mt-3">Tu respuesta fue {{mensajeUsuario}} </h1>
         {{/mensajeUsuario}}
@@ -8,12 +8,12 @@
             <h2 class="text-warning mt-3">Pregunta respondida: </h2>
             <h3 class="text-light mt-3">{{texto}}</h3>
         {{/pregunta}}
-<br>
+            <br>
         {{#partida}}
             <h2 class="text-warning mt-3">Puntaje acumulado: {{puntaje}}</h2>
         {{/partida}}
 
-        <form action="/Partida/ruleta" method="post" >
+        <form action="/Partida/ruleta" method="post" class="mt-5" >
             {{#pregunta}}
                 <input type="hidden" value="{{id}}" name="id">
             {{/pregunta}}

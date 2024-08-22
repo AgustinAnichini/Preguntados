@@ -145,9 +145,9 @@ class EditorController
         $idPregunta =$_GET["id"];
         $usuario = $_SESSION["usuario"];
 
-        $this->model->darDeBajaExistente($idPregunta);
         $this->model->darDeBajaPreguntaUsuario($idPregunta);
         $this->model->darDeBajaPreguntaReportada($idPregunta);
+        $this->model->darDeBajaExistente($idPregunta);// error
 
 
         $homeData = array();

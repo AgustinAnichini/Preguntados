@@ -1,26 +1,27 @@
 <main>
-    <h1>Reportar pregunta</h1>
+    <section class="container text-center mt-5 p-5 ruleta-container">
+        <h1 class="text-warning">Reportar pregunta</h1>
 
-    <div class="datos-pregunta">
-        {{#pregunta}}
-        <h2>{{texto}}</h2>
-        {{/pregunta}}
-        <ul class="lista-respuestas">
-            {{#respuesta}}
-                <li class="respuesta">{{texto}}</li>
-            {{/respuesta}}
-        </ul>
-    </div>
+        <div class="datos-pregunta">
+            {{#pregunta}}
+            <h2 class="p-3 text-light">{{texto}}</h2>
+            {{/pregunta}}
+            <ul class="lista-respuestas">
+                {{#respuesta}}
+                    <li class="respuesta-reporte">{{texto}}</li>
+                {{/respuesta}}
+            </ul>
+        </div>
 
-    <h3>Por que crees que es necesario reportar esta pregunta?</h3>
+        <h3 class="text-warning">¿Por qué crees que es necesario reportar esta pregunta?</h3>
 
-    <form action="/Reporte/reportarPregunta" method="get" class="form-reporte">
-        {{#pregunta}}
-        <input type="hidden" name="idPregunta" id="idPregunta" value="{{id}}">
-        {{/pregunta}}
-        <input type="text" name="texto" id="texto" placeholder="Dejanos una breve explicacion...">
+        <form action="/Reporte/reportarPregunta" method="get" class="form-reporte">
+            {{#pregunta}}
+            <input type="hidden" name="idPregunta" id="idPregunta" value="{{id}}">
+            {{/pregunta}}
+            <input type="text" name="texto" id="texto" class="texto-reporte" placeholder="Dejanos una breve explicacion...">
 
-        <input type="submit" name="reportar" id="reportar" value="Enviar Reporte">
-    </form>
-
+            <input type="submit" class="btn btn-outline-warning w-25" name="reportar" id="reportar" value="Enviar Reporte">
+        </form>
+    </section>
 </main>

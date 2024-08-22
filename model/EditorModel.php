@@ -141,7 +141,7 @@ class EditorModel
         $idRespuestaIncorrecta2 = $idDeRespuestas[2]['id'];
         $idRespuestaIncorrecta3 = $idDeRespuestas[3]['id'];
 
-        $sql = "UPDATE respuesta SET texto = '$respuestaCorrecta', correcta = 1 WHERE pregunta_id = '$idPregunta' and id = '$idDeRespuestas[0]['id']'";
+        $sql = "UPDATE respuesta SET texto = '$respuestaCorrecta', correcta = 1 WHERE pregunta_id = '$idPregunta' and id = '$idRespuestaCorrecta'";
         $this->database->execute($sql);
 
         $sql = "UPDATE respuesta SET texto = '$respuestaIncorrecta1' , correcta = 0 where pregunta_id = '$idPregunta'and id = '$idRespuestaIncorrecta1'";

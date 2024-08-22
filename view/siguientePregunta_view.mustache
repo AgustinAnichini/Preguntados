@@ -1,5 +1,7 @@
+
     <main>
-        <section class="container mt-5">
+
+    <section class="container text-center mt-5 p-5 ruleta-container bg-dark" style="height: max-content;">
             {{#mensajeUsuario}}
                 <h1 class="text-light">{{mensajeUsuario}}</h1>
             {{/mensajeUsuario}}
@@ -7,7 +9,9 @@
             {{#pregunta}}
             <div class="container timerContainer d-flex flex-column align-items-center justify-content-center text-center mt-5">
                 <h1 class="text-warning">TIEMPO</h1>
-                <div id="timer" class="text-warning">{{tiempo_respuesta}}</div>
+                <div>
+                   <h1 id="timer" class="text-warning">{{tiempo_respuesta}}</h1>
+                </div>
             </div>
 
 
@@ -31,17 +35,18 @@
                     <input type="submit" value="Enviar" class="btn btn-outline-warning w-25">
                 </div>
             </form>
-        </section>
 
-        <section class="container mt-5">
-            <form action="/Reporte" method="get" class="d-flex flex-column container w-50">
-                {{#pregunta}}
-                    <div>
-                        <input type="hidden" name="idPregunta" id="{{id}}" value="{{id}}">
-                    </div>
-                {{/pregunta}}
-                <input type="submit" value="Reportar" class="btn btn-outline-warning w-25">
-            </form>
+            <div class="container mt-5">
+                <form action="/Reporte" method="get" class="d-flex flex-column container w-50">
+                    {{#pregunta}}
+                        <div>
+                            <input type="hidden" name="idPregunta" id="{{id}}" value="{{id}}">
+                        </div>
+                    {{/pregunta}}
+                    <input type="submit" value="Reportar" class="btn btn-outline-warning w-25">
+                </form>
+            </div>
+
         </section>
     </main>
     <script src="/public/js/timer.js"></script>
